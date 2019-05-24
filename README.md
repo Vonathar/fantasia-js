@@ -9,7 +9,7 @@ Fantasia is a work in progress, so many more features are currently on the way!
 ### Player
 
 Level up your character by killing monsters, but be careful! They hit you back - so make sure to eat some food when you need to heal yourself.
-Every time you level up, your attack and HP increase!
+Every time you level up, your HP increase!
 
 ### Upgrades
 
@@ -35,9 +35,27 @@ If you want to know more about your adventure, you can read through the battle l
 - Active player skills!
 - Player class system
 - New hero upgrades
-- New obtainable pets
-- Special drops from the chest monsters!
+- A snake pet!
 - Inventory system
+
+## Change log
+
+### 1.1.0
+
+#### Gameplay
+
+- Complete overhaul of game maths!
+- Chest mobs now drop extra coins!
+- A new collectible pet!
+
+#### Other
+
+- XP in the Battle Log is now rendered with punctuation for easy reading
+- Images are now not draggable/selectable
+- The battle log now displays the right amount of HP healed
+- The upgrade screen now displays the attack increase before purchasing
+- Fix a bug which caused the 'Idle' screen to cover the inventory
+- Upgrade buttons now have added margin to prevent them from overlapping
 
 ## License
 

@@ -73,7 +73,13 @@ class UserInterface extends Component {
         <small>
           Kill monsters to <span className="text-primary">level up</span> your
           character; leveling up grants you extra HP, as well as click power.
-          Reach player level 30 to find out more about rebirthing!
+          Reach player level 70 to find out more about rebirthing!
+        </small>
+      </p>,
+      <p>
+        <small className="text-info">
+          Remember: if the stages are too hard, keep playing the current stage
+          to become stronger!
         </small>
       </p>,
       <p>
@@ -90,23 +96,85 @@ class UserInterface extends Component {
     stageEnemiesKilled: 0,
     stageEnemiesToKill: 3,
     stageMaxUnlocked: 1,
-    isStageProgressAuto: false,
-    /* Player values */
+    isStageProgressAuto: true,
+    /* Player values
+
+      HP: (500)  - 500 * pow( 1.05 , P Level) [WHEN LEVEL UP]
+      XP Req: (500)  -  500 * pow(1.05 , P.Level) [WHEN LEVEL UP]
+      Click DMG: (50)  -  50 * pow ( 1.04 , P Level ) [WHEN SKILL UP]
+
+      Sample values:
+
+      @ Lv 50
+      - HP: 5734
+      - XP Req: 1147
+      - Click DMG: 355
+
+      @ Lv 100
+      - HP: 65751
+      - XP Req: 13150
+      - Click DMG: 2525
+
+    */
     playerLevel: 1,
-    playerHealthCurrent: 50,
-    playerHealthMax: 50,
+    playerHealthCurrent: 500,
+    playerHealthMax: 500,
     playerExperienceCurrent: 0,
-    playerExperienceRequired: 10,
-    playerAttack: 1,
+    playerExperienceRequired: 500,
+    playerAttack: 50,
     playerAttackMultiplier: 1,
-    playerAttackPerSecond: 1,
-    /* Pet values */
-    petOneBasicPrice: 5,
+    playerAttackPerSecond: 50,
+
+    /* Pet values
+
+      Price: (100)  -  100 * pow ( 1.05, P Level )
+      DPS: (20)  -  20 * pow ( 1.045 , P Level )
+      
+      @ Lv 50
+      - Price: 1147
+      - DPS: 181
+
+      @ Lv 100
+      - Price: 54320
+      - DPS: 1631
+      
+    */
+    // Pet 1
+    petOneBasicPrice: 100,
+    petOneUpgradePrice: 100,
     petOneUpgradeLevel: 1,
-    petOneUpgradePrice: 5,
-    petOneDamagePerSecondBase: 1,
-    petOneDamagePerSecondCurrent: 1,
-    /* Enemy values */
+    petOneDamagePerSecondBase: 20,
+    petOneDamagePerSecondCurrent: 20,
+
+    // Pet 2
+    petTwoBasicPrice: 1000,
+    petTwoUpgradePrice: 1000,
+    petTwoUpgradeLevel: 0,
+    petTwoDamagePerSecondBase: 200,
+    petTwoDamagePerSecondCurrent: 0,
+
+    /* Enemy values
+
+      HP: (500)  -  500 * pow( 1.05 , E Level)
+      XP Held: (100)  -  100 * pow( 1.04 , E Level)
+      DPS: (50)  -  50 * pow ( 1.04 , E Level)
+      Coin Value: (25)  -  25 * pow ( 1.05 , E Level)
+
+      Sample values:
+
+      @ Lv 50
+      - HP: 5734
+      - XP Held: 142
+      - DPS: 355
+      - Coin value: 1147 (avg)
+
+      @ Lv 100
+      - HP: 65751
+      - XP Req: 13150
+      - DPS: 2525
+      - Coin value: 13150 (avg)
+      
+    */
     enemyImages: [
       enemyImageOne,
       enemyImageTwo,
@@ -136,7 +204,7 @@ class UserInterface extends Component {
       enemyImageTwentysix,
       enemyImageTwentyseven
     ],
-    enemyImageCurrent: enemyImageOne,
+    enemyImageCurrent: enemyImageTwentytwo,
     enemyNames: [
       "Bat",
       "Wolf",
@@ -166,21 +234,20 @@ class UserInterface extends Component {
       "Halloweeno",
       "Devil"
     ],
-    enemyNameCurrent: "Bat",
+    enemyNameCurrent: "Chest",
     enemyLevel: 1,
     enemyIsBoss: false,
     enemyHasHealth: true,
-    enemyHealthCurrent: 20,
-    enemyHealthMax: 20,
-    enemyExperienceHeld: 3,
-    enemyCoinsHeld: 2,
-    enemyCoinsValue: 1,
+    enemyHealthCurrent: 500,
+    enemyHealthMax: 500,
+    enemyExperienceHeld: 104,
+    enemyCoinsValue: 25,
     enemyFoodHeld: 1,
     enemyFoodValue: 1,
-    enemyAttack: 1,
+    enemyAttack: 50,
     /* Upgrade values */
     upgradeHeroClickDamageLevel: 1,
-    upgradeHeroClickDamagePrice: 5,
+    upgradeHeroClickDamagePrice: 100,
     /* Inventory values */
     coins: 0,
     coinsToBeCollected: 0,
@@ -194,11 +261,11 @@ class UserInterface extends Component {
     leftMenuSettingSelected: "Hero",
     /* Value placeholders 
        (used when temporarily setting a value to a different one) */
-    enemyAttackPlaceholder: 2,
-    enemyHealthCurrentPlaceholder: 20,
-    enemyHealthMaxPlaceholder: 20,
-    playerAttackPlaceholder: 1,
-    playerAttackPerSecondPlaceholder: 1,
+    enemyAttackPlaceholder: 50,
+    enemyHealthCurrentPlaceholder: 500,
+    enemyHealthMaxPlaceholder: 500,
+    playerAttackPlaceholder: 50,
+    playerAttackPerSecondPlaceholder: 50,
     /* Global game settings */
     enemyAttackInterval: setInterval(() => {
       this.enemyAttack();
@@ -232,12 +299,15 @@ class UserInterface extends Component {
             this.state.upgradeHeroClickDamageLevel + 1,
           // Increase the price for the next purchase
           upgradeHeroClickDamagePrice: Math.round(
-            this.state.petOneBasicPrice *
-              Math.pow(1.07, this.state.upgradeHeroClickDamageLevel)
+            100 * Math.pow(1.05, this.state.upgradeHeroClickDamageLevel)
           ),
-          // Increase the click damage by 1
-          playerAttack: this.state.playerAttack + 1,
-          playerAttackPlaceholder: this.state.playerAttackPlaceholder + 1
+          // Increase the click damage
+          playerAttack: Math.round(
+            50 * Math.pow(1.045, this.state.upgradeHeroClickDamageLevel)
+          ),
+          playerAttackPlaceholder: Math.round(
+            50 * Math.pow(1.045, this.state.upgradeHeroClickDamageLevel)
+          )
         });
       }
     }
@@ -269,14 +339,58 @@ class UserInterface extends Component {
           // Increase the level by one
           petOneUpgradeLevel: this.state.petOneUpgradeLevel + 1,
           // Increase the price for the next upgrade
-          petOneUpgradePrice:
-            this.state.petOneUpgradePrice +
-            Math.round(Math.pow(1.06, this.state.petOneUpgradeLevel)),
+          petOneUpgradePrice: Math.round(
+            this.state.petOneBasicPrice *
+              Math.pow(1.06, this.state.petOneUpgradeLevel)
+          ),
           // Increase the DPS of the upgraded pet
-          petOneDamagePerSecondCurrent:
-            this.state.petOneDamagePerSecondCurrent +
-            Math.round(Math.pow(1.05, this.state.petOneUpgradeLevel))
+          petOneDamagePerSecondCurrent: Math.round(
+            this.state.petOneDamagePerSecondBase *
+              Math.pow(1.05, this.state.petOneUpgradeLevel)
+          )
         });
+      }
+    }
+    if (petNumber === 2) {
+      if (this.state.petTwoUpgradeLevel === 0) {
+        // If the coins are enough to buy the upgrade
+        if (this.state.coins >= this.state.petTwoBasicPrice) {
+          this.setState({
+            // Take off the coins from the user
+            coins: this.state.coins - this.state.petTwoBasicPrice,
+            // Increase the level by one
+            petTwoUpgradeLevel: this.state.petTwoUpgradeLevel + 1,
+            // Increase the price for the next upgrade
+            petTwoUpgradePrice: Math.round(
+              this.state.petTwoBasicPrice *
+                Math.pow(1.06, this.state.petTwoUpgradeLevel)
+            ),
+            // Increase the DPS of the upgraded pet
+            petTwoDamagePerSecondCurrent: Math.round(
+              this.state.petTwoDamagePerSecondBase *
+                Math.pow(1.05, this.state.petTwoUpgradeLevel)
+            )
+          });
+        }
+      } else {
+        if (this.state.coins >= this.state.petTwoUpgradePrice) {
+          this.setState({
+            // Take off the coins from the user
+            coins: this.state.coins - this.state.petTwoBasicPrice,
+            // Increase the level by one
+            petTwoUpgradeLevel: this.state.petTwoUpgradeLevel + 1,
+            // Increase the price for the next upgrade
+            petTwoUpgradePrice: Math.round(
+              this.state.petTwoBasicPrice *
+                Math.pow(1.06, this.state.petTwoUpgradeLevel)
+            ),
+            // Increase the DPS of the upgraded pet
+            petTwoDamagePerSecondCurrent: Math.round(
+              this.state.petTwoDamagePerSecondBase *
+                Math.pow(1.05, this.state.petTwoUpgradeLevel)
+            )
+          });
+        }
       }
     }
   };
@@ -293,11 +407,23 @@ class UserInterface extends Component {
         return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
       }
     }
+    if (petNumber === 2) {
+      // If the user has enough money
+      if (this.state.coins >= this.state.petTwoUpgradePrice) {
+        return "userInterface-pets-pet-button btn btn-dark mx-auto";
+      } else {
+        // If the user does not have enough money
+        return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+      }
+    }
   };
 
   // Sum of all the DPS sources
   calculateTotalDamagePerSecond = () => {
-    return this.state.petOneDamagePerSecondCurrent;
+    return (
+      this.state.petOneDamagePerSecondCurrent +
+      this.state.petTwoDamagePerSecondCurrent
+    );
   };
 
   // Sum of all the DPS sources
@@ -410,10 +536,8 @@ class UserInterface extends Component {
         this.state.playerExperienceCurrent -
         this.state.playerExperienceRequired,
       // Raise the experience required for the next level
-      playerExperienceRequired:
-        this.state.playerExperienceRequired *
-        Math.pow(1.07, this.state.playerLevel),
-      playerHealthMax: Math.round(50 * Math.pow(1.1, this.state.playerLevel))
+      playerExperienceRequired: 500 * Math.pow(1.05, this.state.playerLevel),
+      playerHealthMax: Math.round(500 * Math.pow(1.05, this.state.playerLevel))
     });
 
     // Add a level up paragraph to the Battle Log
@@ -439,6 +563,17 @@ class UserInterface extends Component {
         // When XP has not already been given
         this.state.enemyHasHealth !== false
       ) {
+        // Amount of coins dropped by killed enemy
+        let coinsDroppedByEnemy;
+        // If the enemy is a Chest enemy
+        if (this.state.enemyNameCurrent === "Chest") {
+          // Give 15 coins
+          coinsDroppedByEnemy = 15;
+          // If the enemy is any other enemy
+        } else {
+          // Give [3-5] coins
+          coinsDroppedByEnemy = Math.round(3 + Math.round(Math.random() * 2));
+        }
         this.setState({
           // Trigger enemy death animation
           enemyHasHealth: false,
@@ -447,9 +582,7 @@ class UserInterface extends Component {
             this.state.playerExperienceCurrent + this.state.enemyExperienceHeld,
           // Drop coins on the ground
           coinsToBeCollected:
-            this.state.coinsToBeCollected +
-            // The amount of coins the enemy normally holds +/- 50%
-            Math.round(this.state.enemyCoinsHeld * (Math.random() * 1 + 1)),
+            this.state.coinsToBeCollected + coinsDroppedByEnemy,
           // Drop food on the ground
           foodToBeCollected:
             this.state.foodToBeCollected +
@@ -468,7 +601,7 @@ class UserInterface extends Component {
             <small>
               You killed {this.state.enemyNameCurrent} and received{" "}
               <span className="text-success">
-                {this.state.enemyExperienceHeld} XP
+                {this.state.enemyExperienceHeld.toLocaleString()} XP
               </span>
               !
             </small>
@@ -496,29 +629,47 @@ class UserInterface extends Component {
 
   // Heal the player using food
   playerHeal = () => {
+    let amountHealed;
     if (
       // The player's health is not already max
       this.state.playerHealthCurrent < this.state.playerHealthMax &&
       // The player has food
       this.state.food > 0
     ) {
-      this.setState({
-        // Remove 1 food from the player
-        food: this.state.food - 1,
-        // Increase the health by 25% of the max
-        playerHealthCurrent:
-          this.state.playerHealthCurrent +
-          (this.state.playerHealthMax / 100) * 25
-      });
+      // If healing the player by 25% would make the current HP be more than the max HP
+      if (
+        this.state.playerHealthCurrent +
+          (this.state.playerHealthMax / 100) * 25 >
+        this.state.playerHealthMax
+      ) {
+        amountHealed =
+          this.state.playerHealthMax - this.state.playerHealthCurrent;
+
+        this.setState({
+          // Remove 1 food from the player
+          food: this.state.food - 1,
+          // Top up the health to max
+          playerHealthCurrent: this.state.playerHealthMax
+        });
+
+        // If the player is missing more than 25% of the health
+      } else {
+        amountHealed = (this.state.playerHealthMax / 100) * 25;
+        this.setState({
+          // Remove 1 food from the player
+          food: this.state.food - 1,
+          // Increase the health by 25% of the max
+          playerHealthCurrent:
+            this.state.playerHealthCurrent +
+            (this.state.playerHealthMax / 100) * 25
+        });
+      }
       // Add a 'HP increased' paragraph to the Battle Log
       this.pushNewParagraphToBattleLog(
         <p>
           <small>
             Player gains{" "}
-            <span className="text-success">
-              {Math.round(this.state.playerHealthMax / 100) * 10} HP
-            </span>
-            !
+            <span className="text-success">{Math.round(amountHealed)} HP</span>!
           </small>
         </p>
       );
@@ -540,6 +691,17 @@ class UserInterface extends Component {
         // If XP has not already been given
         this.state.enemyHasHealth !== false
       ) {
+        // Amount of coins dropped by killed enemy
+        let coinsDroppedByEnemy;
+        // If the enemy is a Chest enemy
+        if (this.state.enemyNameCurrent === "Chest") {
+          // Give 25 coins
+          coinsDroppedByEnemy = 25;
+          // If the enemy is any other enemy
+        } else {
+          // Give [3-5] coins
+          coinsDroppedByEnemy = Math.round(3 + Math.round(Math.random() * 2));
+        }
         this.setState({
           // Trigger enemy death animation
           enemyHasHealth: false,
@@ -548,9 +710,7 @@ class UserInterface extends Component {
             this.state.playerExperienceCurrent + this.state.enemyExperienceHeld,
           // Drop coins on the ground
           coinsToBeCollected:
-            this.state.coinsToBeCollected +
-            // The amount of coins the enemy normally holds +/- 50%
-            Math.floor(this.state.enemyCoinsHeld * (Math.random() * 2 + 1)),
+            this.state.coinsToBeCollected + coinsDroppedByEnemy,
           // Drop food on the ground
           foodToBeCollected:
             this.state.foodToBeCollected +
@@ -649,13 +809,11 @@ class UserInterface extends Component {
       // Reinitialise the values of the new enemy
       enemyHasHealth: true,
       enemyLevel: level,
-      enemyExperienceHeld: 3 * Math.pow(1.5, level),
-      enemyHealthCurrent:
-        this.state.enemyHealthMaxPlaceholder * Math.pow(level, 1.2),
-      enemyHealthMax:
-        this.state.enemyHealthMaxPlaceholder * Math.pow(level, 1.2),
-      enemyAttack: this.state.enemyAttackPlaceholder * Math.pow(level, 1.1),
-      enemyCoinsValue: Math.round(1 * Math.pow(level, 1.1)),
+      enemyExperienceHeld: Math.round(100 * Math.pow(1.04, level)),
+      enemyHealthCurrent: Math.round(500 * Math.pow(1.05, level)),
+      enemyHealthMax: Math.round(500 * Math.pow(1.05, level)),
+      enemyAttack: Math.round(50 * Math.pow(1.04, level)),
+      enemyCoinsValue: Math.round(25 * Math.pow(1.05, level)),
       // Reinitialise the values of the player
       playerHealthCurrent: this.state.playerHealthMax
     });
@@ -785,6 +943,7 @@ class UserInterface extends Component {
       // Add a new coin
       coinsToBeRendered.push(
         <img
+          draggable="false"
           alt="coin"
           className={this.renderCoinDrop()}
           src={coinImageOne}
@@ -803,6 +962,7 @@ class UserInterface extends Component {
       // Add a new food
       foodToBeRendered.push(
         <img
+          draggable="false"
           alt="food"
           className={this.renderFoodDrop()}
           src={resourceThreeImage}
@@ -830,6 +990,7 @@ class UserInterface extends Component {
           <div className="userInterface-upgrades-upgrade-div">
             <div className="userInterface-upgrades-upgrade-div-holder mx-auto">
               <img
+                draggable="false"
                 alt="Upgrade one"
                 src={heroUpgradeOneImage}
                 className="userInterface-upgrades-upgrade-image mx-auto"
@@ -842,8 +1003,16 @@ class UserInterface extends Component {
               </small>
             </div>
             <small className="userInterface-upgrades-upgrade-damage mx-auto">
-              <img alt="click damage" src={clickDamageImage} />
-              +1
+              <img
+                draggable="false"
+                alt="click damage"
+                src={clickDamageImage}
+              />
+              {/* Show the increase the upgrade would have on the current player damage */}
+              +
+              {Math.round(
+                50 * Math.pow(1.045, this.state.upgradeHeroClickDamageLevel)
+              ) - this.state.playerAttackPlaceholder}
             </small>
             <small
               id="userInterface-upgrades-upgradeOne-price"
@@ -851,6 +1020,7 @@ class UserInterface extends Component {
             >
               {this.state.upgradeHeroClickDamagePrice.toLocaleString()}
               <img
+                draggable="false"
                 alt="coin"
                 className="userInterface-upgrades-upgrade-price-image"
                 src={coinImageOne}
@@ -858,7 +1028,7 @@ class UserInterface extends Component {
             </small>
             <button
               type="button"
-              class={this.renderUpgradeButtonClasses("clickDamage")}
+              className={this.renderUpgradeButtonClasses("clickDamage")}
               onClick={() => {
                 this.heroUpgradeLevelUp("clickDamage");
               }}
@@ -904,11 +1074,13 @@ class UserInterface extends Component {
           <p>
             <strong>Pets upgrades</strong>
           </p>
+          {/* Pet 1 */}
           <div className="userInterface-pets-pet-div">
             <div className="userInterface-pets-pet-div-holder">
               <img
+                draggable="false"
                 alt="pet"
-                src={enemyImageTwo}
+                src={enemyImageOne}
                 className="userInterface-pets-pet-image"
               />
               <small className="userInterface-pets-pet-name">
@@ -916,12 +1088,17 @@ class UserInterface extends Component {
               </small>
             </div>
             <small className="userInterface-pets-pet-dps mx-auto">
-              <img alt="click per second" src={clickPerSecondDamageImage} />
+              <img
+                draggable="false"
+                alt="click per second"
+                src={clickPerSecondDamageImage}
+              />
               {this.state.petOneDamagePerSecondCurrent}
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
               {this.state.petOneUpgradePrice}
               <img
+                draggable="false"
                 alt="coin"
                 className="userInterface-pets-pet-price-image"
                 src={coinImageOne}
@@ -932,6 +1109,46 @@ class UserInterface extends Component {
               class={this.renderPetButtonClass(1)}
               onClick={() => {
                 this.petLevelUpgrade(1);
+              }}
+            >
+              +
+            </button>
+          </div>
+          {/* Pet 2 */}
+          <div className="userInterface-pets-pet-div">
+            <div className="userInterface-pets-pet-div-holder">
+              <img
+                draggable="false"
+                alt="pet"
+                src={enemyImageTwo}
+                className="userInterface-pets-pet-image"
+              />
+              <small className="userInterface-pets-pet-name">
+                Lv. {this.state.petTwoUpgradeLevel}
+              </small>
+            </div>
+            <small className="userInterface-pets-pet-dps mx-auto">
+              <img
+                draggable="false"
+                alt="click per second"
+                src={clickPerSecondDamageImage}
+              />
+              {this.state.petTwoDamagePerSecondCurrent}
+            </small>
+            <small className="userInterface-pets-pet-price mx-auto">
+              {this.state.petTwoUpgradePrice}
+              <img
+                draggable="false"
+                alt="coin"
+                className="userInterface-pets-pet-price-image"
+                src={coinImageOne}
+              />
+            </small>
+            <button
+              type="button"
+              class={this.renderPetButtonClass(2)}
+              onClick={() => {
+                this.petLevelUpgrade(2);
               }}
             >
               +
@@ -953,6 +1170,7 @@ class UserInterface extends Component {
             id="userInterface-resourceOne-div"
           >
             <img
+              draggable="false"
               alt="relics"
               className="userInterface-resources-image scale"
               data-toggle="tooltip"
@@ -967,6 +1185,7 @@ class UserInterface extends Component {
             id="userInterface-resourceTwo-div"
           >
             <img
+              draggable="false"
               alt="Lootbags"
               className="userInterface-resources-image scale"
               src={resourceTwoImage}
@@ -981,6 +1200,7 @@ class UserInterface extends Component {
             id="userInterface-resourceThree-div"
           >
             <img
+              draggable="false"
               alt="food"
               className="userInterface-resources-image scale"
               src={resourceThreeImage}
@@ -996,6 +1216,7 @@ class UserInterface extends Component {
         <div id="userInterface-topSummary-div">
           <div className="userInterface-topSummary-section">
             <img
+              draggable="false"
               alt="click damage"
               className="userInterface-topSummary-section-image mx-auto"
               src={clickDamageImage}
@@ -1006,6 +1227,7 @@ class UserInterface extends Component {
           </div>
           <div className="userInterface-topSummary-section">
             <img
+              draggable="false"
               alt="click per second"
               className="userInterface-topSummary-section-image mx-auto"
               src={clickPerSecondDamageImage}
@@ -1016,6 +1238,7 @@ class UserInterface extends Component {
           </div>
           <div className="userInterface-topSummary-section">
             <img
+              draggable="false"
               alt="player health"
               className="userInterface-topSummary-section-image mx-auto"
               src={playerHealthImage}
@@ -1071,6 +1294,7 @@ class UserInterface extends Component {
               className="userInterface-inventory-row"
             >
               <img
+                draggable="false"
                 alt="weapon"
                 id="userInterface-inventory-item1"
                 className="userInterface-inventory-item scale"
@@ -1082,6 +1306,7 @@ class UserInterface extends Component {
             </div>
             <div id="userInterface-inventory-money">
               <img
+                draggable="false"
                 alt="coin"
                 className="mx-auto scale"
                 id="userInterface-inventory-money-img"
@@ -1153,6 +1378,7 @@ class UserInterface extends Component {
             <input
               class="form-check-input"
               type="checkbox"
+              defaultChecked="true"
               id="userInterface-stages-stage-checkbox"
               onClick={this.activateAutoStageAdvance}
             />
@@ -1169,6 +1395,7 @@ class UserInterface extends Component {
           <div id="userInterface-player-div">
             <img
               alt="player"
+              draggable="false"
               className="userInterface-player-image scale"
               src={playerImageOne}
               onClick={this.playerHeal}
@@ -1200,6 +1427,7 @@ class UserInterface extends Component {
           <div id="userInterface-enemy-div">
             <img
               alt="enemy"
+              draggable="false"
               className={this.renderEnemyImageClass()}
               src={this.state.enemyImageCurrent}
               onClick={this.playerAttack}
@@ -1230,6 +1458,7 @@ class UserInterface extends Component {
         <div id="userInterface-skills-div">
           <div className="userInterface-skills-skill-div mx-auto">
             <img
+              draggable="false"
               alt="skill 1"
               className="userInterface-skills-skill-img scale"
               src={skillImageOne}
@@ -1240,6 +1469,7 @@ class UserInterface extends Component {
           </div>
           <div className="userInterface-skills-skill-div mx-auto">
             <img
+              draggable="false"
               alt="skill 2"
               className="userInterface-skills-skill-img scale"
               src={skillImageTwo}
@@ -1250,6 +1480,7 @@ class UserInterface extends Component {
           </div>
           <div className="userInterface-skills-skill-div mx-auto">
             <img
+              draggable="false"
               alt="skill 3"
               className="userInterface-skills-skill-img scale"
               src={skillImageThree}
@@ -1260,6 +1491,7 @@ class UserInterface extends Component {
           </div>
           <div className="userInterface-skills-skill-div mx-auto">
             <img
+              draggable="false"
               alt="skill 4"
               className="userInterface-skills-skill-img scale"
               src={skillImageFour}
@@ -1270,6 +1502,7 @@ class UserInterface extends Component {
           </div>
           <div className="userInterface-skills-skill-div mx-auto">
             <img
+              draggable="false"
               alt="skill 5"
               className="userInterface-skills-skill-img scale"
               src={skillImageFive}

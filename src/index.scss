@@ -12,6 +12,14 @@ body {
   height: 1vh;
 }
 
+img {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
 .App {
   height: 100vh;
   background: #e6dada; /* fallback for old browsers */
@@ -635,15 +643,15 @@ code {
 }
 
 #userInterface-userSettings-menu-div {
-  position: relative;
-  right: 10vw;
-  margin: auto;
+  position: absolute;
+  left: 2.5vw;
 }
 
 .userInterface-upgrades-upgrade-div,
 .userInterface-pets-pet-div {
   display: flex;
   height: 5vw;
+  margin: 1vw;
 }
 
 .userInterface-upgrades-upgrade-button-disabled,
@@ -651,6 +659,15 @@ code {
   background-color: rgba(255, 255, 255, 0.377);
   color: black;
   border-radius: 50px;
+  margin: 1vw;
+}
+
+.userInterface-pets-pet-button {
+  margin: 1vw;
+}
+
+.userInterface-upgrades-upgrade-button {
+  margin: 1vw;
 }
 
 .userInterface-topSummary-section {
@@ -773,9 +790,8 @@ code {
 #userInterface-inventory-div {
   background-color: rgba(201, 201, 201, 0.377);
   border-radius: 25px;
-  position: relative;
-  left: 10vw;
-  margin: auto;
+  position: absolute;
+  right: 2.5vw;
   width: 25vw;
   padding: 10px;
   cursor: default;
