@@ -11,6 +11,26 @@ Fantasia is a work in progress, so many more features are currently on the way!
 Level up your character by killing monsters, but be careful! They hit you back - so make sure to eat some food when you need to heal yourself.
 Every time you level up, your HP increase!
 
+### Skills
+
+To **unlock** skills, level up your characted to the required level; once the minumum level is reached, the skill will be automatically unlocked. To **level up** new skills, just level up your character; all skills get different effects upon leveling up.
+
+#### Quick Stab
+
+Quickly attack the enemy multiple times, dealing damage based on the player level; level up the player to raise the skill level. Damage multiplier and attack count increase with level.
+
+#### Mark of the beast
+
+Increases your total DPS by a fixed percentage; the skill can be unlocked at level 5, and can be improved by raising the level of the player. Duration increases with level.
+
+#### Animal Training
+
+Become one with your animals, increasing your Click Damage by a % of your total DPS from pets; duration and percentage of damage received from DPS increase with level.
+
+#### Fruit of Madness
+
+All your pets get together to attack the enemy, dealing damage 3 times based on a % of your total DPS; the amount of attacks, as well as the damage dealt, increase by leveling the skills up.
+
 ### Upgrades
 
 Upgrade your character to make it easier to kill enemies. The main upgrade is the one for click damage - more will be added with future updates.
@@ -32,30 +52,31 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Future updates
 
-- Active player skills!
+- Rebirth system!
 - Player class system
 - New hero upgrades
-- A snake pet!
+- A pet beetle!
 - Inventory system
 
 ## Change log
 
-### 1.1.0
+### 1.2.0
 
 #### Gameplay
 
-- Complete overhaul of game maths!
-- Chest mobs now drop extra coins!
-- A new collectible pet!
+- Introduce player active skills!
+- New snake pet
 
 #### Other
 
-- XP in the Battle Log is now rendered with punctuation for easy reading
-- Images are now not draggable/selectable
-- The battle log now displays the right amount of HP healed
-- The upgrade screen now displays the attack increase before purchasing
-- Fix a bug which caused the 'Idle' screen to cover the inventory
-- Upgrade buttons now have added margin to prevent them from overlapping
+- Display potential damage increase next to pet DPS
+- Change images of resources to allow resolution to scale
+- Change 'food' to 'potions'
+- Potions now heal 25% of player HP instead of 10%
+- Battle screen, inventory and user settings are now not selectable
+- Fix a bug which allowed the player to heal while the enemy was respawning
+- Fix a bug which allowed the player to purchase all upgrades for the second pet at the basic price (1000)
+- Fix bug causing player damage multiplier to be ignored
 
 ## License
 

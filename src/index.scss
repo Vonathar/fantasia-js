@@ -476,10 +476,20 @@ code {
   width: 25vw;
   padding: 10px;
   cursor: default;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 #userInterface-userSettings-div {
   display: flex;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 .userInterface-resource-div {
@@ -487,7 +497,7 @@ code {
 }
 
 .userInterface-resources-image {
-  height: 5vh;
+  width: 4vw;
 }
 
 #userInterface-topSummary-div {
@@ -500,6 +510,11 @@ code {
   margin: auto;
   width: 7vw;
   padding: 10px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 .userInterface-topSummary-section {
@@ -557,8 +572,8 @@ code {
 }
 
 .userInterface-enemy-drop-food {
-  width: 1.5vw;
-  margin-right: -23px;
+  width: 1.7vw;
+  margin-right: -25px;
   position: relative;
   top: 5vh;
 }
@@ -634,6 +649,11 @@ code {
   margin: auto;
   width: 25vw;
   padding: 10px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 #userInterface-userSettings-div {
@@ -685,6 +705,11 @@ code {
   right: 0;
   position: fixed;
   top: 25vh;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 #userInterface-stages-stage-checkbox-div {
@@ -827,6 +852,7 @@ code {
   position: relative;
   top: 1vh;
   border-radius: 15px;
+
   font-size: 0.9em;
   color: rgb(255, 255, 255);
 }
@@ -869,4 +895,6 @@ code {
 }
 
 .userInterface-skills-skill-img {
+  width: 2.5vw;
+  margin: 0.1vw;
 }
