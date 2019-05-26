@@ -66,7 +66,7 @@ class UserInterface extends Component {
       <p>
         <small>
           To <span className="text-success">heal</span>, click on the player
-          icon. Remember, you need food to heal your character!
+          icon. Remember, you need potions to heal your character!
         </small>
       </p>,
       <p>
