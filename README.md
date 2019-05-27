@@ -8,7 +8,7 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ### Player
 
-Level up your character by killing monsters, but be careful! They hit you back - so make sure to eat some food when you need to heal yourself.
+Level up your character by killing monsters, but be careful! They hit you back - so make sure to drink a potion when you need to heal yourself.
 Every time you level up, your HP increase!
 
 ### Skills
@@ -60,23 +60,15 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.2.0
-
-#### Gameplay
-
-- Introduce player active skills!
-- New snake pet
+### 1.2.1
 
 #### Other
 
-- Display potential damage increase next to pet DPS
-- Change images of resources to allow resolution to scale
-- Change 'food' to 'potions'
-- Potions now heal 25% of player HP instead of 10%
-- Battle screen, inventory and user settings are now not selectable
-- Fix a bug which allowed the player to heal while the enemy was respawning
-- Fix a bug which allowed the player to purchase all upgrades for the second pet at the basic price (1000)
-- Fix bug causing player damage multiplier to be ignored
+- Fix a bug causing the skill 'Mark of the Beast' to always have a multiplier of 2
+- Fix a bug which made it possible to use skills while the enemy was dead
+- Fix rounding errors in skill descriptions
+- Change 'food' to 'potions' in the tutorial text
+- Render a visual difference between 'ready' and 'cooling down' skills
 
 ## License
 

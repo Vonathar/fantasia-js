@@ -66,7 +66,7 @@ class UserInterface extends Component {
       <p>
         <small>
           To <span className="text-success">heal</span>, click on the player
-          icon. Remember, you need food to heal your character!
+          icon. Remember, you need potions to heal your character!
         </small>
       </p>,
       <p>
@@ -609,7 +609,7 @@ class UserInterface extends Component {
         (this.state.petOneDamagePerSecondCurrent +
           this.state.petTwoDamagePerSecondCurrent +
           this.state.petThreeDamagePerSecondCurrent) *
-        2
+        this.state.heroSkillTwoDamageMultiplier
       );
     } else
       return (
@@ -910,6 +910,25 @@ class UserInterface extends Component {
     }
   };
 
+  renderSkillCooldownBadge = skillNumber => {
+    if (skillNumber === 1) {
+      let classes = "userInterface-skills-skill-img scale ";
+      return this.state.isHeroSkillOneReady ? classes : classes + "cooldown";
+    }
+    if (skillNumber === 2) {
+      let classes = "userInterface-skills-skill-img scale ";
+      return this.state.isHeroSkillTwoReady ? classes : classes + "cooldown";
+    }
+    if (skillNumber === 3) {
+      let classes = "userInterface-skills-skill-img scale ";
+      return this.state.isHeroSkillThreeReady ? classes : classes + "cooldown";
+    }
+    if (skillNumber === 4) {
+      let classes = "userInterface-skills-skill-img scale ";
+      return this.state.isHeroSkillFourReady ? classes : classes + "cooldown";
+    }
+  };
+
   // Attack the enemy
   playerAttack = () => {
     // If the enemy is not in the process of respawning
@@ -994,7 +1013,8 @@ class UserInterface extends Component {
     if (
       skillNumber === 1 &&
       this.state.isHeroSkillOneReady &&
-      this.state.heroSkillOneLevel !== 0
+      this.state.heroSkillOneLevel !== 0 &&
+      this.state.enemyHasHealth
     ) {
       this.setState({ isHeroSkillOneReady: false });
 
@@ -1041,7 +1061,8 @@ class UserInterface extends Component {
     if (
       skillNumber === 2 &&
       this.state.isHeroSkillTwoReady &&
-      this.state.heroSkillTwoLevel !== 0
+      this.state.heroSkillTwoLevel !== 0 &&
+      this.state.enemyHasHealth
     ) {
       this.setState({ isHeroSkillTwoReady: false });
 
@@ -1090,7 +1111,8 @@ class UserInterface extends Component {
     if (
       skillNumber === 3 &&
       this.state.isHeroSkillThreeReady &&
-      this.state.heroSkillThreeLevel !== 0
+      this.state.heroSkillThreeLevel !== 0 &&
+      this.state.enemyHasHealth
     ) {
       this.setState({ isHeroSkillThreeReady: false });
 
@@ -1138,7 +1160,8 @@ class UserInterface extends Component {
     if (
       skillNumber === 4 &&
       this.state.isHeroSkillFourReady &&
-      this.state.heroSkillFourLevel !== 0
+      this.state.heroSkillFourLevel !== 0 &&
+      this.state.enemyHasHealth
     ) {
       this.setState({ isHeroSkillFourReady: false });
 
@@ -1200,10 +1223,16 @@ class UserInterface extends Component {
         "  -  Attack the enemy " +
         this.state.heroSkillOneNumberOfAttacks +
         " times, each time dealing damage equal to " +
-        this.state.heroSkillOneDamageMultiplier * 100 +
+        Math.round(this.state.heroSkillOneDamageMultiplier * 100) +
         "% of click damage. [Cooldown: " +
         this.state.heroSkillOneCooldown / 1000 +
-        "s]"
+        "s]" +
+        // Display the player level required for the skills to level up
+        "  -  [Skill+ Lv Req: " +
+        this.state.heroSkillOneLevelsToUpgrade.find(element => {
+          return element > this.state.playerLevel;
+        }) +
+        "]"
       );
     }
   };
@@ -1228,7 +1257,13 @@ class UserInterface extends Component {
         this.state.heroSkillTwoDuration / 1000 +
         " seconds. [Cooldown: " +
         this.state.heroSkillTwoCooldown / 1000 +
-        "s]"
+        "s]" +
+        // Display the player level required for the skills to level up
+        "  -  [Skill+ Lv Req: " +
+        this.state.heroSkillTwoLevelsToUpgrade.find(element => {
+          return element > this.state.playerLevel;
+        }) +
+        "]"
       );
     }
   };
@@ -1253,7 +1288,13 @@ class UserInterface extends Component {
         this.state.heroSkillThreeDuration / 1000 +
         " seconds. [Cooldown: " +
         this.state.heroSkillThreeCooldown / 1000 +
-        "s]"
+        "s]" +
+        // Display the player level required for the skills to level up
+        "  -  [Skill+ Lv Req: " +
+        this.state.heroSkillThreeLevelsToUpgrade.find(element => {
+          return element > this.state.playerLevel;
+        }) +
+        "]"
       );
     }
   };
@@ -1275,10 +1316,16 @@ class UserInterface extends Component {
         "  -  All your pets get together to attack the enemy " +
         this.state.heroSkillFourNumberOfAttacks +
         " times, each time dealing damage equal to " +
-        this.state.heroSkillFourDamageMultiplier * 100 +
+        Math.round(this.state.heroSkillFourDamageMultiplier * 100) +
         "% of your total DPS. [Cooldown: " +
         this.state.heroSkillFourCooldown / 1000 +
-        "s]"
+        "s]" +
+        // Display the player level required for the skills to level up
+        "  -  [Skill+ Lv Req: " +
+        this.state.heroSkillFourLevelsToUpgrade.find(element => {
+          return element > this.state.playerLevel;
+        }) +
+        "]"
       );
     }
   };
@@ -2175,7 +2222,7 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 1"
-              className="userInterface-skills-skill-img scale"
+              className={this.renderSkillCooldownBadge(1)}
               src={skillImageOne}
               onClick={() => {
                 this.playerUseActiveSkill(1);
@@ -2189,7 +2236,7 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 2"
-              className="userInterface-skills-skill-img scale"
+              className={this.renderSkillCooldownBadge(2)}
               src={skillImageTwo}
               onClick={() => {
                 this.playerUseActiveSkill(2);
@@ -2203,7 +2250,7 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 3"
-              className="userInterface-skills-skill-img scale"
+              className={this.renderSkillCooldownBadge(3)}
               src={skillImageThree}
               onClick={() => {
                 this.playerUseActiveSkill(3);
@@ -2217,7 +2264,7 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 4"
-              className="userInterface-skills-skill-img scale"
+              className={this.renderSkillCooldownBadge(4)}
               src={skillImageFour}
               onClick={() => {
                 this.playerUseActiveSkill(4);

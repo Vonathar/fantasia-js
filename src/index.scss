@@ -446,6 +446,11 @@ code {
 
 /* Targeted */
 
+.cooldown {
+  opacity: 0.1;
+  transition-duration: 0.2s;
+}
+
 .scale {
   transition-duration: 0.2s;
 }
@@ -897,4 +902,5 @@ code {
 .userInterface-skills-skill-img {
   width: 2.5vw;
   margin: 0.1vw;
+  transition-duration: 0.2s;
 }
