@@ -55,20 +55,24 @@ If you want to know more about your adventure, you can read through the battle l
 - Rebirth system!
 - Player class system
 - New hero upgrades
-- A pet beetle!
 - Inventory system
 
 ## Change log
 
-### 1.2.1
+### 1.3.0
+
+#### Gameplay
+
+- Encounter a boss at the end of each stage!
+- New beetle pet!
+- Pet rebalancing
+- 5 kills are now required to advance to the next stage
 
 #### Other
 
-- Fix a bug causing the skill 'Mark of the Beast' to always have a multiplier of 2
-- Fix a bug which made it possible to use skills while the enemy was dead
-- Fix rounding errors in skill descriptions
-- Change 'food' to 'potions' in the tutorial text
-- Render a visual difference between 'ready' and 'cooling down' skills
+- Kills to next stage are now displayed as a countdown
+- Change upgrade numbers to use separators for easier reading
+- Add tooltips to show more information about values in the top summary
 
 ## License
 

@@ -9,6 +9,10 @@ import playerImageOne from "../img/player_1.png";
 import playerHealthImage from "../img/health_1.png";
 import clickDamageImage from "../img/cps_1.png";
 import clickPerSecondDamageImage from "../img/dps_1.png";
+/* [IMG] Boss */
+import bossImageOne from "../img/boss_1.png";
+import bossImageTwo from "../img/boss_2.png";
+import bossImageThree from "../img/boss_3.png";
 /* [IMG] Enemy */
 import enemyImageOne from "../img/enemy_1.png";
 import enemyImageTwo from "../img/enemy_2.png";
@@ -94,7 +98,7 @@ class UserInterface extends Component {
     /* Stage settings */
     stageCurrent: 1,
     stageEnemiesKilled: 0,
-    stageEnemiesToKill: 3,
+    stageEnemiesToKill: 5,
     stageMaxUnlocked: 1,
     isStageProgressAuto: true,
     /* Player values
@@ -148,20 +152,31 @@ class UserInterface extends Component {
     petOneDamagePerSecondPlaceholder: 20,
 
     // Pet 2
-    petTwoBasicPrice: 1000,
-    petTwoUpgradePrice: 1000,
+    petTwoBasicPrice: 500,
+    petTwoFirstPurchasePrice: 2500,
+    petTwoUpgradePrice: 500,
     petTwoUpgradeLevel: 0,
-    petTwoDamagePerSecondBase: 200,
+    petTwoDamagePerSecondBase: 100,
     petTwoDamagePerSecondCurrent: 0,
     petTwoDamagePerSecondPlaceholder: 0,
 
     // Pet 3
-    petThreeBasicPrice: 5000,
-    petThreeUpgradePrice: 5000,
+    petThreeBasicPrice: 2500,
+    petThreeFirstPurchasePrice: 12500,
+    petThreeUpgradePrice: 2500,
     petThreeUpgradeLevel: 0,
-    petThreeDamagePerSecondBase: 1000,
+    petThreeDamagePerSecondBase: 500,
     petThreeDamagePerSecondCurrent: 0,
     petThreeDamagePerSecondPlaceholder: 0,
+
+    // Pet 4
+    petFourBasicPrice: 20000,
+    petFourFirstPurchasePrice: 100000,
+    petFourUpgradePrice: 20000,
+    petFourUpgradeLevel: 0,
+    petFourDamagePerSecondBase: 4000,
+    petFourDamagePerSecondCurrent: 0,
+    petFourDamagePerSecondPlaceholder: 0,
 
     /* Enemy values
 
@@ -244,6 +259,8 @@ class UserInterface extends Component {
       "Halloweeno",
       "Devil"
     ],
+    bossImages: [bossImageOne, bossImageTwo, bossImageThree],
+    bossNames: ["Vir", "Umbra", "Oculus"],
     enemyNameCurrent: "Chest",
     enemyLevel: 1,
     enemyIsBoss: false,
@@ -471,10 +488,10 @@ class UserInterface extends Component {
     if (petNumber === 2) {
       if (this.state.petTwoUpgradeLevel === 0) {
         // If the coins are enough to buy the upgrade
-        if (this.state.coins >= this.state.petTwoBasicPrice) {
+        if (this.state.coins >= this.state.petTwoFirstPurchasePrice) {
           this.setState({
             // Take off the coins from the user
-            coins: this.state.coins - this.state.petTwoBasicPrice,
+            coins: this.state.coins - this.state.petTwoFirstPurchasePrice,
             // Increase the level by one
             petTwoUpgradeLevel: this.state.petTwoUpgradeLevel + 1,
             // Increase the price for the next upgrade
@@ -521,10 +538,10 @@ class UserInterface extends Component {
     if (petNumber === 3) {
       if (this.state.petThreeUpgradeLevel === 0) {
         // If the coins are enough to buy the upgrade
-        if (this.state.coins >= this.state.petThreeBasicPrice) {
+        if (this.state.coins >= this.state.petThreeFirstPurchasePrice) {
           this.setState({
             // Take off the coins from the user
-            coins: this.state.coins - this.state.petThreeBasicPrice,
+            coins: this.state.coins - this.state.petThreeFirstPurchasePrice,
             // Increase the level by one
             petThreeUpgradeLevel: this.state.petThreeUpgradeLevel + 1,
             // Increase the price for the next upgrade
@@ -568,6 +585,80 @@ class UserInterface extends Component {
         }
       }
     }
+    if (petNumber === 4) {
+      if (this.state.petFourUpgradeLevel === 0) {
+        // If the coins are enough to buy the upgrade
+        if (this.state.coins >= this.state.petFourFirstPurchasePrice) {
+          this.setState({
+            // Take off the coins from the user
+            coins: this.state.coins - this.state.petFourFirstPurchasePrice,
+            // Increase the level by one
+            petFourUpgradeLevel: this.state.petFourUpgradeLevel + 1,
+            // Increase the price for the next upgrade
+            petFourUpgradePrice: Math.round(
+              this.state.petFourBasicPrice *
+                Math.pow(1.06, this.state.petFourUpgradeLevel)
+            ),
+            // Increase the DPS of the upgraded pet
+            petFourDamagePerSecondCurrent: Math.round(
+              this.state.petFourDamagePerSecondBase *
+                Math.pow(1.05, this.state.petFourUpgradeLevel)
+            ),
+            petFourDamagePerSecondPlaceholder: Math.round(
+              this.state.petFourDamagePerSecondBase *
+                Math.pow(1.05, this.state.petFourUpgradeLevel)
+            )
+          });
+        }
+      } else {
+        if (this.state.coins >= this.state.petFourUpgradePrice) {
+          this.setState({
+            // Take off the coins from the user
+            coins: this.state.coins - this.state.petFourUpgradePrice,
+            // Increase the level by one
+            petFourUpgradeLevel: this.state.petFourUpgradeLevel + 1,
+            // Increase the price for the next upgrade
+            petFourUpgradePrice: Math.round(
+              this.state.petFourBasicPrice *
+                Math.pow(1.06, this.state.petFourUpgradeLevel)
+            ),
+            // Increase the DPS of the upgraded pet
+            petFourDamagePerSecondCurrent: Math.round(
+              this.state.petFourDamagePerSecondBase *
+                Math.pow(1.05, this.state.petFourUpgradeLevel)
+            ),
+            petFourDamagePerSecondPlaceholder: Math.round(
+              this.state.petFourDamagePerSecondBase *
+                Math.pow(1.05, this.state.petFourUpgradeLevel)
+            )
+          });
+        }
+      }
+    }
+  };
+
+  renderPetPriceParagraph = petNumber => {
+    if (petNumber === 2) {
+      if (this.state.petTwoUpgradeLevel === 0) {
+        return this.state.petTwoFirstPurchasePrice.toLocaleString();
+      } else {
+        return this.state.petTwoUpgradePrice.toLocaleString();
+      }
+    }
+    if (petNumber === 3) {
+      if (this.state.petThreeUpgradeLevel === 0) {
+        return this.state.petThreeFirstPurchasePrice.toLocaleString();
+      } else {
+        return this.state.petThreeUpgradePrice.toLocaleString();
+      }
+    }
+    if (petNumber === 4) {
+      if (this.state.petFourUpgradeLevel === 0) {
+        return this.state.petFourFirstPurchasePrice.toLocaleString();
+      } else {
+        return this.state.petFourUpgradePrice.toLocaleString();
+      }
+    }
   };
 
   // Render the button classes based on whether the user has enough money to buy the upgrade
@@ -583,21 +674,64 @@ class UserInterface extends Component {
       }
     }
     if (petNumber === 2) {
-      // If the user has enough money
-      if (this.state.coins >= this.state.petTwoUpgradePrice) {
-        return "userInterface-pets-pet-button btn btn-dark mx-auto";
+      if (this.state.petTwoUpgradeLevel !== 0) {
+        // If the user has enough money
+        if (this.state.coins >= this.state.petTwoUpgradePrice) {
+          return "userInterface-pets-pet-button btn btn-dark mx-auto";
+        } else {
+          // If the user does not have enough money
+          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+        }
       } else {
-        // If the user does not have enough money
-        return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+        // If the user has enough money
+        if (this.state.coins >= this.state.petTwoFirstPurchasePrice) {
+          return "userInterface-pets-pet-button btn btn-dark mx-auto";
+        } else {
+          // If the user does not have enough money
+          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+        }
       }
     }
     if (petNumber === 3) {
-      // If the user has enough money
-      if (this.state.coins >= this.state.petThreeUpgradePrice) {
-        return "userInterface-pets-pet-button btn btn-dark mx-auto";
+      // If the pet has been bought already
+      if (this.state.petThreeUpgradeLevel !== 0) {
+        // If the user has enough money
+        if (this.state.coins >= this.state.petThreeUpgradePrice) {
+          return "userInterface-pets-pet-button btn btn-dark mx-auto";
+        } else {
+          // If the user does not have enough money
+          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+        }
+        // If the pet has now been bought yet
       } else {
-        // If the user does not have enough money
-        return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+        // If the user has enough money
+        if (this.state.coins >= this.state.petThreeFirstPurchasePrice) {
+          return "userInterface-pets-pet-button btn btn-dark mx-auto";
+        } else {
+          // If the user does not have enough money
+          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+        }
+      }
+    }
+    if (petNumber === 4) {
+      // If the pet has been bought already
+      if (this.state.petFourUpgradeLevel !== 0) {
+        // If the user has enough money
+        if (this.state.coins >= this.state.petFourUpgradePrice) {
+          return "userInterface-pets-pet-button btn btn-dark mx-auto";
+        } else {
+          // If the user does not have enough money
+          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+        }
+        // If the pet has now been bought yet
+      } else {
+        // If the user has enough money
+        if (this.state.coins >= this.state.petFourFirstPurchasePrice) {
+          return "userInterface-pets-pet-button btn btn-dark mx-auto";
+        } else {
+          // If the user does not have enough money
+          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+        }
       }
     }
   };
@@ -606,16 +740,18 @@ class UserInterface extends Component {
   calculateTotalDamagePerSecond = () => {
     if (this.state.isHeroSkillTwoActive) {
       return (
-        (this.state.petOneDamagePerSecondCurrent +
-          this.state.petTwoDamagePerSecondCurrent +
-          this.state.petThreeDamagePerSecondCurrent) *
-        this.state.heroSkillTwoDamageMultiplier
+        this.state.petOneDamagePerSecondCurrent +
+        this.state.petTwoDamagePerSecondCurrent +
+        this.state.petThreeDamagePerSecondCurrent +
+        this.state.petFourDamagePerSecondCurrent *
+          this.state.heroSkillTwoDamageMultiplier
       );
     } else
       return (
         this.state.petOneDamagePerSecondCurrent +
         this.state.petTwoDamagePerSecondCurrent +
-        this.state.petThreeDamagePerSecondCurrent
+        this.state.petThreeDamagePerSecondCurrent +
+        this.state.petFourDamagePerSecondCurrent
       );
   };
 
@@ -641,6 +777,10 @@ class UserInterface extends Component {
     if (this.state.stageEnemiesKilled < this.state.stageEnemiesToKill) {
       // Add a kill to the counter
       this.setState({ stageEnemiesKilled: this.state.stageEnemiesKilled + 1 });
+      // If the next stage is going to be the last one, make it a boss stage
+      if (this.state.stageEnemiesKilled === this.state.stageEnemiesToKill - 2) {
+        this.setState({ enemyIsBoss: true });
+      }
     }
     if (
       // If the stage is completed
@@ -995,6 +1135,10 @@ class UserInterface extends Component {
             // Enemy level is the same as current stage /+ 1
             Math.round(this.state.stageCurrent + Math.random())
           );
+          // If the enemy was a boss, change it back to normal
+          if (this.state.enemyIsBoss) {
+            this.setState({ enemyIsBoss: false });
+          }
           // Update the player stage, if applicable
           this.playerStageProgress();
           // Set the player attack and DPS back to the origin values
@@ -1441,8 +1585,12 @@ class UserInterface extends Component {
         setTimeout(() => {
           // Generate a new enemy
           this.generateNewEnemy(
-            this.state.stageCurrent + Math.round(Math.random() * 5)
+            this.state.stageCurrent + Math.round(Math.random() * 3)
           );
+          // If the enemy was a boss, change it back to normal
+          if (this.state.enemyIsBoss) {
+            this.setState({ enemyIsBoss: false });
+          }
           // Update the player stage, if applicable
           this.playerStageProgress();
           // Set the value of the attack back to the original value
@@ -1468,6 +1616,13 @@ class UserInterface extends Component {
       });
       // If the player is dead
       if (this.state.playerHealthCurrent <= 0) {
+        if (this.state.enemyIsBoss) {
+          this.setState({
+            stageEnemiesKilled: 0,
+            enemyIsBoss: false,
+            activateAutoStageAdvance: false
+          });
+        }
         // Render a paragraph to the Battle Log saying that the player is dead
         this.pushNewParagraphToBattleLog(
           <p>
@@ -1486,12 +1641,20 @@ class UserInterface extends Component {
   generateRandomEnemyIdentity = () => {
     // If the enemy is a normal field enemy, and not a boss
     if (!this.state.enemyIsBoss) {
-      // Generate a random number between 0 and 19
+      // Generate a random number between 0 and 26
       let randomNumber = Math.round(Math.random() * 26);
       this.setState({
         // And use the random number to get a new random enemy (image and name)
         enemyImageCurrent: this.state.enemyImages[randomNumber],
         enemyNameCurrent: this.state.enemyNames[randomNumber]
+      });
+    } else {
+      // Generate a random number between 0 and 3
+      let randomNumber = Math.round(Math.random() * 2);
+      this.setState({
+        // And use the random number to get a new random enemy (image and name)
+        enemyImageCurrent: this.state.bossImages[randomNumber],
+        enemyNameCurrent: this.state.bossNames[randomNumber]
       });
     }
   };
@@ -1509,18 +1672,43 @@ class UserInterface extends Component {
     }
     // Create a new identity for the next enemy
     this.generateRandomEnemyIdentity();
-    this.setState({
-      // Reinitialise the values of the new enemy
-      enemyHasHealth: true,
-      enemyLevel: level,
-      enemyExperienceHeld: Math.round(100 * Math.pow(1.04, level)),
-      enemyHealthCurrent: Math.round(500 * Math.pow(1.05, level)),
-      enemyHealthMax: Math.round(500 * Math.pow(1.05, level)),
-      enemyAttack: Math.round(50 * Math.pow(1.04, level)),
-      enemyCoinsValue: Math.round(25 * Math.pow(1.05, level)),
-      // Reinitialise the values of the player
-      playerHealthCurrent: this.state.playerHealthMax
-    });
+    // If the enemy is not a boss
+    if (!this.state.enemyIsBoss) {
+      this.setState({
+        // Reinitialise the values of the new enemy
+        enemyHasHealth: true,
+        enemyLevel: level,
+        enemyExperienceHeld: Math.round(100 * Math.pow(1.04, level)),
+        enemyHealthCurrent: Math.round(500 * Math.pow(1.05, level)),
+        enemyHealthMax: Math.round(500 * Math.pow(1.05, level)),
+        enemyAttack: Math.round(50 * Math.pow(1.04, level)),
+        enemyCoinsValue: Math.round(25 * Math.pow(1.05, level)),
+        // Reinitialise the values of the player
+        playerHealthCurrent: this.state.playerHealthMax
+      });
+      // If the enemy is a boss
+    } else {
+      this.setState({
+        // Reinitialise the values of the new enemy
+        enemyHasHealth: true,
+        enemyLevel: this.state.stageCurrent,
+        enemyExperienceHeld: Math.round(
+          300 * Math.pow(1.04, this.state.stageCurrent)
+        ),
+        enemyHealthCurrent: Math.round(
+          1500 * Math.pow(1.05, this.state.stageCurrent)
+        ),
+        enemyHealthMax: Math.round(
+          1500 * Math.pow(1.05, this.state.stageCurrent)
+        ),
+        enemyAttack: Math.round(75 * Math.pow(1.04, this.state.stageCurrent)),
+        enemyCoinsValue: Math.round(
+          25 * Math.pow(1.05, this.state.stageCurrent)
+        ),
+        // Reinitialise the values of the player
+        playerHealthCurrent: this.state.playerHealthMax
+      });
+    }
   };
 
   // Enemy HP progress bar
@@ -1806,7 +1994,7 @@ class UserInterface extends Component {
               )
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
-              {this.state.petOneUpgradePrice}
+              {this.state.petOneUpgradePrice.toLocaleString()}
               <img
                 draggable="false"
                 alt="coin"
@@ -1852,7 +2040,7 @@ class UserInterface extends Component {
               )
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
-              {this.state.petTwoUpgradePrice}
+              {this.renderPetPriceParagraph(2)}
               <img
                 draggable="false"
                 alt="coin"
@@ -1898,7 +2086,7 @@ class UserInterface extends Component {
               )
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
-              {this.state.petThreeUpgradePrice}
+              {this.renderPetPriceParagraph(3)}
               <img
                 draggable="false"
                 alt="coin"
@@ -1911,6 +2099,52 @@ class UserInterface extends Component {
               class={this.renderPetButtonClass(3)}
               onClick={() => {
                 this.petLevelUpgrade(3);
+              }}
+            >
+              +
+            </button>
+          </div>
+          {/* Pet 3 */}
+          <div className="userInterface-pets-pet-div">
+            <div className="userInterface-pets-pet-div-holder">
+              <img
+                draggable="false"
+                alt="pet"
+                src={enemyImageFour}
+                className="userInterface-pets-pet-image"
+              />
+              <small className="userInterface-pets-pet-name">
+                Lv. {this.state.petFourUpgradeLevel}
+              </small>
+            </div>
+            <small className="userInterface-pets-pet-dps mx-auto">
+              <img
+                draggable="false"
+                alt="click per second"
+                src={clickPerSecondDamageImage}
+              />
+              {/* The attack which would be added to the pet after the upgrade */}
+              {this.state.petFourDamagePerSecondCurrent} (+
+              {Math.round(
+                this.state.petFourDamagePerSecondBase *
+                  Math.pow(1.05, this.state.petFourUpgradeLevel)
+              ) - this.state.petFourDamagePerSecondCurrent}
+              )
+            </small>
+            <small className="userInterface-pets-pet-price mx-auto">
+              {this.renderPetPriceParagraph(4)}
+              <img
+                draggable="false"
+                alt="coin"
+                className="userInterface-pets-pet-price-image"
+                src={coinImageOne}
+              />
+            </small>
+            <button
+              type="button"
+              class={this.renderPetButtonClass(4)}
+              onClick={() => {
+                this.petLevelUpgrade(4);
               }}
             >
               +
@@ -1978,6 +2212,9 @@ class UserInterface extends Component {
         <div id="userInterface-topSummary-div">
           <div className="userInterface-topSummary-section">
             <img
+              data-toggle="tooltip"
+              title="Total click damage"
+              data-placement="top"
               draggable="false"
               alt="click damage"
               className="userInterface-topSummary-section-image mx-auto"
@@ -1989,6 +2226,9 @@ class UserInterface extends Component {
           </div>
           <div className="userInterface-topSummary-section">
             <img
+              data-toggle="tooltip"
+              title="Total DPS"
+              data-placement="top"
               draggable="false"
               alt="click per second"
               className="userInterface-topSummary-section-image mx-auto"
@@ -2000,6 +2240,9 @@ class UserInterface extends Component {
           </div>
           <div className="userInterface-topSummary-section">
             <img
+              data-toggle="tooltip"
+              title="Player health"
+              data-placement="top"
               draggable="false"
               alt="player health"
               className="userInterface-topSummary-section-image mx-auto"
@@ -2078,7 +2321,7 @@ class UserInterface extends Component {
                 className="mx-auto"
                 id="userInterface-inventory-money-paragraph"
               >
-                {this.state.coins}
+                {this.state.coins.toLocaleString()}
               </p>
             </div>
           </div>
@@ -2132,8 +2375,8 @@ class UserInterface extends Component {
           </div>
           <div id="userInterface-stages-stage-pragraph">
             <small>
-              Kills for next stage: {this.state.stageEnemiesKilled}/
-              {this.state.stageEnemiesToKill}
+              Kills for next stage:{" "}
+              {this.state.stageEnemiesToKill - this.state.stageEnemiesKilled}
             </small>
           </div>
           <div class="form-check" id="userInterface-stages-stage-checkbox-div">
