@@ -384,9 +384,15 @@ class UserInterface extends Component {
     isCoinCollected: false,
     relics: 0,
     lootBags: 0,
+
     food: 0,
     foodToBeCollected: 0,
+    lootBagsToBeCollected: 0,
+    // Chance in percentage
+    lootBagsDropChance: 0.2,
+    foodDropChance: 25,
     isFoodCollected: false,
+    isLootBagCollected: false,
     /* Left menu values */
     leftMenuSettingSelected: "Hero",
     /* Value placeholders 
@@ -1069,6 +1075,131 @@ class UserInterface extends Component {
     }
   };
 
+  // Get the input from the keyboard, document-wide
+  handleGlobalKeyboardInput = event => {
+    // Use [W/E] to attack
+    if (event.key === "w" || event.key === "e") {
+      this.playerAttack();
+    }
+    // Use [H] to heal
+    if (event.key === "h") {
+      this.playerHeal();
+    }
+    // Use [1,2,3,4] to use skills
+    if (event.key === "1") {
+      this.playerUseActiveSkill(1);
+    }
+    if (event.key === "2") {
+      this.playerUseActiveSkill(2);
+    }
+    if (event.key === "3") {
+      this.playerUseActiveSkill(3);
+    }
+    if (event.key === "4") {
+      this.playerUseActiveSkill(4);
+    }
+  };
+
+  calculateRandomDropChance = chanceInPercentage => {
+    return chanceInPercentage > Math.random() * 100;
+  };
+
+  calculateAllDrops = () => {
+    /* LUCK drops - things which are not guaranteed, and might NOT be dropped */
+    // Calculate lootbag drops
+    if (this.calculateRandomDropChance(this.state.lootBagsDropChance)) {
+      this.setState({
+        lootBagsToBeCollected: this.state.lootBagsToBeCollected + 1
+      });
+    }
+    // Calculate food drops
+    if (this.calculateRandomDropChance(this.state.foodDropChance)) {
+      this.setState({
+        foodToBeCollected:
+          this.state.foodToBeCollected + this.state.enemyFoodHeld
+      });
+    }
+
+    /* SURE drops - things which are guaranteed, and WILL drop */
+    // Give coins, 100% chance
+    let coinsDroppedByEnemy;
+    if (
+      // If the enemy is a Chest enemy
+      this.state.enemyNameCurrent === "Chest" ||
+      // If the enemy is a boss
+      this.state.bossNames.includes(this.state.enemyNameCurrent)
+    ) {
+      // Give 15 coins
+      coinsDroppedByEnemy = 15;
+      // If the enemy is any other enemy
+    } else {
+      // Give [3-5] coins
+      coinsDroppedByEnemy = Math.round(3 + Math.round(Math.random() * 2));
+    }
+    this.setState({
+      // Drop coins on the ground
+      coinsToBeCollected: this.state.coinsToBeCollected + coinsDroppedByEnemy
+    });
+    // Give XP, 100% chance
+    this.setState({
+      playerExperienceCurrent:
+        this.state.playerExperienceCurrent + this.state.enemyExperienceHeld
+    });
+  };
+
+  enemyDie = () => {
+    // Give the player all the drops
+    this.calculateAllDrops();
+    this.setState({
+      // Trigger enemy death animation
+      enemyHasHealth: false,
+      // Block the player from attacking while the enemy is respawning
+      playerAttack: 0,
+      playerAttackPerSecond: 0
+    });
+
+    if (
+      // If the player has enough experience to level up
+      this.state.playerExperienceCurrent >= this.state.playerExperienceRequired
+    ) {
+      // Level up the player
+      this.playerLevelUp();
+    }
+
+    // Add a 'enemy killed, XP received' paragraph to the Battle Log
+    this.pushNewParagraphToBattleLog(
+      <p>
+        <small>
+          You killed {this.state.enemyNameCurrent} and received{" "}
+          <span className="text-success">
+            {this.state.enemyExperienceHeld.toLocaleString()} XP
+          </span>
+          !
+        </small>
+      </p>
+    );
+
+    setTimeout(() => {
+      // Generate a new enemy
+      this.generateNewEnemy(
+        // Enemy level is the same as current stage /+ 1
+        Math.round(this.state.stageCurrent + Math.random())
+      );
+      // If the enemy was a boss, change it back to normal
+      if (this.state.enemyIsBoss) {
+        this.setState({ enemyIsBoss: false });
+      }
+      // Update the player stage, if applicable
+      this.playerStageProgress();
+      // Set the player attack and DPS back to the origin values
+      this.setState({
+        playerAttack: this.state.playerAttackPlaceholder,
+        playerAttackPerSecond: this.state.playerAttackPerSecondPlaceholder
+      });
+      // After 1 second
+    }, 1000);
+  };
+
   // Attack the enemy
   playerAttack = () => {
     // If the enemy is not in the process of respawning
@@ -1084,70 +1215,7 @@ class UserInterface extends Component {
         // When XP has not already been given
         this.state.enemyHasHealth !== false
       ) {
-        // Amount of coins dropped by killed enemy
-        let coinsDroppedByEnemy;
-        // If the enemy is a Chest enemy
-        if (this.state.enemyNameCurrent === "Chest") {
-          // Give 15 coins
-          coinsDroppedByEnemy = 15;
-          // If the enemy is any other enemy
-        } else {
-          // Give [3-5] coins
-          coinsDroppedByEnemy = Math.round(3 + Math.round(Math.random() * 2));
-        }
-        this.setState({
-          // Trigger enemy death animation
-          enemyHasHealth: false,
-          // Add experience to the player
-          playerExperienceCurrent:
-            this.state.playerExperienceCurrent + this.state.enemyExperienceHeld,
-          // Drop coins on the ground
-          coinsToBeCollected:
-            this.state.coinsToBeCollected + coinsDroppedByEnemy,
-          // Drop food on the ground
-          foodToBeCollected:
-            this.state.foodToBeCollected +
-            // The amount of food the enemy normally holds / -50%
-            Math.floor(
-              this.state.enemyFoodHeld * Math.round(Math.random() * 1)
-            ),
-          // Block the player from attacking while the enemy is respawning
-          playerAttack: 0,
-          playerAttackPerSecond: 0
-        });
-
-        // Add a 'enemy killed, XP received' paragraph to the Battle Log
-        this.pushNewParagraphToBattleLog(
-          <p>
-            <small>
-              You killed {this.state.enemyNameCurrent} and received{" "}
-              <span className="text-success">
-                {this.state.enemyExperienceHeld.toLocaleString()} XP
-              </span>
-              !
-            </small>
-          </p>
-        );
-
-        setTimeout(() => {
-          // Generate a new enemy
-          this.generateNewEnemy(
-            // Enemy level is the same as current stage /+ 1
-            Math.round(this.state.stageCurrent + Math.random())
-          );
-          // If the enemy was a boss, change it back to normal
-          if (this.state.enemyIsBoss) {
-            this.setState({ enemyIsBoss: false });
-          }
-          // Update the player stage, if applicable
-          this.playerStageProgress();
-          // Set the player attack and DPS back to the origin values
-          this.setState({
-            playerAttack: this.state.playerAttackPlaceholder,
-            playerAttackPerSecond: this.state.playerAttackPerSecondPlaceholder
-          });
-          // After 1 second
-        }, 1000);
+        this.enemyDie();
       }
     }
   };
@@ -1539,67 +1607,7 @@ class UserInterface extends Component {
         // If XP has not already been given
         this.state.enemyHasHealth !== false
       ) {
-        // Amount of coins dropped by killed enemy
-        let coinsDroppedByEnemy;
-        // If the enemy is a Chest enemy
-        if (this.state.enemyNameCurrent === "Chest") {
-          // Give 25 coins
-          coinsDroppedByEnemy = 25;
-          // If the enemy is any other enemy
-        } else {
-          // Give [3-5] coins
-          coinsDroppedByEnemy = Math.round(3 + Math.round(Math.random() * 2));
-        }
-        this.setState({
-          // Trigger enemy death animation
-          enemyHasHealth: false,
-          // Add experience to the player
-          playerExperienceCurrent:
-            this.state.playerExperienceCurrent + this.state.enemyExperienceHeld,
-          // Drop coins on the ground
-          coinsToBeCollected:
-            this.state.coinsToBeCollected + coinsDroppedByEnemy,
-          // Drop food on the ground
-          foodToBeCollected:
-            this.state.foodToBeCollected +
-            // The amount of food the enemy normally holds
-            Math.floor(this.state.enemyFoodHeld * (Math.random() * 1 + 1)),
-          // Block the player from attacking while the enemy is respawning
-          playerAttackPerSecond: 0,
-          playerAttack: 0
-        });
-
-        // Add a 'enemy killed, XP received' paragraph to the Battle Log
-        this.pushNewParagraphToBattleLog(
-          <p>
-            <small>
-              You killed {this.state.enemyNameCurrent} and received{" "}
-              <span className="text-success">
-                {Math.round(this.state.enemyExperienceHeld)} XP
-              </span>
-              !
-            </small>
-          </p>
-        );
-
-        setTimeout(() => {
-          // Generate a new enemy
-          this.generateNewEnemy(
-            this.state.stageCurrent + Math.round(Math.random() * 3)
-          );
-          // If the enemy was a boss, change it back to normal
-          if (this.state.enemyIsBoss) {
-            this.setState({ enemyIsBoss: false });
-          }
-          // Update the player stage, if applicable
-          this.playerStageProgress();
-          // Set the value of the attack back to the original value
-          this.setState({
-            playerAttack: this.state.playerAttackPlaceholder,
-            playerAttackPerSecond: this.state.playerAttackPerSecondPlaceholder
-          });
-          // After 1 second
-        }, 1000);
+        this.enemyDie();
       }
     }
   };
@@ -1663,13 +1671,6 @@ class UserInterface extends Component {
      The parameter 'level' is used to generate values which are balanced all-over 
   */
   generateNewEnemy = level => {
-    if (
-      // If the player has enough experience to level up
-      this.state.playerExperienceCurrent >= this.state.playerExperienceRequired
-    ) {
-      // Level up the player
-      this.playerLevelUp();
-    }
     // Create a new identity for the next enemy
     this.generateRandomEnemyIdentity();
     // If the enemy is not a boss
@@ -1679,9 +1680,9 @@ class UserInterface extends Component {
         enemyHasHealth: true,
         enemyLevel: level,
         enemyExperienceHeld: Math.round(100 * Math.pow(1.04, level)),
-        enemyHealthCurrent: Math.round(500 * Math.pow(1.05, level)),
-        enemyHealthMax: Math.round(500 * Math.pow(1.05, level)),
-        enemyAttack: Math.round(50 * Math.pow(1.04, level)),
+        enemyHealthCurrent: Math.round(500 * Math.pow(1.055, level)),
+        enemyHealthMax: Math.round(500 * Math.pow(1.055, level)),
+        enemyAttack: Math.round(50 * Math.pow(1.045, level)),
         enemyCoinsValue: Math.round(25 * Math.pow(1.05, level)),
         // Reinitialise the values of the player
         playerHealthCurrent: this.state.playerHealthMax
@@ -1696,12 +1697,12 @@ class UserInterface extends Component {
           300 * Math.pow(1.04, this.state.stageCurrent)
         ),
         enemyHealthCurrent: Math.round(
-          1500 * Math.pow(1.05, this.state.stageCurrent)
+          2500 * Math.pow(1.05, this.state.stageCurrent)
         ),
         enemyHealthMax: Math.round(
-          1500 * Math.pow(1.05, this.state.stageCurrent)
+          2500 * Math.pow(1.05, this.state.stageCurrent)
         ),
-        enemyAttack: Math.round(75 * Math.pow(1.04, this.state.stageCurrent)),
+        enemyAttack: Math.round(100 * Math.pow(1.04, this.state.stageCurrent)),
         enemyCoinsValue: Math.round(
           25 * Math.pow(1.05, this.state.stageCurrent)
         ),
@@ -1789,6 +1790,18 @@ class UserInterface extends Component {
     }
   };
 
+  // Drop new lootbags on the floor
+  renderLootBagDrop = () => {
+    // Only when lootbags have not been collected
+    if (!this.state.isLootBagCollected) {
+      // Animate them so that they drop down from the enemy image
+      return "userInterface-enemy-drop-food userInterface-enemy-drop-food-appear";
+    } else {
+      // Animate them so that they move towards the inventory
+      return "userInterface-enemy-drop-food userInterface-enemy-drop-food-collect";
+    }
+  };
+
   // Add coins to the inventory
   collectCoinsOnHover = event => {
     // Trigger the animation from renderCoinDrop()
@@ -1823,6 +1836,23 @@ class UserInterface extends Component {
         foodToBeCollected: 0,
         // Prevent food spawned after to also be animated
         isFoodCollected: false
+      });
+    }, 1000);
+  };
+
+  // Add lootbags to the inventory
+  collectLootBagOnHover = event => {
+    // Trigger the animation from renderLootBagDrop()
+    this.setState({ isLootBagCollected: true });
+    // Wait 1 second for the animation to be over
+    setTimeout(() => {
+      this.setState({
+        // Add the collected lootbag to the lootbags held in the inventory
+        lootBags: this.state.lootBags + this.state.lootBagsToBeCollected,
+        // Remove the food from the ground
+        lootBagsToBeCollected: 0,
+        // Prevent food spawned after to also be animated
+        isLootBagCollected: false
       });
     }, 1000);
   };
@@ -1863,6 +1893,25 @@ class UserInterface extends Component {
       );
     }
     return foodToBeRendered;
+  };
+
+  // Create new lootbag dropped
+  generateLootBagDrop = () => {
+    let lootbagsToBeRendered = [];
+    // All the lootbags which have not been collected yet (by hovering)
+    for (let i = 0; i < this.state.lootBagsToBeCollected; i++) {
+      // Add a new food
+      lootbagsToBeRendered.push(
+        <img
+          draggable="false"
+          alt="lootbag"
+          className={this.renderLootBagDrop()}
+          src={resourceTwoImage}
+          onMouseOver={this.collectLootBagOnHover}
+        />
+      );
+    }
+    return lootbagsToBeRendered;
   };
 
   /* Inventory UI*/
@@ -2154,6 +2203,17 @@ class UserInterface extends Component {
       );
     }
   };
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleGlobalKeyboardInput, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener(
+      "keydown",
+      this.handleGlobalKeyboardInput,
+      false
+    );
+  }
 
   render() {
     return (
@@ -2455,6 +2515,7 @@ class UserInterface extends Component {
             <div id="userInterface-enemy-drop-div">
               {this.generateCoinDrop()}
               {this.generateFoodDrop()}
+              {this.generateLootBagDrop()}
             </div>
           </div>
         </div>

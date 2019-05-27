@@ -59,20 +59,17 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.3.0
+### 1.4.0
 
 #### Gameplay
 
-- Encounter a boss at the end of each stage!
-- New beetle pet!
-- Pet rebalancing
-- 5 kills are now required to advance to the next stage
+- New keyboard commands! Use [W/E] to attack; [Q] to heal and [1,2,3,4] for your skills!
+- Enemy balancing
 
 #### Other
 
-- Kills to next stage are now displayed as a countdown
-- Change upgrade numbers to use separators for easier reading
-- Add tooltips to show more information about values in the top summary
+- General optimisation
+- Fix a bug which caused a delay between the level up and the rendering of the XP bar
 
 ## License
 
