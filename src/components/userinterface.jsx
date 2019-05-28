@@ -13,6 +13,14 @@ import clickPerSecondDamageImage from "../img/dps_1.png";
 import bossImageOne from "../img/boss_1.png";
 import bossImageTwo from "../img/boss_2.png";
 import bossImageThree from "../img/boss_3.png";
+/* [IMG] Backgrounds */
+import backgroundImageOne from "../img/background_1.jpg";
+import backgroundImageTwo from "../img/background_2.jpg";
+import backgroundImageThree from "../img/background_3.jpg";
+import backgroundImageFour from "../img/background_4.jpg";
+import backgroundImageFive from "../img/background_5.jpg";
+import backgroundImageSix from "../img/background_6.jpg";
+
 /* [IMG] Enemy */
 import enemyImageOne from "../img/enemy_1.png";
 import enemyImageTwo from "../img/enemy_2.png";
@@ -95,6 +103,16 @@ class UserInterface extends Component {
           </em>
         </small>
       </p>
+    ],
+    /* Global settings */
+    backgroundImageCurrent: backgroundImageThree,
+    backgroundImages: [
+      backgroundImageOne,
+      backgroundImageTwo,
+      backgroundImageThree,
+      backgroundImageFour,
+      backgroundImageFive,
+      backgroundImageSix
     ],
     /* Stage settings */
     stageCurrent: 1,
@@ -823,6 +841,11 @@ class UserInterface extends Component {
         // Reset the kill counter
         stageEnemiesKilled: 0
       });
+      // If the stage is a multiple of 5
+      if (this.state.stageCurrent % 5 === 0) {
+        // Set a new background
+        this.changeToRandomBackground();
+      }
     }
   };
 
@@ -2223,6 +2246,20 @@ class UserInterface extends Component {
     }
   };
 
+  changeToRandomBackground = () => {
+    let randomImageNumber = Math.round(Math.random() * 5);
+    this.setState({
+      backgroundImageCurrent: this.state.backgroundImages[randomImageNumber]
+    });
+  };
+
+  renderBackgroundImage = () => {
+    let backgroundDivStyle = {
+      backgroundImage: "url(" + this.state.backgroundImageCurrent + ")"
+    };
+    return backgroundDivStyle;
+  };
+
   componentDidMount() {
     document.addEventListener("keydown", this.handleGlobalKeyboardInput, false);
   }
@@ -2236,7 +2273,7 @@ class UserInterface extends Component {
 
   render() {
     return (
-      <div id="userInterface-div">
+      <div style={this.renderBackgroundImage()} id="userInterface-div">
         <h1 id="userInterface-h1">Fantasia</h1>
         {/* Resources [ TOP ] */}
         <div id="userInterface-resources-div">

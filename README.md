@@ -59,17 +59,15 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.4.1
+### 1.4.2
 
 #### Gameplay
 
-- The UI has been completely redesigned!
+- Every 5 stages, the background of the game changes!
 
 #### Other
 
-- Add hotkey information to tooltips; attack hotkeys are now part of the tutorial [Fixes issue #8]
-- Remove trailing space in skill descriptions [Fixes issue #7]
-- Make skill images hidden when unlocked [Fixes issue #6]
+- Add 5 new backgrounds
 
 ## License
 

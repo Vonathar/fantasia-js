@@ -6,6 +6,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#userInterface-div {
+  height: 100vh;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .progress {
   border: 0.5px solid rgba(0, 0, 0, 0.815);
   border-radius: 15px;
@@ -21,12 +29,6 @@ img {
 }
 
 .App {
-  height: 100vh;
-  background: url(./img//background_1.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
 }
 
 code {
