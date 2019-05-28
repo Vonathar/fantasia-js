@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/fantasia-js/static/css/main.4f039ad7.chunk.css",
+    "main.css": "/fantasia-js/static/css/main.d10aa1c0.chunk.css",
     "main.js": "/fantasia-js/static/js/main.af3e7ff8.chunk.js",
     "main.js.map": "/fantasia-js/static/js/main.af3e7ff8.chunk.js.map",
     "runtime~main.js": "/fantasia-js/static/js/runtime~main.f33bc8dc.js",
@@ -9,10 +9,11 @@
     "static/js/2.d4fd030b.chunk.js": "/fantasia-js/static/js/2.d4fd030b.chunk.js",
     "static/js/2.d4fd030b.chunk.js.map": "/fantasia-js/static/js/2.d4fd030b.chunk.js.map",
     "index.html": "/fantasia-js/index.html",
-    "precache-manifest.005c2529211e1622bd12b4401af43c89.js": "/fantasia-js/precache-manifest.005c2529211e1622bd12b4401af43c89.js",
+    "precache-manifest.eafd01c5a70fc0c6ebd680909a2e30ef.js": "/fantasia-js/precache-manifest.eafd01c5a70fc0c6ebd680909a2e30ef.js",
     "service-worker.js": "/fantasia-js/service-worker.js",
     "static/css/2.a4c6d6ca.chunk.css.map": "/fantasia-js/static/css/2.a4c6d6ca.chunk.css.map",
-    "static/css/main.4f039ad7.chunk.css.map": "/fantasia-js/static/css/main.4f039ad7.chunk.css.map",
+    "static/css/main.d10aa1c0.chunk.css.map": "/fantasia-js/static/css/main.d10aa1c0.chunk.css.map",
+    "static/media/index.scss": "/fantasia-js/static/media/background_1.52762bcd.jpg",
     "static/media/boss_1.png": "/fantasia-js/static/media/boss_1.8826c054.png",
     "static/media/boss_2.png": "/fantasia-js/static/media/boss_2.3fdb3854.png",
     "static/media/boss_3.png": "/fantasia-js/static/media/boss_3.2be71395.png",
