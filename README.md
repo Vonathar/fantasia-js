@@ -59,17 +59,17 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.4.0
+### 1.4.1
 
 #### Gameplay
 
-- New keyboard commands! Use [W/E] to attack; [Q] to heal and [1,2,3,4] for your skills!
-- Enemy balancing
+- The UI has been completely redesigned!
 
 #### Other
 
-- General optimisation
-- Fix a bug which caused a delay between the level up and the rendering of the XP bar
+- Add hotkey information to tooltips; attack hotkeys are now part of the tutorial [Fixes issue #8]
+- Remove trailing space in skill descriptions [Fixes issue #7]
+- Make skill images hidden when unlocked [Fixes issue #6]
 
 ## License
 

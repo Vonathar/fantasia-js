@@ -63,8 +63,9 @@ class UserInterface extends Component {
       <p>
         <small>
           To <span className="text-danger">attack</span>, click on the enemy
-          icon. You can also get help from your pets, which will deal DPS
-          (Damage Per Second), even when you are away!
+          icon or press the keys W / E on your keyboard. You can also get help
+          from your pets, which will deal DPS (Damage Per Second), even when you
+          are away!
         </small>
       </p>,
       <p>
@@ -1056,22 +1057,36 @@ class UserInterface extends Component {
     }
   };
 
-  renderSkillCooldownBadge = skillNumber => {
+  renderSkillBadge = skillNumber => {
+    // Skill 1
     if (skillNumber === 1) {
       let classes = "userInterface-skills-skill-img scale ";
-      return this.state.isHeroSkillOneReady ? classes : classes + "cooldown";
+      return this.state.isHeroSkillOneReady && this.state.heroSkillOneLevel > 0
+        ? classes
+        : classes + "cooldown";
     }
+    // Skill 2
     if (skillNumber === 2) {
       let classes = "userInterface-skills-skill-img scale ";
-      return this.state.isHeroSkillTwoReady ? classes : classes + "cooldown";
+      return this.state.isHeroSkillTwoReady && this.state.heroSkillTwoLevel > 0
+        ? classes
+        : classes + "cooldown";
     }
+    // Skill 3
     if (skillNumber === 3) {
       let classes = "userInterface-skills-skill-img scale ";
-      return this.state.isHeroSkillThreeReady ? classes : classes + "cooldown";
+      return this.state.isHeroSkillThreeReady &&
+        this.state.heroSkillThreeLevel > 0
+        ? classes
+        : classes + "cooldown";
     }
+    // Skill 4
     if (skillNumber === 4) {
       let classes = "userInterface-skills-skill-img scale ";
-      return this.state.isHeroSkillFourReady ? classes : classes + "cooldown";
+      return this.state.isHeroSkillFourReady &&
+        this.state.heroSkillFourLevel > 0
+        ? classes
+        : classes + "cooldown";
     }
   };
 
@@ -1424,7 +1439,7 @@ class UserInterface extends Component {
         this.state.heroSkillOneName +
         "  -  [Lv. Req: " +
         this.state.heroSkillOneLevelToUnlock +
-        " ] "
+        "] "
       );
     } else {
       return (
@@ -1444,7 +1459,8 @@ class UserInterface extends Component {
         this.state.heroSkillOneLevelsToUpgrade.find(element => {
           return element > this.state.playerLevel;
         }) +
-        "]"
+        "]" +
+        "  -  [Hotkey: 1]"
       );
     }
   };
@@ -1455,7 +1471,7 @@ class UserInterface extends Component {
         this.state.heroSkillTwoName +
         "  -  [Lv. Req: " +
         this.state.heroSkillTwoLevelToUnlock +
-        " ] "
+        "] "
       );
     } else {
       return (
@@ -1475,7 +1491,8 @@ class UserInterface extends Component {
         this.state.heroSkillTwoLevelsToUpgrade.find(element => {
           return element > this.state.playerLevel;
         }) +
-        "]"
+        "]" +
+        "  -  [Hotkey: 2]"
       );
     }
   };
@@ -1486,7 +1503,7 @@ class UserInterface extends Component {
         this.state.heroSkillThreeName +
         "  -  [Lv. Req: " +
         this.state.heroSkillThreeLevelToUnlock +
-        " ] "
+        "] "
       );
     } else {
       return (
@@ -1506,7 +1523,8 @@ class UserInterface extends Component {
         this.state.heroSkillThreeLevelsToUpgrade.find(element => {
           return element > this.state.playerLevel;
         }) +
-        "]"
+        "]" +
+        "  -  [Hotkey: 3]"
       );
     }
   };
@@ -1517,7 +1535,7 @@ class UserInterface extends Component {
         this.state.heroSkillFourName +
         "  -  [Lv. Req: " +
         this.state.heroSkillFourLevelToUnlock +
-        " ] "
+        "] "
       );
     } else {
       return (
@@ -1537,7 +1555,8 @@ class UserInterface extends Component {
         this.state.heroSkillFourLevelsToUpgrade.find(element => {
           return element > this.state.playerLevel;
         }) +
-        "]"
+        "]" +
+        "  -  [Hotkey: 4]"
       );
     }
   };
@@ -2234,7 +2253,9 @@ class UserInterface extends Component {
               data-placement="top"
               src={resourceOneImage}
             />
-            <p>{this.state.relics}</p>
+            <p className="userInterface-resource-div-paragraph">
+              {this.state.relics}
+            </p>
           </div>
           <div
             className="userInterface-resource-div mx-auto"
@@ -2249,7 +2270,9 @@ class UserInterface extends Component {
               title="Loot bags are obtained randomly by killing enemies; use them to obtain coins, upgrades and more!"
               data-placement="top"
             />
-            <p>{this.state.lootBags}</p>
+            <p className="userInterface-resource-div-paragraph">
+              {this.state.lootBags}
+            </p>
           </div>
           <div
             className="userInterface-resource-div mx-auto"
@@ -2261,10 +2284,12 @@ class UserInterface extends Component {
               className="userInterface-resources-image scale"
               src={resourceThreeImage}
               data-toggle="tooltip"
-              title="Potions are used to heal your character (25% of total HP)."
+              title="Potions are used to heal your character (25% of total HP) [Hotkey: H]."
               data-placement="top"
             />
-            <p>{this.state.food}</p>
+            <p className="userInterface-resource-div-paragraph">
+              {this.state.food}
+            </p>
           </div>
         </div>
 
@@ -2526,7 +2551,7 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 1"
-              className={this.renderSkillCooldownBadge(1)}
+              className={this.renderSkillBadge(1)}
               src={skillImageOne}
               onClick={() => {
                 this.playerUseActiveSkill(1);
@@ -2540,7 +2565,7 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 2"
-              className={this.renderSkillCooldownBadge(2)}
+              className={this.renderSkillBadge(2)}
               src={skillImageTwo}
               onClick={() => {
                 this.playerUseActiveSkill(2);
@@ -2554,7 +2579,7 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 3"
-              className={this.renderSkillCooldownBadge(3)}
+              className={this.renderSkillBadge(3)}
               src={skillImageThree}
               onClick={() => {
                 this.playerUseActiveSkill(3);
@@ -2568,7 +2593,7 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 4"
-              className={this.renderSkillCooldownBadge(4)}
+              className={this.renderSkillBadge(4)}
               src={skillImageFour}
               onClick={() => {
                 this.playerUseActiveSkill(4);

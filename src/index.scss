@@ -22,17 +22,12 @@ img {
 
 .App {
   height: 100vh;
-  background: #e6dada; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #274046,
-    #e6dada
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #274046,
-    #e6dada
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: url("https://i.pinimg.com/originals/e5/49/49/e5494986d6f4985dfe047646ffdd034a.jpg")
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 code {
@@ -469,8 +464,17 @@ code {
 
 #userInterface-h1 {
   position: relative;
+  font-family: "Great Vibes", cursive;
+  font-size: 2vw;
+  padding: 0.25vw;
   top: 4vh;
   cursor: default;
+  background-color: rgba(0, 0, 0, 0.76);
+  border: 1px solid rgba(95, 95, 95, 0.486);
+  border-radius: 50px;
+  color: white;
+  left: 42.5vw;
+  width: 15vw;
 }
 
 #userInterface-resources-div {
@@ -481,6 +485,12 @@ code {
   width: 25vw;
   padding: 10px;
   cursor: default;
+  background-color: rgba(255, 255, 255, 0.048);
+  border: 1px solid rgba(95, 95, 95, 0.486);
+  font-size: 0.8vw;
+
+  border-radius: 15px;
+  color: white;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -505,13 +515,24 @@ code {
   width: 4vw;
 }
 
+.userInterface-resource-div-paragraph {
+  background-color: rgba(0, 0, 0, 0.507);
+  border-radius: 5px;
+}
+
 #userInterface-topSummary-div {
-  background-color: rgba(201, 201, 201, 0.377);
   border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.801);
+  color: white;
+  font-size: 0.8vw;
+
+  border-width: 0 1px 1px 1px;
+  border-color: rgba(95, 95, 95, 0.486);
+  border-style: solid;
   left: 0;
   right: 0;
   position: fixed;
-  top: 40vh;
+  top: 41vh;
   margin: auto;
   width: 7vw;
   padding: 10px;
@@ -532,7 +553,7 @@ code {
 
 .userInterface-player-image,
 .userInterface-enemy-image {
-  width: 8vw;
+  width: 10.5vw;
 }
 
 .userInterface-enemy-image-dead {
@@ -644,15 +665,18 @@ code {
 }
 
 #userInterface-battle-div {
-  background-color: rgba(201, 201, 201, 0.377);
+  background-color: rgba(0, 0, 0, 0.158);
+  border: 1px solid rgba(95, 95, 95, 0.486);
   border-radius: 25px;
   left: 0;
   right: 0;
   position: fixed;
-  top: 55vh;
+  font-size: 0.8vw;
+
+  top: 60vh;
   display: flex;
   margin: auto;
-  width: 25vw;
+  width: 30vw;
   padding: 10px;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -664,6 +688,8 @@ code {
 #userInterface-userSettings-div {
   display: flex;
   position: relative;
+  font-size: 0.8vw;
+
   top: 10vh;
 }
 
@@ -681,18 +707,33 @@ code {
 
 .userInterface-upgrades-upgrade-button-disabled,
 .userInterface-pets-pet-button-disabled {
-  background-color: rgba(255, 255, 255, 0.377);
+  background-color: rgba(0, 0, 0, 0);
   color: black;
   border-radius: 50px;
   margin: 1vw;
+  height: 2vw;
 }
 
-.userInterface-pets-pet-button {
+.userInterface-upgrades-upgrade-button-disabled:hover,
+.userInterface-pets-pet-button-disabled:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.userInterface-pets-pet-button,
+.userInterface-upgrades-upgrade-button {
   margin: 1vw;
+  height: 2vw;
+  background-color: rgba(228, 228, 228, 0.568);
+  color: rgb(0, 0, 0);
 }
 
 .userInterface-upgrades-upgrade-button {
   margin: 1vw;
+}
+
+.userInterface-upgrades-upgrade-button:hover,
+.userInterface-pets-pet-button:hover {
+  background-color: rgba(125, 190, 106, 0.568);
 }
 
 .userInterface-topSummary-section {
@@ -701,7 +742,13 @@ code {
 }
 
 #userInterface-stages-div {
-  background-color: rgba(201, 201, 201, 0.377);
+  background-color: rgba(0, 0, 0, 0.801);
+  color: white;
+  font-size: 0.8vw;
+
+  border-width: 0 1px 1px 1px;
+  border-color: rgba(95, 95, 95, 0.486);
+  border-style: solid;
   border-radius: 25px;
   width: 20vw;
   padding: 0.5vw;
@@ -709,7 +756,7 @@ code {
   left: 0;
   right: 0;
   position: fixed;
-  top: 25vh;
+  top: 30vh;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -722,20 +769,20 @@ code {
 }
 
 .userInterface-stages-button {
-  background-color: rgba(41, 43, 44, 0.884);
-  font-size: 0.9em;
+  background-color: rgba(0, 0, 0, 0.301);
+  font-size: 0.8vw;
   border-radius: 25px;
   margin: 0.25vw;
 }
 
 .userInterface-stages-unlocked {
-  background-color: rgba(255, 255, 255, 0.582);
+  background-color: rgba(201, 255, 164, 0.582);
   border-radius: 5px;
   color: black;
 }
 
 .userInterface-stages-button:hover {
-  background-color: rgba(255, 255, 255, 0.329);
+  background-color: rgba(255, 255, 255, 0.726);
   color: black;
 }
 
@@ -750,14 +797,19 @@ code {
 }
 
 #userInterface-userSettings-menu-holder {
-  background-color: rgba(41, 43, 44, 0.884);
+  background-color: rgba(0, 0, 0, 0.671);
   border-radius: 25px 25px 0 0;
-  color: white;
+
   display: flex;
+  border-width: 1px 0 0 0;
+  border-color: rgba(95, 95, 95, 0.486);
+  border-style: solid;
 }
 
 .userInterface-userSettings-menu-tab-button {
-  background-color: rgba(100, 100, 100, 0.377);
+  background-color: rgba(173, 173, 173, 0.308);
+  font-size: 0.8vw;
+
   border-radius: 15px;
   margin: 0.25vw;
 }
@@ -797,12 +849,16 @@ code {
 #userInterface-idle-div,
 #userInterface-upgrades-div,
 #userInterface-pets-div {
-  background-color: rgba(201, 201, 201, 0.377);
   border-radius: 0 0 25px 25px;
   position: relative;
   width: 25vw;
   padding: 10px;
   cursor: default;
+  background-color: rgba(0, 0, 0, 0.801);
+  color: white;
+  border-width: 0 1px 1px 1px;
+  border-color: rgba(95, 95, 95, 0.486);
+  border-style: solid;
 }
 
 .userInterface-idle-category {
@@ -815,7 +871,9 @@ code {
 }
 
 #userInterface-inventory-div {
-  background-color: rgba(201, 201, 201, 0.377);
+  background-color: rgba(0, 0, 0, 0.801);
+  border: 1px solid rgba(95, 95, 95, 0.486);
+  color: white;
   border-radius: 25px;
   position: absolute;
   right: 2.5vw;
@@ -825,7 +883,7 @@ code {
 }
 
 #userInterface-chatlog-div {
-  background-color: rgba(0, 0, 0, 0.575);
+  background-color: rgba(0, 0, 0, 0.829);
   border-radius: 25px;
   color: white;
   position: absolute;
@@ -850,7 +908,7 @@ code {
 
 #userInterface-player-paragraph,
 #userInterface-enemy-paragraph {
-  background-color: rgba(41, 43, 44, 0.884);
+  background-color: rgba(0, 0, 0, 0.884);
   position: relative;
   top: 1vh;
   border-radius: 15px;
@@ -861,7 +919,7 @@ code {
 
 .userInterface-upgrades-upgrade-level,
 .userInterface-pets-pet-name {
-  background-color: rgba(41, 43, 44, 0.884);
+  background-color: rgba(156, 156, 156, 0.479);
   position: relative;
   border-radius: 5px;
   padding: 0.2vw;
@@ -881,7 +939,8 @@ code {
 }
 
 #userInterface-skills-div {
-  background-color: rgba(201, 201, 201, 0.377);
+  background-color: rgba(0, 0, 0, 0.459);
+  border: 1px solid rgba(95, 95, 95, 0.486);
   border-radius: 25px;
   width: 15vw;
   padding: 0.5vw;
