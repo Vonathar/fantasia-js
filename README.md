@@ -59,15 +59,17 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.4.2
+### 1.4.3
 
 #### Gameplay
 
-- Every 5 stages, the background of the game changes!
+- N/a
 
 #### Other
 
-- Add 5 new backgrounds
+- Fixed a bug causing the loot from the enemy to overlap with the skillbar [Issue #10]
+- Prevent loot from overaccumulating by automatically collecting it past a fixed point
+- The coordinates of the starting point for the loot animation are now centered
 
 ## License
 

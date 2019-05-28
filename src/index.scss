@@ -596,6 +596,7 @@ code {
   margin-right: -23px;
   position: relative;
   top: 5vh;
+  left: 5vw;
 }
 
 .userInterface-enemy-drop-food {
@@ -603,6 +604,7 @@ code {
   margin-right: -25px;
   position: relative;
   top: 5vh;
+  left: 5vw;
 }
 
 /* Coin hovered by the user */
@@ -647,7 +649,7 @@ code {
 /* Coin spawns below the enemy image */
 @keyframes appearDrop {
   0% {
-    transform: translate3d(0, -15vh, 0);
+    transform: translate3d(-5vw, -18vh, 0);
   }
   25% {
     transform: rotate(5deg);

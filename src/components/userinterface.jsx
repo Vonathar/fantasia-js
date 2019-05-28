@@ -1158,6 +1158,17 @@ class UserInterface extends Component {
       });
     }
 
+    // If there are more than 75 uncollected coins
+    if (this.state.coinsToBeCollected > 75) {
+      // Collect all of them
+      this.collectCoinsOnHover();
+    }
+    // If there are more than 10 uncollected food drops
+    if (this.state.foodToBeCollected > 10) {
+      // Collect all of them
+      this.collectFoodOnHover();
+    }
+
     /* SURE drops - things which are guaranteed, and WILL drop */
     // Give coins, 100% chance
     let coinsDroppedByEnemy;
