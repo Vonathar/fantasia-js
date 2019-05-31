@@ -114,6 +114,17 @@ class UserInterface extends Component {
       backgroundImageFive,
       backgroundImageSix
     ],
+    /* Stats values */
+    totalPlayerAttacks: 0,
+    totalSkillsUsed: 0,
+    totalPlayerDamageDealt: 0,
+    totalPetDamageDealt: 0,
+    totalPlayerDeaths: 0,
+    totalEnemiesKilled: 0,
+    totalTimesHealed: 0,
+    totalMoneySpent: 0,
+    totalMoneyEarned: 0,
+
     /* Stage settings */
     stageCurrent: 1,
     stageEnemiesKilled: 0,
@@ -449,6 +460,9 @@ class UserInterface extends Component {
         this.setState({
           // Take off the money from the player
           coins: this.state.coins - this.state.upgradeHeroClickDamagePrice,
+          // Update player stats
+          totalMoneySpent:
+            this.state.totalMoneySpent + this.state.upgradeHeroClickDamagePrice,
           // Increase the level of the skill
           upgradeHeroClickDamageLevel:
             this.state.upgradeHeroClickDamageLevel + 1,
@@ -491,6 +505,9 @@ class UserInterface extends Component {
         this.setState({
           // Take off the coins from the user
           coins: this.state.coins - this.state.petOneUpgradePrice,
+          // Update the player stats
+          totalMoneySpent:
+            this.state.totalMoneySpent + this.state.petOneUpgradePrice,
           // Increase the level by one
           petOneUpgradeLevel: this.state.petOneUpgradeLevel + 1,
           // Increase the price for the next upgrade
@@ -517,6 +534,9 @@ class UserInterface extends Component {
           this.setState({
             // Take off the coins from the user
             coins: this.state.coins - this.state.petTwoFirstPurchasePrice,
+            // Update player stats
+            totalMoneySpent:
+              this.state.totalMoneySpent + this.state.petTwoFirstPurchasePrice,
             // Increase the level by one
             petTwoUpgradeLevel: this.state.petTwoUpgradeLevel + 1,
             // Increase the price for the next upgrade
@@ -540,6 +560,9 @@ class UserInterface extends Component {
           this.setState({
             // Take off the coins from the user
             coins: this.state.coins - this.state.petTwoUpgradePrice,
+            // Update player stats
+            totalMoneySpent:
+              this.state.totalMoneySpent + this.state.petTwoUpgradePrice,
             // Increase the level by one
             petTwoUpgradeLevel: this.state.petTwoUpgradeLevel + 1,
             // Increase the price for the next upgrade
@@ -567,6 +590,10 @@ class UserInterface extends Component {
           this.setState({
             // Take off the coins from the user
             coins: this.state.coins - this.state.petThreeFirstPurchasePrice,
+            // Update player stats
+            totalMoneySpent:
+              this.state.totalMoneySpent +
+              this.state.petThreeFirstPurchasePrice,
             // Increase the level by one
             petThreeUpgradeLevel: this.state.petThreeUpgradeLevel + 1,
             // Increase the price for the next upgrade
@@ -590,6 +617,9 @@ class UserInterface extends Component {
           this.setState({
             // Take off the coins from the user
             coins: this.state.coins - this.state.petThreeUpgradePrice,
+            // Update player stats
+            totalMoneySpent:
+              this.state.totalMoneySpent + this.state.petThreeUpgradePrice,
             // Increase the level by one
             petThreeUpgradeLevel: this.state.petThreeUpgradeLevel + 1,
             // Increase the price for the next upgrade
@@ -617,6 +647,9 @@ class UserInterface extends Component {
           this.setState({
             // Take off the coins from the user
             coins: this.state.coins - this.state.petFourFirstPurchasePrice,
+            // Update player stats
+            totalMoneySpent:
+              this.state.totalMoneySpent + this.state.petFourFirstPurchasePrice,
             // Increase the level by one
             petFourUpgradeLevel: this.state.petFourUpgradeLevel + 1,
             // Increase the price for the next upgrade
@@ -640,6 +673,9 @@ class UserInterface extends Component {
           this.setState({
             // Take off the coins from the user
             coins: this.state.coins - this.state.petFourUpgradePrice,
+            // Update player stats
+            totalMoneySpent:
+              this.state.totalMoneySpent + this.state.petFourUpgradePrice,
             // Increase the level by one
             petFourUpgradeLevel: this.state.petFourUpgradeLevel + 1,
             // Increase the price for the next upgrade
@@ -1227,6 +1263,8 @@ class UserInterface extends Component {
         </small>
       </p>
     );
+    // Update player stats
+    this.setState({ totalEnemiesKilled: this.state.totalEnemiesKilled + 1 });
 
     setTimeout(() => {
       // Generate a new enemy
@@ -1256,7 +1294,12 @@ class UserInterface extends Component {
       this.setState({
         // Remove the player damage from the enemy's health
         enemyHealthCurrent:
-          this.state.enemyHealthCurrent - this.calculateTotalClickDamage()
+          this.state.enemyHealthCurrent - this.calculateTotalClickDamage(),
+        totalPlayerAttacks: this.state.totalPlayerAttacks + 1
+      });
+      this.setState({
+        totalPlayerDamageDealt:
+          this.state.totalPlayerDamageDealt + this.calculateTotalClickDamage()
       });
       if (
         // When enemy is dead
@@ -1465,6 +1508,8 @@ class UserInterface extends Component {
         </p>
       );
     }
+    // Update the stats counter
+    this.setState({ totalSkillsUsed: this.state.totalSkillsUsed + 1 });
   };
 
   renderSkillOneDescription = () => {
@@ -1642,6 +1687,8 @@ class UserInterface extends Component {
           </small>
         </p>
       );
+      // Update the stats
+      this.setState({ totalTimesHealed: this.state.totalTimesHealed + 1 });
     }
   };
 
@@ -1652,7 +1699,10 @@ class UserInterface extends Component {
       this.setState({
         // Damage the enemy by the amount of player DPS
         enemyHealthCurrent:
-          this.state.enemyHealthCurrent - this.calculateTotalDamagePerSecond()
+          this.state.enemyHealthCurrent - this.calculateTotalDamagePerSecond(),
+        // Update player stats
+        totalPetDamageDealt:
+          this.state.totalPetDamageDealt + this.calculateTotalDamagePerSecond()
       });
       if (
         // If enemy is dead
@@ -1694,6 +1744,8 @@ class UserInterface extends Component {
         this.generateNewEnemy(
           this.state.stageCurrent + Math.round(Math.random() * 2)
         );
+        // Update player stats
+        this.setState({ totalPlayerDeaths: this.state.totalPlayerDeaths + 1 });
       }
     }
   };
@@ -1865,6 +1917,10 @@ class UserInterface extends Component {
         // Add the collected coins to the coins held in the inventory
         coins:
           this.state.coins +
+          this.state.coinsToBeCollected * this.state.enemyCoinsValue,
+        totalMoneyEarned:
+          // Update the player stats
+          this.state.totalMoneyEarned +
           this.state.coinsToBeCollected * this.state.enemyCoinsValue,
         // Remove the coins from the ground
         coinsToBeCollected: 0,
@@ -2058,6 +2114,51 @@ class UserInterface extends Component {
             passive mode. When you activate 'idle' mode, you will not be allowed
             to perform action until the time is over.
           </small>
+        </div>
+      );
+    }
+    // Stats tab selected
+    if (this.state.leftMenuSettingSelected === "Stats") {
+      return (
+        <div id="userInterface-stats-div">
+          <p>
+            <strong>Statistics</strong>
+          </p>
+          <small className="userInterface-stats-category">
+            Total player attacks
+          </small>
+          <p>{this.state.totalPlayerAttacks.toLocaleString()}</p>
+          <small className="userInterface-stats-category">
+            Total player damage
+          </small>
+          <p>{this.state.totalPlayerDamageDealt.toLocaleString()}</p>
+          <small className="userInterface-stats-category">
+            Total pet damage
+          </small>
+          <p>{this.state.totalPetDamageDealt.toLocaleString()}</p>
+          <small className="userInterface-stats-category">Total kills</small>
+          <p>{this.state.totalEnemiesKilled.toLocaleString()}</p>
+          <small className="userInterface-stats-category">
+            Total money earned
+          </small>
+          <p>{this.state.totalMoneyEarned.toLocaleString()}</p>
+          <small className="userInterface-stats-category">
+            Total money spent
+          </small>
+          <p>{this.state.totalMoneySpent.toLocaleString()}</p>
+          <small className="userInterface-stats-category">
+            Total skills used
+          </small>
+          <p>{this.state.totalSkillsUsed.toLocaleString()}</p>
+          <small className="userInterface-stats-category">
+            Total player deaths
+          </small>
+          <p>{this.state.totalPlayerDeaths.toLocaleString()}</p>
+          <small className="userInterface-stats-category">
+            Total potions used
+          </small>
+          <p>{this.state.totalTimesHealed.toLocaleString()}</p>
+          <small>Check out your stats to know more about your adventure!</small>
         </div>
       );
     }
@@ -2416,6 +2517,15 @@ class UserInterface extends Component {
                   onClick={this.fetchLeftMenuSettingSelection}
                 >
                   <small>Idle</small>
+                </button>
+              </div>
+              <div className="mx-auto" id="userInterface-userSettings-menu-tab">
+                <button
+                  type="button"
+                  class="userInterface-userSettings-menu-tab-button btn btn-dark mx-auto"
+                  onClick={this.fetchLeftMenuSettingSelection}
+                >
+                  <small>Stats</small>
                 </button>
               </div>
             </div>

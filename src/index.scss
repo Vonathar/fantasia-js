@@ -584,7 +584,7 @@ code {
 #userInterface-enemy-div {
   position: relative;
   left: 8vw;
-  height: 0;
+  height: 25vh;
 }
 
 #userInterface-enemy-drop-div {
@@ -851,7 +851,8 @@ code {
 
 #userInterface-idle-div,
 #userInterface-upgrades-div,
-#userInterface-pets-div {
+#userInterface-pets-div,
+#userInterface-stats-div {
   border-radius: 0 0 25px 25px;
   position: relative;
   width: 25vw;

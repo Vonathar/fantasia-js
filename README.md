@@ -59,17 +59,15 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.4.3
+### 1.4.4
 
 #### Gameplay
 
-- N/a
+- Add a tab to display player stats!
 
 #### Other
 
-- Fixed a bug causing the loot from the enemy to overlap with the skillbar [Issue #10]
-- Prevent loot from overaccumulating by automatically collecting it past a fixed point
-- The coordinates of the starting point for the loot animation are now centered
+- N/a
 
 ## License
 
