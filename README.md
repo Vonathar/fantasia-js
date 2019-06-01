@@ -59,15 +59,15 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.4.4
+### 1.4.5
 
 #### Gameplay
 
-- Add a tab to display player stats!
+- Quests are now available - complete assigned tasks to gain Adventure Points!
 
 #### Other
 
-- N/a
+- Remove the 'Idle' window
 
 ## License
 

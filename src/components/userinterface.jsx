@@ -4,6 +4,7 @@ import coinImageOne from "../img/coin_1.png";
 import resourceOneImage from "../img/resource_1.png";
 import resourceTwoImage from "../img/resource_2.png";
 import resourceThreeImage from "../img/resource_3.png";
+import achievementPointImage from "../img/achievement_1.png";
 /* [IMG] Player */
 import playerImageOne from "../img/player_1.png";
 import playerHealthImage from "../img/health_1.png";
@@ -124,6 +125,157 @@ class UserInterface extends Component {
     totalTimesHealed: 0,
     totalMoneySpent: 0,
     totalMoneyEarned: 0,
+    /* Quests values */
+    quests: {
+      playerAttacks: {
+        adventurePointsHeld: 5,
+        timesAchieved: 0,
+        nextRequired: 50,
+        required: [
+          50,
+          500,
+          2500,
+          10000,
+          25000,
+          50000,
+          75000,
+          100000,
+          150000,
+          200000
+        ]
+      },
+      skillsUsed: {
+        adventurePointsHeld: 5,
+        timesAchieved: 0,
+        nextRequired: 5,
+        required: [
+          5,
+          50,
+          250,
+          500,
+          1000,
+          2000,
+          5000,
+          10000,
+          20000,
+          50000,
+          100000
+        ]
+      },
+      playerDamageDealt: {
+        adventurePointsHeld: 5,
+        timesAchieved: 0,
+        nextRequired: 1000,
+        required: [
+          1000,
+          5000,
+          50000,
+          250000,
+          1000000,
+          2500000,
+          5000000,
+          7500000,
+          10000000,
+          15000000,
+          20000000
+        ]
+      },
+      petDamageDealt: {
+        adventurePointsHeld: 5,
+        timesAchieved: 0,
+        nextRequired: 500,
+        required: [
+          500,
+          5000,
+          50000,
+          250000,
+          1000000,
+          2500000,
+          5000000,
+          7500000,
+          10000000,
+          15000000,
+          20000000
+        ]
+      },
+      enemiesKilled: {
+        adventurePointsHeld: 5,
+        timesAchieved: 0,
+        nextRequired: 5,
+        required: [
+          5,
+          50,
+          250,
+          500,
+          1000,
+          2000,
+          5000,
+          10000,
+          20000,
+          50000,
+          100000
+        ]
+      },
+      stageUnlocked: {
+        adventurePointsHeld: 5,
+        timesAchieved: 0,
+        nextRequired: 5,
+        required: [
+          5,
+          10,
+          20,
+          30,
+          40,
+          50,
+          70,
+          100,
+          150,
+          200,
+          250,
+          300,
+          350,
+          400,
+          450,
+          500
+        ]
+      },
+      timesHealed: {
+        adventurePointsHeld: 5,
+        timesAchieved: 0,
+        nextRequired: 5,
+        required: [
+          5,
+          50,
+          250,
+          500,
+          1000,
+          2000,
+          5000,
+          10000,
+          20000,
+          50000,
+          100000
+        ]
+      },
+      moneyEarned: {
+        adventurePointsHeld: 5,
+        timesAchieved: 0,
+        nextRequired: 1000,
+        required: [
+          1000,
+          5000,
+          50000,
+          250000,
+          1000000,
+          2500000,
+          5000000,
+          7500000,
+          10000000,
+          15000000,
+          20000000
+        ]
+      }
+    },
 
     /* Stage settings */
     stageCurrent: 1,
@@ -409,6 +561,7 @@ class UserInterface extends Component {
       623
     ],
     /* Inventory values */
+    adventurePoints: 0,
     coins: 0,
     coinsToBeCollected: 0,
     isCoinCollected: false,
@@ -439,6 +592,53 @@ class UserInterface extends Component {
     playerAttackInterval: setInterval(() => {
       this.playerAttackPerSecond();
     }, 1000)
+  };
+
+  /*
+  Quests UI 
+    'questName' => a string, passed each time the function is called, to define 
+      which key of the 'quests' object the specific call affects.
+    'observedValue' => a reference to the value which determines the quest's 
+      advancement (as it is already in the original state).
+
+  SAMPLE CALL:
+          this.checkIfQuestConditionsMet(
+        "playerAttacks",
+        this.state.totalPlayerAttacks
+      );
+
+  */
+  checkIfQuestConditionsMet = (questName, observedValue) => {
+    // Create a copy of the quests object
+    let quests = { ...this.state.quests };
+    // If the relevant observed value is higher than the one required for the next progression
+    if (observedValue >= quests[questName].nextRequired) {
+      // Set the first level of the quest as achieved
+      quests[questName].timesAchieved += 1;
+      // Change the next required value to be the next element in the array after the current required value
+      quests[questName].nextRequired = [
+        quests[questName].required[quests[questName].timesAchieved]
+      ];
+      this.setState({
+        adventurePoints:
+          this.state.adventurePoints + quests[questName].adventurePointsHeld
+      });
+      // Set the state's 'quests' object to be a clone of the modified copy
+      this.setState({ quests });
+      // Push a paragraph to the battle log
+      this.pushNewParagraphToBattleLog(
+        <p>
+          <small className="text-primary">
+            Quest completed! + {quests[questName].adventurePointsHeld} AP
+          </small>
+        </p>
+      );
+    }
+    // Increase the rewarded adventure points
+    if (quests[questName].timesAchieved !== 0) {
+      quests[questName].adventurePointsHeld =
+        quests[questName].timesAchieved * 10;
+    }
   };
 
   /* Battle Log UI*/
@@ -1265,6 +1465,11 @@ class UserInterface extends Component {
     );
     // Update player stats
     this.setState({ totalEnemiesKilled: this.state.totalEnemiesKilled + 1 });
+    // Check if the quests are completed
+    this.checkIfQuestConditionsMet(
+      "enemiesKilled",
+      this.state.totalEnemiesKilled
+    );
 
     setTimeout(() => {
       // Generate a new enemy
@@ -1301,6 +1506,15 @@ class UserInterface extends Component {
         totalPlayerDamageDealt:
           this.state.totalPlayerDamageDealt + this.calculateTotalClickDamage()
       });
+      // After every attack, check if the quests are completed
+      this.checkIfQuestConditionsMet(
+        "playerAttacks",
+        this.state.totalPlayerAttacks
+      );
+      this.checkIfQuestConditionsMet(
+        "playerDamageDealt",
+        this.state.totalPlayerDamageDealt
+      );
       if (
         // When enemy is dead
         this.state.enemyHealthCurrent <= 1 &&
@@ -1510,6 +1724,8 @@ class UserInterface extends Component {
     }
     // Update the stats counter
     this.setState({ totalSkillsUsed: this.state.totalSkillsUsed + 1 });
+    // Check if the quests are completed
+    this.checkIfQuestConditionsMet("skillsUsed", this.state.totalSkillsUsed);
   };
 
   renderSkillOneDescription = () => {
@@ -1689,6 +1905,11 @@ class UserInterface extends Component {
       );
       // Update the stats
       this.setState({ totalTimesHealed: this.state.totalTimesHealed + 1 });
+      // Check if the quests are completed
+      this.checkIfQuestConditionsMet(
+        "timesHealed",
+        this.state.totalTimesHealed
+      );
     }
   };
 
@@ -1704,6 +1925,11 @@ class UserInterface extends Component {
         totalPetDamageDealt:
           this.state.totalPetDamageDealt + this.calculateTotalDamagePerSecond()
       });
+      // Check if the quests are completed
+      this.checkIfQuestConditionsMet(
+        "petDamageDealt",
+        this.state.totalPetDamageDealt
+      );
       if (
         // If enemy is dead
         this.state.enemyHealthCurrent <= 1 &&
@@ -1927,6 +2153,11 @@ class UserInterface extends Component {
         // Prevent coins spawned after to also be animated
         isCoinCollected: false
       });
+      // Check if the quests are completed
+      this.checkIfQuestConditionsMet(
+        "moneyEarned",
+        this.state.totalMoneyEarned
+      );
     }, 1000);
   };
 
@@ -2159,6 +2390,143 @@ class UserInterface extends Component {
           </small>
           <p>{this.state.totalTimesHealed.toLocaleString()}</p>
           <small>Check out your stats to know more about your adventure!</small>
+        </div>
+      );
+    }
+    // Quests tab selected
+    if (this.state.leftMenuSettingSelected === "Quests") {
+      return (
+        <div id="userInterface-stats-div">
+          <p>
+            <strong>Quests</strong>
+          </p>
+          {/* Total AP */}
+          <p>
+            {this.state.adventurePoints}
+            <img src={achievementPointImage} />
+          </p>
+          {/* Quest #1  -  Player attacks */}
+          {/* Description */}
+          <small className="userInterface-stats-category">
+            Attack the enemy {this.state.quests.playerAttacks.nextRequired}{" "}
+            times.
+          </small>{" "}
+          {/* Achievement Points */}
+          <small>
+            {this.state.achievementPointImage}{" "}
+            <img src={achievementPointImage} />
+            {this.state.quests.playerAttacks.adventurePointsHeld} AP
+          </small>
+          {/* Done/Required summary */}
+          <p>
+            {this.state.totalPlayerAttacks.toLocaleString()}/
+            {this.state.quests.playerAttacks.nextRequired}
+          </p>
+          {/* Quest #2  -  Pet damage */}
+          {/* Description */}
+          <small className="userInterface-stats-category">
+            Use your pets to deal{" "}
+            {this.state.quests.petDamageDealt.nextRequired.toLocaleString()}{" "}
+            damage.
+          </small>{" "}
+          {/* Achievement Points */}
+          <small>
+            {this.state.achievementPointImage}{" "}
+            <img src={achievementPointImage} />
+            {this.state.quests.petDamageDealt.adventurePointsHeld} AP
+          </small>
+          {/* Done/Required summary */}
+          <p>
+            {this.state.totalPetDamageDealt.toLocaleString()}/
+            {this.state.quests.petDamageDealt.nextRequired.toLocaleString()}
+          </p>
+          {/* Quest #3  -  Player damage */}
+          {/* Description */}
+          <small className="userInterface-stats-category">
+            Actively attack the enemy to deal{" "}
+            {this.state.quests.playerDamageDealt.nextRequired.toLocaleString()}{" "}
+            damage.
+          </small>{" "}
+          {/* Achievement Points */}
+          <small>
+            {this.state.achievementPointImage}{" "}
+            <img src={achievementPointImage} />
+            {this.state.quests.playerDamageDealt.adventurePointsHeld} AP
+          </small>
+          {/* Done/Required summary */}
+          <p>
+            {this.state.totalPlayerDamageDealt.toLocaleString()}/
+            {this.state.quests.playerDamageDealt.nextRequired.toLocaleString()}
+          </p>
+          {/* Quest #4  -  Total money earned */}
+          {/* Description */}
+          <small className="userInterface-stats-category">
+            Earn a total of{" "}
+            {this.state.quests.moneyEarned.nextRequired.toLocaleString()} coins.
+          </small>{" "}
+          {/* Achievement Points */}
+          <small>
+            {this.state.achievementPointImage}{" "}
+            <img src={achievementPointImage} />
+            {this.state.quests.moneyEarned.adventurePointsHeld} AP
+          </small>
+          {/* Done/Required summary */}
+          <p>
+            {this.state.totalMoneyEarned.toLocaleString()}/
+            {this.state.quests.moneyEarned.nextRequired.toLocaleString()}
+          </p>
+          {/* Quest #5  -  Total skills used */}
+          {/* Description */}
+          <small className="userInterface-stats-category">
+            Use your active skills{" "}
+            {this.state.quests.skillsUsed.nextRequired.toLocaleString()} times.
+          </small>{" "}
+          {/* Achievement Points */}
+          <small>
+            {this.state.achievementPointImage}{" "}
+            <img src={achievementPointImage} />
+            {this.state.quests.skillsUsed.adventurePointsHeld} AP
+          </small>
+          {/* Done/Required summary */}
+          <p>
+            {this.state.totalSkillsUsed.toLocaleString()}/
+            {this.state.quests.skillsUsed.nextRequired.toLocaleString()}
+          </p>
+          {/* Quest #6  -  Total player heals */}
+          {/* Description */}
+          <small className="userInterface-stats-category">
+            Heal yourself with potions{" "}
+            {this.state.quests.timesHealed.nextRequired.toLocaleString()} times.
+          </small>{" "}
+          {/* Achievement Points */}
+          <small>
+            {this.state.achievementPointImage}{" "}
+            <img src={achievementPointImage} />
+            {this.state.quests.timesHealed.adventurePointsHeld} AP
+          </small>
+          {/* Done/Required summary */}
+          <p>
+            {this.state.totalTimesHealed.toLocaleString()}/
+            {this.state.quests.timesHealed.nextRequired.toLocaleString()}
+          </p>
+          {/* Quest #7  -  Total enemies killed */}
+          {/* Description */}
+          <small className="userInterface-stats-category">
+            Kill {this.state.quests.enemiesKilled.nextRequired.toLocaleString()}{" "}
+            enemies.
+          </small>{" "}
+          {/* Achievement Points */}
+          <small>
+            {this.state.achievementPointImage}{" "}
+            <img src={achievementPointImage} />
+            {this.state.quests.enemiesKilled.adventurePointsHeld} AP
+          </small>
+          {/* Done/Required summary */}
+          <p>
+            {this.state.totalEnemiesKilled.toLocaleString()}/
+            {this.state.quests.enemiesKilled.nextRequired.toLocaleString()}
+          </p>
+          <small>Collect AP and progress in your adventure!</small>
         </div>
       );
     }
@@ -2516,7 +2884,7 @@ class UserInterface extends Component {
                   class="userInterface-userSettings-menu-tab-button btn btn-dark mx-auto"
                   onClick={this.fetchLeftMenuSettingSelection}
                 >
-                  <small>Idle</small>
+                  <small>Quests</small>
                 </button>
               </div>
               <div className="mx-auto" id="userInterface-userSettings-menu-tab">
