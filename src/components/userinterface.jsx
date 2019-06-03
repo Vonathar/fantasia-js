@@ -590,6 +590,8 @@ class UserInterface extends Component {
     adventurePoints: 0,
     coins: 0,
     coinsToBeCollected: 0,
+    // Cumulative value of coins which will be added to the player's inventory
+    coinsToBeCollectedValue: 0,
     isCoinCollected: false,
     relics: 0,
     lootBags: 0,
@@ -933,23 +935,35 @@ class UserInterface extends Component {
   renderPetPriceParagraph = petNumber => {
     if (petNumber === 2) {
       if (this.state.petTwoUpgradeLevel === 0) {
-        return this.state.petTwoFirstPurchasePrice.toLocaleString();
+        return this.renderNumberWithAbbreviations(
+          this.state.petTwoFirstPurchasePrice
+        );
       } else {
-        return this.state.petTwoUpgradePrice.toLocaleString();
+        return this.renderNumberWithAbbreviations(
+          this.state.petTwoUpgradePrice
+        );
       }
     }
     if (petNumber === 3) {
       if (this.state.petThreeUpgradeLevel === 0) {
-        return this.state.petThreeFirstPurchasePrice.toLocaleString();
+        return this.renderNumberWithAbbreviations(
+          this.state.petThreeFirstPurchasePrice
+        );
       } else {
-        return this.state.petThreeUpgradePrice.toLocaleString();
+        return this.renderNumberWithAbbreviations(
+          this.state.petThreeUpgradePrice
+        );
       }
     }
     if (petNumber === 4) {
       if (this.state.petFourUpgradeLevel === 0) {
-        return this.state.petFourFirstPurchasePrice.toLocaleString();
+        return this.renderNumberWithAbbreviations(
+          this.state.petFourFirstPurchasePrice
+        );
       } else {
-        return this.state.petFourUpgradePrice.toLocaleString();
+        return this.renderNumberWithAbbreviations(
+          this.state.petFourUpgradePrice
+        );
       }
     }
   };
@@ -1147,7 +1161,7 @@ class UserInterface extends Component {
     // Set the bar's width according to the percentage of health remaining
     return (
       "progress-bar bg-danger progress-bar-striped progress-bar-animated progress" +
-      playerHealthPercentage.toString()
+      playerHealthPercentage
     );
   };
 
@@ -1161,7 +1175,7 @@ class UserInterface extends Component {
     // Set the bar's width according to the percentage of experience
     return (
       "progress-bar bg-success progress-bar-striped progress-bar-animated progress" +
-      playerExperiencePercentage.toString()
+      playerExperiencePercentage
     );
   };
 
@@ -1176,7 +1190,10 @@ class UserInterface extends Component {
         this.state.playerExperienceRequired,
       // Raise the experience required for the next level
       playerExperienceRequired: 500 * Math.pow(1.05, this.state.playerLevel),
-      playerHealthMax: Math.round(500 * Math.pow(1.05, this.state.playerLevel))
+      playerHealthMax: Math.round(500 * Math.pow(1.05, this.state.playerLevel)),
+      playerHealthCurrent: Math.round(
+        500 * Math.pow(1.05, this.state.playerLevel)
+      )
     });
 
     //Check if any of the skills are to be unlocked or leveled up
@@ -1461,7 +1478,10 @@ class UserInterface extends Component {
     }
     this.setState({
       // Drop coins on the ground
-      coinsToBeCollected: this.state.coinsToBeCollected + coinsDroppedByEnemy
+      coinsToBeCollected: this.state.coinsToBeCollected + coinsDroppedByEnemy,
+      coinsToBeCollectedValue:
+        this.state.coinsToBeCollectedValue +
+        coinsDroppedByEnemy * this.state.enemyCoinsValue
     });
     // Give XP, 100% chance
     this.setState({
@@ -1495,7 +1515,8 @@ class UserInterface extends Component {
         <small>
           You killed {this.state.enemyNameCurrent} and received{" "}
           <span className="text-success">
-            {this.state.enemyExperienceHeld.toLocaleString()} XP
+            {this.renderNumberWithAbbreviations(this.state.enemyExperienceHeld)}{" "}
+            XP
           </span>
           !
         </small>
@@ -1601,11 +1622,13 @@ class UserInterface extends Component {
           <small>
             {this.state.heroSkillOneName} deals{" "}
             <span className="text-warning">
-              {Math.round(
-                this.calculateTotalClickDamage() *
-                  this.state.heroSkillOneDamageMultiplier *
-                  this.state.heroSkillOneNumberOfAttacks
-              ).toLocaleString()}{" "}
+              {this.renderNumberWithAbbreviations(
+                Math.round(
+                  this.calculateTotalClickDamage() *
+                    this.state.heroSkillOneDamageMultiplier *
+                    this.state.heroSkillOneNumberOfAttacks
+                )
+              )}{" "}
               DMG
             </span>
             !
@@ -1748,11 +1771,13 @@ class UserInterface extends Component {
           <small>
             {this.state.heroSkillFourName} deals{" "}
             <span className="text-warning">
-              {Math.round(
-                this.calculateTotalDamagePerSecond() *
-                  this.state.heroSkillFourDamageMultiplier *
-                  this.state.heroSkillFourNumberOfAttacks
-              ).toLocaleString()}{" "}
+              {this.renderNumberWithAbbreviations(
+                Math.round(
+                  this.calculateTotalDamagePerSecond() *
+                    this.state.heroSkillFourDamageMultiplier *
+                    this.state.heroSkillFourNumberOfAttacks
+                )
+              )}{" "}
               DMG
             </span>
             !
@@ -1937,7 +1962,10 @@ class UserInterface extends Component {
         <p>
           <small>
             Player gains{" "}
-            <span className="text-success">{Math.round(amountHealed)} HP</span>!
+            <span className="text-success">
+              {this.renderNumberWithAbbreviations(Math.round(amountHealed))} HP
+            </span>
+            !
           </small>
         </p>
       );
@@ -2073,7 +2101,7 @@ class UserInterface extends Component {
         ),
         enemyAttack: Math.round(100 * Math.pow(1.04, this.state.stageCurrent)),
         enemyCoinsValue: Math.round(
-          25 * Math.pow(1.05, this.state.stageCurrent)
+          100 * Math.pow(1.05, this.state.stageCurrent)
         ),
         // Reinitialise the values of the player
         playerHealthCurrent: this.state.playerHealthMax
@@ -2090,7 +2118,7 @@ class UserInterface extends Component {
     // Set the bar's width according to the percentage of health remaining
     return (
       "progress-bar bg-danger progress-bar-striped progress-bar-animated progress" +
-      enemyHealthPercentage.toString()
+      enemyHealthPercentage
     );
   };
 
@@ -2179,15 +2207,13 @@ class UserInterface extends Component {
     setTimeout(() => {
       this.setState({
         // Add the collected coins to the coins held in the inventory
-        coins:
-          this.state.coins +
-          this.state.coinsToBeCollected * this.state.enemyCoinsValue,
+        coins: this.state.coins + this.state.coinsToBeCollectedValue,
         totalMoneyEarned:
           // Update the player stats
-          this.state.totalMoneyEarned +
-          this.state.coinsToBeCollected * this.state.enemyCoinsValue,
+          this.state.totalMoneyEarned + this.state.coinsToBeCollectedValue,
         // Remove the coins from the ground
         coinsToBeCollected: 0,
+        coinsToBeCollectedValue: 0,
         // Prevent coins spawned after to also be animated
         isCoinCollected: false
       });
@@ -2309,9 +2335,9 @@ class UserInterface extends Component {
         stageMaxUnlocked: this.state.stageMaxUnlocked + 10
       });
     }
-    // Increase levels
+    // Increase level
     if (itemName === "levels") {
-      this.setState({ playerLevel: this.state.playerLevel + 10 });
+      this.playerLevelUp();
     }
   };
 
@@ -2368,15 +2394,19 @@ class UserInterface extends Component {
               />
               {/* Show the increase the upgrade would have on the current player damage */}
               +
-              {Math.round(
-                50 * Math.pow(1.045, this.state.upgradeHeroClickDamageLevel)
-              ) - this.state.playerAttackPlaceholder}
+              {this.renderNumberWithAbbreviations(
+                Math.round(
+                  50 * Math.pow(1.045, this.state.upgradeHeroClickDamageLevel)
+                ) - this.state.playerAttackPlaceholder
+              )}
             </small>
             <small
               id="userInterface-upgrades-upgradeOne-price"
               className="userInterface-upgrades-upgrade-price mx-auto"
             >
-              {this.state.upgradeHeroClickDamagePrice.toLocaleString()}
+              {this.renderNumberWithAbbreviations(
+                this.state.upgradeHeroClickDamagePrice
+              )}
               <img
                 draggable="false"
                 alt="coin"
@@ -2439,21 +2469,31 @@ class UserInterface extends Component {
           <small className="userInterface-stats-category">
             Total player damage
           </small>
-          <p>{this.state.totalPlayerDamageDealt.toLocaleString()}</p>
+          <p>
+            {this.renderNumberWithAbbreviations(
+              this.state.totalPlayerDamageDealt
+            )}
+          </p>
           <small className="userInterface-stats-category">
             Total pet damage
           </small>
-          <p>{this.state.totalPetDamageDealt.toLocaleString()}</p>
+          <p>
+            {this.renderNumberWithAbbreviations(this.state.totalPetDamageDealt)}
+          </p>
           <small className="userInterface-stats-category">Total kills</small>
           <p>{this.state.totalEnemiesKilled.toLocaleString()}</p>
           <small className="userInterface-stats-category">
             Total money earned
           </small>
-          <p>{this.state.totalMoneyEarned.toLocaleString()}</p>
+          <p>
+            {this.renderNumberWithAbbreviations(this.state.totalMoneyEarned)}
+          </p>
           <small className="userInterface-stats-category">
             Total money spent
           </small>
-          <p>{this.state.totalMoneySpent.toLocaleString()}</p>
+          <p>
+            {this.renderNumberWithAbbreviations(this.state.totalMoneySpent)}
+          </p>
           <small className="userInterface-stats-category">
             Total skills used
           </small>
@@ -2488,7 +2528,10 @@ class UserInterface extends Component {
           {/* Quest #1  -  Player attacks */}
           {/* Description */}
           <small className="userInterface-stats-category">
-            Attack the enemy {this.state.quests.playerAttacks.nextRequired}{" "}
+            Attack the enemy{" "}
+            {this.renderNumberWithAbbreviations(
+              this.state.quests.playerAttacks.nextRequired
+            )}{" "}
             times.
           </small>{" "}
           {/* Achievement Points */}
@@ -2502,14 +2545,18 @@ class UserInterface extends Component {
           </small>
           {/* Done/Required summary */}
           <p>
-            {this.state.totalPlayerAttacks.toLocaleString()}/
-            {this.state.quests.playerAttacks.nextRequired}
+            {this.renderNumberWithAbbreviations(this.state.totalPlayerAttacks)}/
+            {this.renderNumberWithAbbreviations(
+              this.state.quests.playerAttacks.nextRequired
+            )}
           </p>
           {/* Quest #2  -  Pet damage */}
           {/* Description */}
           <small className="userInterface-stats-category">
             Use your pets to deal{" "}
-            {this.state.quests.petDamageDealt.nextRequired.toLocaleString()}{" "}
+            {this.renderNumberWithAbbreviations(
+              this.state.quests.petDamageDealt.nextRequired
+            )}{" "}
             damage.
           </small>{" "}
           {/* Achievement Points */}
@@ -2523,14 +2570,19 @@ class UserInterface extends Component {
           </small>
           {/* Done/Required summary */}
           <p>
-            {this.state.totalPetDamageDealt.toLocaleString()}/
-            {this.state.quests.petDamageDealt.nextRequired.toLocaleString()}
+            {this.renderNumberWithAbbreviations(this.state.totalPetDamageDealt)}
+            /
+            {this.renderNumberWithAbbreviations(
+              this.state.quests.petDamageDealt.nextRequired
+            )}
           </p>
           {/* Quest #3  -  Player damage */}
           {/* Description */}
           <small className="userInterface-stats-category">
             Actively attack the enemy to deal{" "}
-            {this.state.quests.playerDamageDealt.nextRequired.toLocaleString()}{" "}
+            {this.renderNumberWithAbbreviations(
+              this.state.quests.playerDamageDealt.nextRequired
+            )}{" "}
             damage.
           </small>{" "}
           {/* Achievement Points */}
@@ -2544,14 +2596,22 @@ class UserInterface extends Component {
           </small>
           {/* Done/Required summary */}
           <p>
-            {this.state.totalPlayerDamageDealt.toLocaleString()}/
-            {this.state.quests.playerDamageDealt.nextRequired.toLocaleString()}
+            {this.renderNumberWithAbbreviations(
+              this.state.totalPlayerDamageDealt
+            )}
+            /
+            {this.renderNumberWithAbbreviations(
+              this.state.quests.playerDamageDealt.nextRequired
+            )}
           </p>
           {/* Quest #4  -  Total money earned */}
           {/* Description */}
           <small className="userInterface-stats-category">
             Earn a total of{" "}
-            {this.state.quests.moneyEarned.nextRequired.toLocaleString()} coins.
+            {this.renderNumberWithAbbreviations(
+              this.state.quests.moneyEarned.nextRequired
+            )}{" "}
+            coins.
           </small>{" "}
           {/* Achievement Points */}
           <small>
@@ -2564,8 +2624,10 @@ class UserInterface extends Component {
           </small>
           {/* Done/Required summary */}
           <p>
-            {this.state.totalMoneyEarned.toLocaleString()}/
-            {this.state.quests.moneyEarned.nextRequired.toLocaleString()}
+            {this.renderNumberWithAbbreviations(this.state.totalMoneyEarned)}/
+            {this.renderNumberWithAbbreviations(
+              this.state.quests.moneyEarned.nextRequired
+            )}
           </p>
           {/* Quest #5  -  Total skills used */}
           {/* Description */}
@@ -2692,7 +2754,7 @@ class UserInterface extends Component {
                   this.giveItemDebug("levels");
                 }}
               >
-                Player level +10
+                Player level +1
               </button>
             </small>
           </div>
@@ -2730,15 +2792,22 @@ class UserInterface extends Component {
                 src={clickPerSecondDamageImage}
               />
               {/* The attack which would be added to the pet after the upgrade */}
-              {this.state.petOneDamagePerSecondCurrent} (+
-              {Math.round(
-                this.state.petOneDamagePerSecondBase *
-                  Math.pow(1.05, this.state.petOneUpgradeLevel)
-              ) - this.state.petOneDamagePerSecondCurrent}
+              {this.renderNumberWithAbbreviations(
+                this.state.petOneDamagePerSecondCurrent
+              )}{" "}
+              (+
+              {this.renderNumberWithAbbreviations(
+                Math.round(
+                  this.state.petOneDamagePerSecondBase *
+                    Math.pow(1.05, this.state.petOneUpgradeLevel)
+                ) - this.state.petOneDamagePerSecondCurrent
+              )}
               )
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
-              {this.state.petOneUpgradePrice.toLocaleString()}
+              {this.renderNumberWithAbbreviations(
+                this.state.petOneUpgradePrice
+              )}
               <img
                 draggable="false"
                 alt="coin"
@@ -2776,11 +2845,16 @@ class UserInterface extends Component {
                 src={clickPerSecondDamageImage}
               />
               {/* The attack which would be added to the pet after the upgrade */}
-              {this.state.petTwoDamagePerSecondCurrent} (+
-              {Math.round(
-                this.state.petTwoDamagePerSecondBase *
-                  Math.pow(1.05, this.state.petTwoUpgradeLevel)
-              ) - this.state.petTwoDamagePerSecondCurrent}
+              {this.renderNumberWithAbbreviations(
+                this.state.petTwoDamagePerSecondCurrent
+              )}{" "}
+              (+
+              {this.renderNumberWithAbbreviations(
+                Math.round(
+                  this.state.petTwoDamagePerSecondBase *
+                    Math.pow(1.05, this.state.petTwoUpgradeLevel)
+                ) - this.state.petTwoDamagePerSecondCurrent
+              )}
               )
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
@@ -2822,11 +2896,16 @@ class UserInterface extends Component {
                 src={clickPerSecondDamageImage}
               />
               {/* The attack which would be added to the pet after the upgrade */}
-              {this.state.petThreeDamagePerSecondCurrent} (+
-              {Math.round(
-                this.state.petThreeDamagePerSecondBase *
-                  Math.pow(1.05, this.state.petThreeUpgradeLevel)
-              ) - this.state.petThreeDamagePerSecondCurrent}
+              {this.renderNumberWithAbbreviations(
+                this.state.petThreeDamagePerSecondCurrent
+              )}{" "}
+              (+
+              {this.renderNumberWithAbbreviations(
+                Math.round(
+                  this.state.petThreeDamagePerSecondBase *
+                    Math.pow(1.05, this.state.petThreeUpgradeLevel)
+                ) - this.state.petThreeDamagePerSecondCurrent
+              )}
               )
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
@@ -2868,11 +2947,16 @@ class UserInterface extends Component {
                 src={clickPerSecondDamageImage}
               />
               {/* The attack which would be added to the pet after the upgrade */}
-              {this.state.petFourDamagePerSecondCurrent} (+
-              {Math.round(
-                this.state.petFourDamagePerSecondBase *
-                  Math.pow(1.05, this.state.petFourUpgradeLevel)
-              ) - this.state.petFourDamagePerSecondCurrent}
+              {this.renderNumberWithAbbreviations(
+                this.state.petFourDamagePerSecondCurrent
+              )}{" "}
+              (+
+              {this.renderNumberWithAbbreviations(
+                Math.round(
+                  this.state.petFourDamagePerSecondBase *
+                    Math.pow(1.05, this.state.petFourUpgradeLevel)
+                ) - this.state.petFourDamagePerSecondCurrent
+              )}
               )
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
@@ -2934,6 +3018,32 @@ class UserInterface extends Component {
       false
     );
   }
+
+  // Return the number formatted for readability
+  renderNumberWithAbbreviations = number => {
+    // 1k - 999k
+    if (number >= 1000 && number < 1000000) {
+      return Math.sign(number) * (Math.abs(number) / 1000).toFixed(1) + "k";
+    }
+    // 1m - 999m
+    if (number >= 1000000 && number < 1000000000) {
+      return Math.sign(number) * (Math.abs(number) / 1000000).toFixed(1) + "m";
+    }
+    // 1b - 999b
+    if (number >= 1000000000 && number < 1000000000000) {
+      return (
+        Math.sign(number) * (Math.abs(number) / 1000000000).toFixed(1) + "b"
+      );
+    }
+    // 1t - 999t
+    if (number >= 1000000000000 && number < 1000000000000000) {
+      return (
+        Math.sign(number) * (Math.abs(number) / 1000000000000).toFixed(1) + "t"
+      );
+    } else {
+      return number;
+    }
+  };
 
   render() {
     return (
@@ -3007,7 +3117,9 @@ class UserInterface extends Component {
               src={clickDamageImage}
             />
             <small className="userInterface-topSummary-section-paragraph mx-auto">
-              {this.calculateTotalClickDamage()}
+              {this.renderNumberWithAbbreviations(
+                this.calculateTotalClickDamage()
+              )}
             </small>
           </div>
           <div className="userInterface-topSummary-section">
@@ -3021,7 +3133,9 @@ class UserInterface extends Component {
               src={clickPerSecondDamageImage}
             />
             <small className="userInterface-topSummary-section-paragraph mx-auto">
-              {this.calculateTotalDamagePerSecond().toLocaleString()}
+              {this.renderNumberWithAbbreviations(
+                this.calculateTotalDamagePerSecond()
+              )}
             </small>
           </div>
           <div className="userInterface-topSummary-section">
@@ -3035,7 +3149,7 @@ class UserInterface extends Component {
               src={playerHealthImage}
             />
             <small className="userInterface-topSummary-section-paragraph mx-auto">
-              {this.state.playerHealthMax.toLocaleString()}
+              {this.renderNumberWithAbbreviations(this.state.playerHealthMax)}
             </small>
           </div>
         </div>
@@ -3117,7 +3231,7 @@ class UserInterface extends Component {
                 className="mx-auto"
                 id="userInterface-inventory-money-paragraph"
               >
-                {this.state.coins.toLocaleString()}
+                {this.renderNumberWithAbbreviations(this.state.coins)}
               </p>
             </div>
           </div>
