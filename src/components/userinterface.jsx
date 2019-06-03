@@ -92,20 +92,12 @@ class UserInterface extends Component {
       </p>,
       <p>
         <small className="text-info">
-          Remember: if the stages are too hard, keep playing the current stage
-          to become stronger!
-        </small>
-      </p>,
-      <p>
-        <small>
-          <em>
-            Stay tuned for more updates, including improved Idle mode, gear,
-            rebirth and more!
-          </em>
+          ** Press [D] to enable Debug Mode **
         </small>
       </p>
     ],
     /* Global settings */
+    isDebugModeActive: false,
     backgroundImageCurrent: backgroundImageThree,
     backgroundImages: [
       backgroundImageOne,
@@ -649,7 +641,7 @@ class UserInterface extends Component {
     if (
       // If the observed value is bigger than the required value
       observedValue >= quests[questName].nextRequired &&
-      // If the required value is not the part of the last quest of its kind
+      // If the required value is not the last quest of its kind
       quests[questName].nextRequired !==
         quests[questName].required[quests[questName].required.length - 1]
     ) {
@@ -1411,6 +1403,12 @@ class UserInterface extends Component {
     }
     if (event.key === "4") {
       this.playerUseActiveSkill(4);
+    }
+    if (event.key === "d") {
+      this.setState({
+        isDebugModeActive: !this.state.isDebugModeActive,
+        leftMenuSettingSelected: "Hero"
+      });
     }
   };
 
@@ -2294,6 +2292,45 @@ class UserInterface extends Component {
     return lootbagsToBeRendered;
   };
 
+  // Increase the value of the player for debugging
+  giveItemDebug = itemName => {
+    // Increase coins
+    if (itemName === "coins") {
+      this.setState({ coins: this.state.coins + 1000000 });
+    }
+    // Increase potions
+    if (itemName === "potions") {
+      this.setState({ food: this.state.food + 1000 });
+    }
+    // Increase stages
+    if (itemName === "stages") {
+      this.setState({
+        stageCurrent: this.state.stageCurrent + 10,
+        stageMaxUnlocked: this.state.stageMaxUnlocked + 10
+      });
+    }
+    // Increase levels
+    if (itemName === "levels") {
+      this.setState({ playerLevel: this.state.playerLevel + 10 });
+    }
+  };
+
+  renderDebugMenu = () => {
+    if (this.state.isDebugModeActive) {
+      return (
+        <div className="mx-auto" id="userInterface-userSettings-menu-tab">
+          <button
+            type="button"
+            class="userInterface-userSettings-menu-tab-button btn btn-dark mx-auto"
+            onClick={this.fetchLeftMenuSettingSelection}
+          >
+            <small>Debug</small>
+          </button>
+        </div>
+      );
+    }
+  };
+
   /* Inventory UI*/
   fetchLeftMenuSettingSelection = event => {
     this.setState({ leftMenuSettingSelected: event.target.textContent });
@@ -2570,6 +2607,78 @@ class UserInterface extends Component {
         </div>
       );
     }
+    // Debug tab selected
+    if (this.state.leftMenuSettingSelected === "Debug") {
+      return (
+        <div
+          id="userInterface-debug-div"
+          data-toggle="tooltip"
+          title="The idle interface is currently a work in progress!"
+          data-placement="top"
+        >
+          <p>
+            <strong>Debug</strong>
+          </p>
+          <div />
+          <div className="userInterface-debug-div">
+            <small className="userInterface-debug-category">
+              <button
+                type="button"
+                class="btn btn-warning btn-sm"
+                onClick={() => {
+                  this.giveItemDebug("coins");
+                }}
+              >
+                Coins +1,000,000
+              </button>
+            </small>
+          </div>
+          <div className="userInterface-debug-div">
+            <small className="userInterface-debug-category">
+              <button
+                type="button"
+                class="btn btn-warning btn-sm"
+                onClick={() => {
+                  this.giveItemDebug("potions");
+                }}
+              >
+                Potions +1,000
+              </button>
+            </small>
+          </div>
+          <div className="userInterface-debug-div">
+            <small className="userInterface-debug-category">
+              <button
+                type="button"
+                class="btn btn-warning btn-sm"
+                onClick={() => {
+                  this.giveItemDebug("stages");
+                }}
+              >
+                Stages +10
+              </button>
+            </small>
+          </div>
+          <div className="userInterface-debug-div">
+            <small className="userInterface-debug-category">
+              <button
+                type="button"
+                class="btn btn-warning btn-sm"
+                onClick={() => {
+                  this.giveItemDebug("levels");
+                }}
+              >
+                Player level +10
+              </button>
+            </small>
+          </div>
+          <small>
+            Use the debug screen to speed your progress up in order to test the
+            game more efficiently.
+          </small>
+        </div>
+      );
+    }
     // Pets tab selected
     if (this.state.leftMenuSettingSelected === "Pets") {
       return (
@@ -2768,9 +2877,20 @@ class UserInterface extends Component {
 
   changeToRandomBackground = () => {
     let randomImageNumber = Math.round(Math.random() * 5);
-    this.setState({
-      backgroundImageCurrent: this.state.backgroundImages[randomImageNumber]
-    });
+    // If the current background image is not the same as the new randomised one
+    if (
+      this.state.backgroundImageCurrent !==
+      this.state.backgroundImages[randomImageNumber]
+    ) {
+      // Update the background image
+      this.setState({
+        backgroundImageCurrent: this.state.backgroundImages[randomImageNumber]
+      });
+      // If the new random image is the same as the current one
+    } else {
+      // Recursively call the function until the picture is different
+      this.changeToRandomBackground();
+    }
   };
 
   renderBackgroundImage = () => {
@@ -2936,6 +3056,7 @@ class UserInterface extends Component {
                   <small>Stats</small>
                 </button>
               </div>
+              {this.renderDebugMenu()}
             </div>
             {this.renderLeftMenuSettingSelection()}
           </div>

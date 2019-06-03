@@ -59,18 +59,16 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.4.6
+### 1.4.7
 
 #### Gameplay
 
-- Game rebalancing
-- Prevent multiple attacks by holding down the W/E keys
-- Add more quests!
+- Implement a debug mode to test the game more effectively [Hotkey: D]
 
 #### Other
 
-- Change animation on item drop to Y-Axis rotation
-- Prevent finished quests from awarding extra adventure points
+- The background image is now forced to change to a different one once every 5 stages
+- Remove two paragraphs from the in-game tutorial
 
 ## License
 

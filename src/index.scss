@@ -28,9 +28,6 @@ img {
   user-select: none;
 }
 
-.App {
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -852,7 +849,13 @@ code {
   top: 1vh;
 }
 
+.userInterface-debug-div {
+  position: relative;
+  margin: 1vh;
+}
+
 #userInterface-idle-div,
+#userInterface-debug-div,
 #userInterface-upgrades-div,
 #userInterface-pets-div,
 #userInterface-stats-div,
