@@ -141,7 +141,9 @@ class UserInterface extends Component {
           75000,
           100000,
           150000,
-          200000
+          200000,
+          500000,
+          1000000
         ]
       },
       skillsUsed: {
@@ -159,7 +161,9 @@ class UserInterface extends Component {
           10000,
           20000,
           50000,
-          100000
+          100000,
+          150000,
+          200000
         ]
       },
       playerDamageDealt: {
@@ -177,7 +181,12 @@ class UserInterface extends Component {
           7500000,
           10000000,
           15000000,
-          20000000
+          20000000,
+          35000000,
+          50000000,
+          100000000,
+          250000000,
+          500000000
         ]
       },
       petDamageDealt: {
@@ -195,7 +204,11 @@ class UserInterface extends Component {
           7500000,
           10000000,
           15000000,
-          20000000
+          20000000,
+          50000000,
+          100000000,
+          250000000,
+          500000000
         ]
       },
       enemiesKilled: {
@@ -213,7 +226,11 @@ class UserInterface extends Component {
           10000,
           20000,
           50000,
-          100000
+          100000,
+          200000,
+          350000,
+          500000,
+          1000000
         ]
       },
       stageUnlocked: {
@@ -236,7 +253,13 @@ class UserInterface extends Component {
           350,
           400,
           450,
-          500
+          500,
+          550,
+          600,
+          650,
+          700,
+          750,
+          800
         ]
       },
       timesHealed: {
@@ -254,7 +277,12 @@ class UserInterface extends Component {
           10000,
           20000,
           50000,
-          100000
+          100000,
+          150000,
+          200000,
+          250000,
+          350000,
+          500000
         ]
       },
       moneyEarned: {
@@ -272,7 +300,13 @@ class UserInterface extends Component {
           7500000,
           10000000,
           15000000,
-          20000000
+          20000000,
+          50000000,
+          100000000,
+          250000000,
+          500000000,
+          1200000000,
+          2500000000
         ]
       }
     },
@@ -612,7 +646,13 @@ class UserInterface extends Component {
     // Create a copy of the quests object
     let quests = { ...this.state.quests };
     // If the relevant observed value is higher than the one required for the next progression
-    if (observedValue >= quests[questName].nextRequired) {
+    if (
+      // If the observed value is bigger than the required value
+      observedValue >= quests[questName].nextRequired &&
+      // If the required value is not the part of the last quest of its kind
+      quests[questName].nextRequired !==
+        quests[questName].required[quests[questName].required.length - 1]
+    ) {
       // Set the first level of the quest as achieved
       quests[questName].timesAchieved += 1;
       // Change the next required value to be the next element in the array after the current required value
@@ -2011,8 +2051,8 @@ class UserInterface extends Component {
         enemyHasHealth: true,
         enemyLevel: level,
         enemyExperienceHeld: Math.round(100 * Math.pow(1.04, level)),
-        enemyHealthCurrent: Math.round(500 * Math.pow(1.055, level)),
-        enemyHealthMax: Math.round(500 * Math.pow(1.055, level)),
+        enemyHealthCurrent: Math.round(500 * Math.pow(1.07, level)),
+        enemyHealthMax: Math.round(500 * Math.pow(1.07, level)),
         enemyAttack: Math.round(50 * Math.pow(1.045, level)),
         enemyCoinsValue: Math.round(25 * Math.pow(1.05, level)),
         // Reinitialise the values of the player
@@ -2028,10 +2068,10 @@ class UserInterface extends Component {
           300 * Math.pow(1.04, this.state.stageCurrent)
         ),
         enemyHealthCurrent: Math.round(
-          2500 * Math.pow(1.05, this.state.stageCurrent)
+          2500 * Math.pow(1.07, this.state.stageCurrent)
         ),
         enemyHealthMax: Math.round(
-          2500 * Math.pow(1.05, this.state.stageCurrent)
+          2500 * Math.pow(1.07, this.state.stageCurrent)
         ),
         enemyAttack: Math.round(100 * Math.pow(1.04, this.state.stageCurrent)),
         enemyCoinsValue: Math.round(
@@ -2741,11 +2781,11 @@ class UserInterface extends Component {
   };
 
   componentDidMount() {
-    document.addEventListener("keydown", this.handleGlobalKeyboardInput, false);
+    document.addEventListener("keyup", this.handleGlobalKeyboardInput, false);
   }
   componentWillUnmount() {
     document.removeEventListener(
-      "keydown",
+      "keyup",
       this.handleGlobalKeyboardInput,
       false
     );

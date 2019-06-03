@@ -59,15 +59,18 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.4.5
+### 1.4.6
 
 #### Gameplay
 
-- Quests are now available - complete assigned tasks to gain Adventure Points!
+- Game rebalancing
+- Prevent multiple attacks by holding down the W/E keys
+- Add more quests!
 
 #### Other
 
-- Remove the 'Idle' window
+- Change animation on item drop to Y-Axis rotation
+- Prevent finished quests from awarding extra adventure points
 
 ## License
 

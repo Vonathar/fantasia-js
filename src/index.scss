@@ -651,11 +651,14 @@ code {
   0% {
     transform: translate3d(-5vw, -18vh, 0);
   }
-  25% {
-    transform: rotate(5deg);
+  30% {
+    transform: rotate3d(0, 1, 0, 0deg);
   }
-  50% {
-    transform: rotateZ(360deg);
+  60% {
+    transform: rotate3d(0, 1, 0, 180deg);
+  }
+  100% {
+    transform: rotate3d(0, 1, 0, 360deg);
   }
 }
 
