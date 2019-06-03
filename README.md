@@ -59,16 +59,15 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.4.7
+### 1.4.8
 
 #### Gameplay
 
-- Implement a debug mode to test the game more effectively [Hotkey: D]
+- N/a
 
 #### Other
 
-- The background image is now forced to change to a different one once every 5 stages
-- Remove two paragraphs from the in-game tutorial
+- Fix the stats/quests tabs to prevent them from overflowing on smaller screens
 
 ## License
 

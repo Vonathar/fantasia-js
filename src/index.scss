@@ -691,7 +691,7 @@ code {
 #userInterface-userSettings-div {
   display: flex;
   position: relative;
-  font-size: 0.8vw;
+  font-size: 0.7vw;
 
   top: 10vh;
 }
@@ -970,4 +970,8 @@ code {
   width: 2.5vw;
   margin: 0.1vw;
   transition-duration: 0.2s;
+}
+
+.userInterface-quests-logo {
+  width: 1.5vw;
 }

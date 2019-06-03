@@ -2480,7 +2480,10 @@ class UserInterface extends Component {
           {/* Total AP */}
           <p>
             {this.state.adventurePoints}
-            <img src={achievementPointImage} />
+            <img
+              className="userInterface-quests-logo"
+              src={achievementPointImage}
+            />
           </p>
           {/* Quest #1  -  Player attacks */}
           {/* Description */}
@@ -2491,7 +2494,10 @@ class UserInterface extends Component {
           {/* Achievement Points */}
           <small>
             {this.state.achievementPointImage}{" "}
-            <img src={achievementPointImage} />
+            <img
+              className="userInterface-quests-logo"
+              src={achievementPointImage}
+            />
             {this.state.quests.playerAttacks.adventurePointsHeld} AP
           </small>
           {/* Done/Required summary */}
@@ -2509,7 +2515,10 @@ class UserInterface extends Component {
           {/* Achievement Points */}
           <small>
             {this.state.achievementPointImage}{" "}
-            <img src={achievementPointImage} />
+            <img
+              className="userInterface-quests-logo"
+              src={achievementPointImage}
+            />
             {this.state.quests.petDamageDealt.adventurePointsHeld} AP
           </small>
           {/* Done/Required summary */}
@@ -2527,7 +2536,10 @@ class UserInterface extends Component {
           {/* Achievement Points */}
           <small>
             {this.state.achievementPointImage}{" "}
-            <img src={achievementPointImage} />
+            <img
+              className="userInterface-quests-logo"
+              src={achievementPointImage}
+            />
             {this.state.quests.playerDamageDealt.adventurePointsHeld} AP
           </small>
           {/* Done/Required summary */}
@@ -2544,7 +2556,10 @@ class UserInterface extends Component {
           {/* Achievement Points */}
           <small>
             {this.state.achievementPointImage}{" "}
-            <img src={achievementPointImage} />
+            <img
+              className="userInterface-quests-logo"
+              src={achievementPointImage}
+            />
             {this.state.quests.moneyEarned.adventurePointsHeld} AP
           </small>
           {/* Done/Required summary */}
@@ -2561,7 +2576,10 @@ class UserInterface extends Component {
           {/* Achievement Points */}
           <small>
             {this.state.achievementPointImage}{" "}
-            <img src={achievementPointImage} />
+            <img
+              className="userInterface-quests-logo"
+              src={achievementPointImage}
+            />
             {this.state.quests.skillsUsed.adventurePointsHeld} AP
           </small>
           {/* Done/Required summary */}
@@ -2578,7 +2596,10 @@ class UserInterface extends Component {
           {/* Achievement Points */}
           <small>
             {this.state.achievementPointImage}{" "}
-            <img src={achievementPointImage} />
+            <img
+              className="userInterface-quests-logo"
+              src={achievementPointImage}
+            />
             {this.state.quests.timesHealed.adventurePointsHeld} AP
           </small>
           {/* Done/Required summary */}
@@ -2595,7 +2616,10 @@ class UserInterface extends Component {
           {/* Achievement Points */}
           <small>
             {this.state.achievementPointImage}{" "}
-            <img src={achievementPointImage} />
+            <img
+              className="userInterface-quests-logo"
+              src={achievementPointImage}
+            />
             {this.state.quests.enemiesKilled.adventurePointsHeld} AP
           </small>
           {/* Done/Required summary */}
