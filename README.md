@@ -59,19 +59,16 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.4.9
+### 1.5.0
 
 #### Gameplay
 
-- All big numbers are now rendered using abbreviations [K/M/B/T] for easier reading (replaces the use of _.toString()_).
-- Fix a bug which caused all coins collected to be multiplied by the 'coinsHeld' multiplier of the _currently_ active monster
-- Bosses now drop 4 times the normal amount of coins!
-- Fix a bug in the debug window causing the player level to increase without properly updating critically dependant variables
+- New hero upgrades! [Crit DMG / Crit % / Double Attack]
+- Player stats are now rendered in the 'Stats' tab instead of in a separate div
 
 #### Other
 
-- Progress bar renderings now bypass the .toString() method
-- In debug mode, instead of leveling up 10 times the player will now level up only once per click
+- The code for hero upgrades has been entirely rewritten to improve future scalabilty.
 
 ## License
 

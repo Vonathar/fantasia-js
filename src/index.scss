@@ -518,31 +518,29 @@ code {
   border-radius: 5px;
 }
 
-#userInterface-topSummary-div {
-  border-radius: 25px;
-  background-color: rgba(0, 0, 0, 0.801);
-  color: white;
-  font-size: 0.8vw;
-
-  border-width: 0 1px 1px 1px;
-  border-color: rgba(95, 95, 95, 0.486);
-  border-style: solid;
-  left: 0;
-  right: 0;
-  position: fixed;
-  top: 41vh;
-  margin: auto;
-  width: 7vw;
-  padding: 10px;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+.userInterface-stats-summary-row {
+  display: flex;
+  margin-bottom: 1vw;
 }
 
-.userInterface-topSummary-section {
-  margin: 0.25vw 0;
+.userInterface-stats-summary-section {
+  display: block;
+  width: 4vw;
+  background-color: rgba(173, 173, 173, 0.178);
+  padding: 0.2vw;
+  border-radius: 15px;
+}
+
+.userInterface-stats-summary-section-image {
+  height: 2vh;
+}
+
+.userInterface-stats-row {
+  display: flex;
+}
+
+.userInterface-stats-row-child {
+  width: 6vw;
 }
 
 #userInterface-player-div {
@@ -793,10 +791,6 @@ code {
   background-color: rgba(255, 255, 255, 0.329);
   border-radius: 5px;
   color: black;
-}
-
-.userInterface-topSummary-section-image {
-  height: 2vh;
 }
 
 #userInterface-userSettings-menu-holder {
