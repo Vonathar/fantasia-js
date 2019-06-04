@@ -357,40 +357,44 @@ class UserInterface extends Component {
       - DPS: 1631
       
     */
-    // Pet 1
-    petOneBasicPrice: 100,
-    petOneUpgradePrice: 100,
-    petOneUpgradeLevel: 1,
-    petOneDamagePerSecondBase: 20,
-    petOneDamagePerSecondCurrent: 20,
-    petOneDamagePerSecondPlaceholder: 20,
 
-    // Pet 2
-    petTwoBasicPrice: 500,
-    petTwoFirstPurchasePrice: 2500,
-    petTwoUpgradePrice: 500,
-    petTwoUpgradeLevel: 0,
-    petTwoDamagePerSecondBase: 100,
-    petTwoDamagePerSecondCurrent: 0,
-    petTwoDamagePerSecondPlaceholder: 0,
-
-    // Pet 3
-    petThreeBasicPrice: 2500,
-    petThreeFirstPurchasePrice: 12500,
-    petThreeUpgradePrice: 2500,
-    petThreeUpgradeLevel: 0,
-    petThreeDamagePerSecondBase: 500,
-    petThreeDamagePerSecondCurrent: 0,
-    petThreeDamagePerSecondPlaceholder: 0,
-
-    // Pet 4
-    petFourBasicPrice: 20000,
-    petFourFirstPurchasePrice: 100000,
-    petFourUpgradePrice: 20000,
-    petFourUpgradeLevel: 0,
-    petFourDamagePerSecondBase: 4000,
-    petFourDamagePerSecondCurrent: 0,
-    petFourDamagePerSecondPlaceholder: 0,
+    pets: {
+      petOne: {
+        basicPrice: 100,
+        upgradePrice: 100,
+        upgradeLevel: 1,
+        damagePerSecondBase: 20,
+        damagePerSecondCurrent: 20,
+        damagePerSecondPlaceholder: 20
+      },
+      petTwo: {
+        basicPrice: 500,
+        firstPurchasePrice: 2500,
+        upgradePrice: 500,
+        upgradeLevel: 0,
+        damagePerSecondBase: 100,
+        damagePerSecondCurrent: 0,
+        damagePerSecondPlaceholder: 0
+      },
+      petThree: {
+        basicPrice: 2500,
+        firstPurchasePrice: 12500,
+        upgradePrice: 2500,
+        upgradeLevel: 0,
+        damagePerSecondBase: 500,
+        damagePerSecondCurrent: 0,
+        damagePerSecondPlaceholder: 0
+      },
+      petFour: {
+        basicPrice: 20000,
+        firstPurchasePrice: 100000,
+        upgradePrice: 20000,
+        upgradeLevel: 0,
+        damagePerSecondBase: 4000,
+        damagePerSecondCurrent: 0,
+        damagePerSecondPlaceholder: 0
+      }
+    },
 
     /* Enemy values
 
@@ -783,314 +787,98 @@ class UserInterface extends Component {
 
   /* Pets UI */
   petLevelUpgrade = petNumber => {
-    // For the first pet
-    if (petNumber === 1) {
+    let pets = { ...this.state.pets };
+    // If the pet has not been bought yet
+    if (pets[petNumber].upgradeLevel === 0) {
       // If the coins are enough to buy the upgrade
-      if (this.state.coins >= this.state.petOneUpgradePrice) {
+      if (this.state.coins >= pets[petNumber].firstPurchasePrice) {
         this.setState({
           // Take off the coins from the user
-          coins: this.state.coins - this.state.petOneUpgradePrice,
+          coins: this.state.coins - pets[petNumber].firstPurchasePrice,
+          // Update player stats
+          totalMoneySpent:
+            this.state.totalMoneySpent + pets[petNumber].firstPurchasePrice
+        });
+        // Increase pet level
+        pets[petNumber].upgradeLevel += 1;
+        // Increase pet price
+        pets[petNumber].upgradePrice = Math.round(
+          pets[petNumber].basicPrice *
+            Math.pow(1.06, pets[petNumber].upgradeLevel)
+        );
+        // Increase pet damage
+        pets[petNumber].damagePerSecondCurrent = Math.round(
+          pets[petNumber].damagePerSecondBase *
+            Math.pow(1.05, pets[petNumber].upgradeLevel)
+        );
+        // Increase pet damage
+        pets[petNumber].damagePerSecondPlaceholder = Math.round(
+          pets[petNumber].damagePerSecondBase *
+            Math.pow(1.05, pets[petNumber].upgradeLevel)
+        );
+      }
+    } else {
+      if (this.state.coins >= pets[petNumber].upgradePrice) {
+        this.setState({
+          // Take off the coins from the user
+          coins: this.state.coins - pets[petNumber].upgradePrice,
           // Update the player stats
           totalMoneySpent:
-            this.state.totalMoneySpent + this.state.petOneUpgradePrice,
-          // Increase the level by one
-          petOneUpgradeLevel: this.state.petOneUpgradeLevel + 1,
-          // Increase the price for the next upgrade
-          petOneUpgradePrice: Math.round(
-            this.state.petOneBasicPrice *
-              Math.pow(1.06, this.state.petOneUpgradeLevel)
-          ),
-          // Increase the DPS of the upgraded pet
-          petOneDamagePerSecondCurrent: Math.round(
-            this.state.petOneDamagePerSecondBase *
-              Math.pow(1.05, this.state.petOneUpgradeLevel)
-          ),
-          petOneDamagePerSecondPlaceholder: Math.round(
-            this.state.petOneDamagePerSecondBase *
-              Math.pow(1.05, this.state.petOneUpgradeLevel)
-          )
+            this.state.totalMoneySpent + pets[petNumber].upgradePrice
         });
+        // Increase pet level
+        pets[petNumber].upgradeLevel += 1;
+        // Increase pet price
+        pets[petNumber].upgradePrice = Math.round(
+          pets[petNumber].basicPrice *
+            Math.pow(1.06, pets[petNumber].upgradeLevel)
+        );
+        // Increase pet damage
+        pets[petNumber].damagePerSecondCurrent = Math.round(
+          pets[petNumber].damagePerSecondBase *
+            Math.pow(1.05, pets[petNumber].upgradeLevel)
+        );
+        // Increase pet damage
+        pets[petNumber].damagePerSecondPlaceholder = Math.round(
+          pets[petNumber].damagePerSecondBase *
+            Math.pow(1.05, pets[petNumber].upgradeLevel)
+        );
       }
     }
-    if (petNumber === 2) {
-      if (this.state.petTwoUpgradeLevel === 0) {
-        // If the coins are enough to buy the upgrade
-        if (this.state.coins >= this.state.petTwoFirstPurchasePrice) {
-          this.setState({
-            // Take off the coins from the user
-            coins: this.state.coins - this.state.petTwoFirstPurchasePrice,
-            // Update player stats
-            totalMoneySpent:
-              this.state.totalMoneySpent + this.state.petTwoFirstPurchasePrice,
-            // Increase the level by one
-            petTwoUpgradeLevel: this.state.petTwoUpgradeLevel + 1,
-            // Increase the price for the next upgrade
-            petTwoUpgradePrice: Math.round(
-              this.state.petTwoBasicPrice *
-                Math.pow(1.06, this.state.petTwoUpgradeLevel)
-            ),
-            // Increase the DPS of the upgraded pet
-            petTwoDamagePerSecondCurrent: Math.round(
-              this.state.petTwoDamagePerSecondBase *
-                Math.pow(1.05, this.state.petTwoUpgradeLevel)
-            ),
-            petTwoDamagePerSecondPlaceholder: Math.round(
-              this.state.petOneDamagePerSecondBase *
-                Math.pow(1.05, this.state.petOneUpgradeLevel)
-            )
-          });
-        }
-      } else {
-        if (this.state.coins >= this.state.petTwoUpgradePrice) {
-          this.setState({
-            // Take off the coins from the user
-            coins: this.state.coins - this.state.petTwoUpgradePrice,
-            // Update player stats
-            totalMoneySpent:
-              this.state.totalMoneySpent + this.state.petTwoUpgradePrice,
-            // Increase the level by one
-            petTwoUpgradeLevel: this.state.petTwoUpgradeLevel + 1,
-            // Increase the price for the next upgrade
-            petTwoUpgradePrice: Math.round(
-              this.state.petTwoBasicPrice *
-                Math.pow(1.06, this.state.petTwoUpgradeLevel)
-            ),
-            // Increase the DPS of the upgraded pet
-            petTwoDamagePerSecondCurrent: Math.round(
-              this.state.petTwoDamagePerSecondBase *
-                Math.pow(1.05, this.state.petTwoUpgradeLevel)
-            ),
-            petTwoDamagePerSecondPlaceholder: Math.round(
-              this.state.petOneDamagePerSecondBase *
-                Math.pow(1.05, this.state.petOneUpgradeLevel)
-            )
-          });
-        }
-      }
-    }
-    if (petNumber === 3) {
-      if (this.state.petThreeUpgradeLevel === 0) {
-        // If the coins are enough to buy the upgrade
-        if (this.state.coins >= this.state.petThreeFirstPurchasePrice) {
-          this.setState({
-            // Take off the coins from the user
-            coins: this.state.coins - this.state.petThreeFirstPurchasePrice,
-            // Update player stats
-            totalMoneySpent:
-              this.state.totalMoneySpent +
-              this.state.petThreeFirstPurchasePrice,
-            // Increase the level by one
-            petThreeUpgradeLevel: this.state.petThreeUpgradeLevel + 1,
-            // Increase the price for the next upgrade
-            petThreeUpgradePrice: Math.round(
-              this.state.petThreeBasicPrice *
-                Math.pow(1.06, this.state.petThreeUpgradeLevel)
-            ),
-            // Increase the DPS of the upgraded pet
-            petThreeDamagePerSecondCurrent: Math.round(
-              this.state.petThreeDamagePerSecondBase *
-                Math.pow(1.05, this.state.petThreeUpgradeLevel)
-            ),
-            petThreeDamagePerSecondPlaceholder: Math.round(
-              this.state.petOneDamagePerSecondBase *
-                Math.pow(1.05, this.state.petOneUpgradeLevel)
-            )
-          });
-        }
-      } else {
-        if (this.state.coins >= this.state.petThreeUpgradePrice) {
-          this.setState({
-            // Take off the coins from the user
-            coins: this.state.coins - this.state.petThreeUpgradePrice,
-            // Update player stats
-            totalMoneySpent:
-              this.state.totalMoneySpent + this.state.petThreeUpgradePrice,
-            // Increase the level by one
-            petThreeUpgradeLevel: this.state.petThreeUpgradeLevel + 1,
-            // Increase the price for the next upgrade
-            petThreeUpgradePrice: Math.round(
-              this.state.petThreeBasicPrice *
-                Math.pow(1.06, this.state.petThreeUpgradeLevel)
-            ),
-            // Increase the DPS of the upgraded pet
-            petThreeDamagePerSecondCurrent: Math.round(
-              this.state.petThreeDamagePerSecondBase *
-                Math.pow(1.05, this.state.petThreeUpgradeLevel)
-            ),
-            petThreeDamagePerSecondPlaceholder: Math.round(
-              this.state.petOneDamagePerSecondBase *
-                Math.pow(1.05, this.state.petOneUpgradeLevel)
-            )
-          });
-        }
-      }
-    }
-    if (petNumber === 4) {
-      if (this.state.petFourUpgradeLevel === 0) {
-        // If the coins are enough to buy the upgrade
-        if (this.state.coins >= this.state.petFourFirstPurchasePrice) {
-          this.setState({
-            // Take off the coins from the user
-            coins: this.state.coins - this.state.petFourFirstPurchasePrice,
-            // Update player stats
-            totalMoneySpent:
-              this.state.totalMoneySpent + this.state.petFourFirstPurchasePrice,
-            // Increase the level by one
-            petFourUpgradeLevel: this.state.petFourUpgradeLevel + 1,
-            // Increase the price for the next upgrade
-            petFourUpgradePrice: Math.round(
-              this.state.petFourBasicPrice *
-                Math.pow(1.06, this.state.petFourUpgradeLevel)
-            ),
-            // Increase the DPS of the upgraded pet
-            petFourDamagePerSecondCurrent: Math.round(
-              this.state.petFourDamagePerSecondBase *
-                Math.pow(1.05, this.state.petFourUpgradeLevel)
-            ),
-            petFourDamagePerSecondPlaceholder: Math.round(
-              this.state.petFourDamagePerSecondBase *
-                Math.pow(1.05, this.state.petFourUpgradeLevel)
-            )
-          });
-        }
-      } else {
-        if (this.state.coins >= this.state.petFourUpgradePrice) {
-          this.setState({
-            // Take off the coins from the user
-            coins: this.state.coins - this.state.petFourUpgradePrice,
-            // Update player stats
-            totalMoneySpent:
-              this.state.totalMoneySpent + this.state.petFourUpgradePrice,
-            // Increase the level by one
-            petFourUpgradeLevel: this.state.petFourUpgradeLevel + 1,
-            // Increase the price for the next upgrade
-            petFourUpgradePrice: Math.round(
-              this.state.petFourBasicPrice *
-                Math.pow(1.06, this.state.petFourUpgradeLevel)
-            ),
-            // Increase the DPS of the upgraded pet
-            petFourDamagePerSecondCurrent: Math.round(
-              this.state.petFourDamagePerSecondBase *
-                Math.pow(1.05, this.state.petFourUpgradeLevel)
-            ),
-            petFourDamagePerSecondPlaceholder: Math.round(
-              this.state.petFourDamagePerSecondBase *
-                Math.pow(1.05, this.state.petFourUpgradeLevel)
-            )
-          });
-        }
-      }
-    }
+
+    this.setState({ pets });
+  };
+
+  // Return the damage increase that would be applied if the user were to purchase the next pet level
+  renderPetDamageAfterUpgrade = petNumber => {
+    return this.renderNumberWithAbbreviations(
+      Math.round(
+        this.state.pets[petNumber].damagePerSecondBase *
+          Math.pow(1.05, this.state.pets[petNumber].upgradeLevel + 1)
+      ) - this.state.pets[petNumber].damagePerSecondCurrent
+    );
   };
 
   renderPetPriceParagraph = petNumber => {
-    if (petNumber === 2) {
-      if (this.state.petTwoUpgradeLevel === 0) {
-        return this.renderNumberWithAbbreviations(
-          this.state.petTwoFirstPurchasePrice
-        );
-      } else {
-        return this.renderNumberWithAbbreviations(
-          this.state.petTwoUpgradePrice
-        );
-      }
+    let pets = { ...this.state.pets };
+
+    if (pets[petNumber].upgradeLevel === 0) {
+      return this.renderNumberWithAbbreviations(
+        pets[petNumber].firstPurchasePrice
+      );
+    } else {
+      return this.renderNumberWithAbbreviations(pets[petNumber].upgradePrice);
     }
-    if (petNumber === 3) {
-      if (this.state.petThreeUpgradeLevel === 0) {
-        return this.renderNumberWithAbbreviations(
-          this.state.petThreeFirstPurchasePrice
-        );
-      } else {
-        return this.renderNumberWithAbbreviations(
-          this.state.petThreeUpgradePrice
-        );
-      }
-    }
-    if (petNumber === 4) {
-      if (this.state.petFourUpgradeLevel === 0) {
-        return this.renderNumberWithAbbreviations(
-          this.state.petFourFirstPurchasePrice
-        );
-      } else {
-        return this.renderNumberWithAbbreviations(
-          this.state.petFourUpgradePrice
-        );
-      }
-    }
+    this.setState({ pets });
   };
 
   // Render the button classes based on whether the user has enough money to buy the upgrade
   renderPetButtonClass = petNumber => {
-    // For the first pet
-    if (petNumber === 1) {
-      // If the user has enough money
-      if (this.state.coins >= this.state.petOneUpgradePrice) {
-        return "userInterface-pets-pet-button btn btn-dark mx-auto";
-      } else {
-        // If the user does not have enough money
-        return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
-      }
-    }
-    if (petNumber === 2) {
-      if (this.state.petTwoUpgradeLevel !== 0) {
-        // If the user has enough money
-        if (this.state.coins >= this.state.petTwoUpgradePrice) {
-          return "userInterface-pets-pet-button btn btn-dark mx-auto";
-        } else {
-          // If the user does not have enough money
-          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
-        }
-      } else {
-        // If the user has enough money
-        if (this.state.coins >= this.state.petTwoFirstPurchasePrice) {
-          return "userInterface-pets-pet-button btn btn-dark mx-auto";
-        } else {
-          // If the user does not have enough money
-          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
-        }
-      }
-    }
-    if (petNumber === 3) {
-      // If the pet has been bought already
-      if (this.state.petThreeUpgradeLevel !== 0) {
-        // If the user has enough money
-        if (this.state.coins >= this.state.petThreeUpgradePrice) {
-          return "userInterface-pets-pet-button btn btn-dark mx-auto";
-        } else {
-          // If the user does not have enough money
-          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
-        }
-        // If the pet has now been bought yet
-      } else {
-        // If the user has enough money
-        if (this.state.coins >= this.state.petThreeFirstPurchasePrice) {
-          return "userInterface-pets-pet-button btn btn-dark mx-auto";
-        } else {
-          // If the user does not have enough money
-          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
-        }
-      }
-    }
-    if (petNumber === 4) {
-      // If the pet has been bought already
-      if (this.state.petFourUpgradeLevel !== 0) {
-        // If the user has enough money
-        if (this.state.coins >= this.state.petFourUpgradePrice) {
-          return "userInterface-pets-pet-button btn btn-dark mx-auto";
-        } else {
-          // If the user does not have enough money
-          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
-        }
-        // If the pet has now been bought yet
-      } else {
-        // If the user has enough money
-        if (this.state.coins >= this.state.petFourFirstPurchasePrice) {
-          return "userInterface-pets-pet-button btn btn-dark mx-auto";
-        } else {
-          // If the user does not have enough money
-          return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
-        }
-      }
+    if (this.state.coins >= this.state.pets[petNumber].upgradePrice) {
+      return "userInterface-pets-pet-button btn btn-dark mx-auto";
+    } else {
+      // If the user does not have enough money
+      return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
     }
   };
 
@@ -1098,18 +886,18 @@ class UserInterface extends Component {
   calculateTotalDamagePerSecond = () => {
     if (this.state.isHeroSkillTwoActive) {
       return (
-        this.state.petOneDamagePerSecondCurrent +
-        this.state.petTwoDamagePerSecondCurrent +
-        this.state.petThreeDamagePerSecondCurrent +
-        this.state.petFourDamagePerSecondCurrent *
-          this.state.heroSkillTwoDamageMultiplier
+        (this.state.pets.petOne.damagePerSecondCurrent +
+          this.state.pets.petTwo.damagePerSecondCurrent +
+          this.state.pets.petThree.damagePerSecondCurrent +
+          this.state.pets.petFour.damagePerSecondCurrent) *
+        this.state.heroSkillTwoDamageMultiplier
       );
     } else
       return (
-        this.state.petOneDamagePerSecondCurrent +
-        this.state.petTwoDamagePerSecondCurrent +
-        this.state.petThreeDamagePerSecondCurrent +
-        this.state.petFourDamagePerSecondCurrent
+        this.state.pets.petOne.damagePerSecondCurrent +
+        this.state.pets.petTwo.damagePerSecondCurrent +
+        this.state.pets.petThree.damagePerSecondCurrent +
+        this.state.pets.petFour.damagePerSecondCurrent
       );
   };
 
@@ -3142,7 +2930,7 @@ class UserInterface extends Component {
                 className="userInterface-pets-pet-image"
               />
               <small className="userInterface-pets-pet-name">
-                Lv. {this.state.petOneUpgradeLevel}
+                Lv. {this.state.pets.petOne.upgradeLevel}
               </small>
             </div>
             <small className="userInterface-pets-pet-dps mx-auto">
@@ -3153,20 +2941,14 @@ class UserInterface extends Component {
               />
               {/* The attack which would be added to the pet after the upgrade */}
               {this.renderNumberWithAbbreviations(
-                this.state.petOneDamagePerSecondCurrent
+                this.state.pets.petOne.damagePerSecondCurrent
               )}{" "}
               (+
-              {this.renderNumberWithAbbreviations(
-                Math.round(
-                  this.state.petOneDamagePerSecondBase *
-                    Math.pow(1.05, this.state.petOneUpgradeLevel)
-                ) - this.state.petOneDamagePerSecondCurrent
-              )}
-              )
+              {this.renderPetDamageAfterUpgrade("petOne")})
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
               {this.renderNumberWithAbbreviations(
-                this.state.petOneUpgradePrice
+                this.state.pets.petOne.upgradePrice
               )}
               <img
                 draggable="false"
@@ -3177,9 +2959,9 @@ class UserInterface extends Component {
             </small>
             <button
               type="button"
-              class={this.renderPetButtonClass(1)}
+              class={this.renderPetButtonClass("petOne")}
               onClick={() => {
-                this.petLevelUpgrade(1);
+                this.petLevelUpgrade("petOne");
               }}
             >
               +
@@ -3195,7 +2977,7 @@ class UserInterface extends Component {
                 className="userInterface-pets-pet-image"
               />
               <small className="userInterface-pets-pet-name">
-                Lv. {this.state.petTwoUpgradeLevel}
+                Lv. {this.state.pets.petTwo.upgradeLevel}
               </small>
             </div>
             <small className="userInterface-pets-pet-dps mx-auto">
@@ -3206,19 +2988,13 @@ class UserInterface extends Component {
               />
               {/* The attack which would be added to the pet after the upgrade */}
               {this.renderNumberWithAbbreviations(
-                this.state.petTwoDamagePerSecondCurrent
+                this.state.pets.petTwo.damagePerSecondCurrent
               )}{" "}
               (+
-              {this.renderNumberWithAbbreviations(
-                Math.round(
-                  this.state.petTwoDamagePerSecondBase *
-                    Math.pow(1.05, this.state.petTwoUpgradeLevel)
-                ) - this.state.petTwoDamagePerSecondCurrent
-              )}
-              )
+              {this.renderPetDamageAfterUpgrade("petTwo")})
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
-              {this.renderPetPriceParagraph(2)}
+              {this.renderPetPriceParagraph("petTwo")}
               <img
                 draggable="false"
                 alt="coin"
@@ -3228,9 +3004,9 @@ class UserInterface extends Component {
             </small>
             <button
               type="button"
-              class={this.renderPetButtonClass(2)}
+              class={this.renderPetButtonClass("petTwo")}
               onClick={() => {
-                this.petLevelUpgrade(2);
+                this.petLevelUpgrade("petTwo");
               }}
             >
               +
@@ -3246,7 +3022,7 @@ class UserInterface extends Component {
                 className="userInterface-pets-pet-image"
               />
               <small className="userInterface-pets-pet-name">
-                Lv. {this.state.petThreeUpgradeLevel}
+                Lv. {this.state.pets.petThree.upgradeLevel}
               </small>
             </div>
             <small className="userInterface-pets-pet-dps mx-auto">
@@ -3257,19 +3033,13 @@ class UserInterface extends Component {
               />
               {/* The attack which would be added to the pet after the upgrade */}
               {this.renderNumberWithAbbreviations(
-                this.state.petThreeDamagePerSecondCurrent
+                this.state.pets.petThree.damagePerSecondCurrent
               )}{" "}
               (+
-              {this.renderNumberWithAbbreviations(
-                Math.round(
-                  this.state.petThreeDamagePerSecondBase *
-                    Math.pow(1.05, this.state.petThreeUpgradeLevel)
-                ) - this.state.petThreeDamagePerSecondCurrent
-              )}
-              )
+              {this.renderPetDamageAfterUpgrade("petThree")})
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
-              {this.renderPetPriceParagraph(3)}
+              {this.renderPetPriceParagraph("petThree")}
               <img
                 draggable="false"
                 alt="coin"
@@ -3279,15 +3049,15 @@ class UserInterface extends Component {
             </small>
             <button
               type="button"
-              class={this.renderPetButtonClass(3)}
+              class={this.renderPetButtonClass("petThree")}
               onClick={() => {
-                this.petLevelUpgrade(3);
+                this.petLevelUpgrade("petThree");
               }}
             >
               +
             </button>
           </div>
-          {/* Pet 3 */}
+          {/* Pet 4 */}
           <div className="userInterface-pets-pet-div">
             <div className="userInterface-pets-pet-div-holder">
               <img
@@ -3297,7 +3067,7 @@ class UserInterface extends Component {
                 className="userInterface-pets-pet-image"
               />
               <small className="userInterface-pets-pet-name">
-                Lv. {this.state.petFourUpgradeLevel}
+                Lv. {this.state.pets.petFour.upgradeLevel}
               </small>
             </div>
             <small className="userInterface-pets-pet-dps mx-auto">
@@ -3308,19 +3078,13 @@ class UserInterface extends Component {
               />
               {/* The attack which would be added to the pet after the upgrade */}
               {this.renderNumberWithAbbreviations(
-                this.state.petFourDamagePerSecondCurrent
+                this.state.pets.petFour.damagePerSecondCurrent
               )}{" "}
               (+
-              {this.renderNumberWithAbbreviations(
-                Math.round(
-                  this.state.petFourDamagePerSecondBase *
-                    Math.pow(1.05, this.state.petFourUpgradeLevel)
-                ) - this.state.petFourDamagePerSecondCurrent
-              )}
-              )
+              {this.renderPetDamageAfterUpgrade("petFour")})
             </small>
             <small className="userInterface-pets-pet-price mx-auto">
-              {this.renderPetPriceParagraph(4)}
+              {this.renderPetPriceParagraph("petFour")}
               <img
                 draggable="false"
                 alt="coin"
@@ -3330,9 +3094,9 @@ class UserInterface extends Component {
             </small>
             <button
               type="button"
-              class={this.renderPetButtonClass(4)}
+              class={this.renderPetButtonClass("petFour")}
               onClick={() => {
-                this.petLevelUpgrade(4);
+                this.petLevelUpgrade("petFour");
               }}
             >
               +

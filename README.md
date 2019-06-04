@@ -59,16 +59,15 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.5.0
+### 1.5.1
 
 #### Gameplay
 
-- New hero upgrades! [Crit DMG / Crit % / Double Attack]
-- Player stats are now rendered in the 'Stats' tab instead of in a separate div
+- Fix a critical bug which caused active player skills to ignore the damage of pets 1-3
 
 #### Other
 
-- The code for hero upgrades has been entirely rewritten to improve future scalabilty.
+- Change the way pet upgrades are handled to improve scalability and performance
 
 ## License
 
