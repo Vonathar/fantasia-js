@@ -59,15 +59,16 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.5.1
+### 1.5.3
 
 #### Gameplay
 
-- Fix a critical bug which caused active player skills to ignore the damage of pets 1-3
+- Rebalance skills and upgrades
+- Change cooldowns and the way they are calculated
 
 #### Other
 
-- Change the way pet upgrades are handled to improve scalability and performance
+- Fix a bug which caused the pet buttons to render as enabled when the money held was not enough to purchase the first level
 
 ## License
 

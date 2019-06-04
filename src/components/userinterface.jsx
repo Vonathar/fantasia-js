@@ -501,125 +501,137 @@ class UserInterface extends Component {
       doubleAttackChance: {
         level: 0,
         priceMultiplier: 1.25,
-        price: 5000,
-        purchasePrice: 5000
+        price: 2500,
+        purchasePrice: 1000
       },
       criticalChance: {
         level: 0,
         priceMultiplier: 1.15,
-        price: 2500,
-        purchasePrice: 2500
+        price: 1000,
+        purchasePrice: 500
       },
       criticalMultiplier: {
         level: 0,
         priceMultiplier: 1.1,
         price: 1000,
-        purchasePrice: 1000
+        purchasePrice: 500
       }
     },
     /* Skill values */
-    // Skill 1
-    heroSkillOneName: "Quick Stab",
-    heroSkillOneLevel: 0,
-    heroSkillOneCooldown: 30000,
-    isHeroSkillOneReady: true,
-    heroSkillOneNumberOfAttacks: 3,
-    heroSkillOneNumberOfAttacksLevelsToUpgrade: [10, 50, 100, 200, 350, 500],
-    heroSkillOneDamageMultiplier: 2,
-    heroSkillOneLevelToUnlock: 3,
-    heroSkillOneLevelsToUpgrade: [
-      5,
-      10,
-      20,
-      30,
-      50,
-      70,
-      100,
-      150,
-      200,
-      250,
-      300,
-      350,
-      400,
-      450,
-      500
-    ],
-    // Skill 2
-    heroSkillTwoName: "Mark of the Beast",
-    heroSkillTwoLevel: 0,
-    heroSkillTwoCooldown: 60000,
-    heroSkillTwoDuration: 10000,
-    isHeroSkillTwoReady: true,
-    isHeroSkillTwoActive: false,
-    heroSkillTwoDamageMultiplier: 1.5,
-    heroSkillTwoLevelToUnlock: 5,
-    heroSkillTwoLevelsToUpgrade: [
-      15,
-      25,
-      40,
-      60,
-      80,
-      110,
-      150,
-      210,
-      240,
-      310,
-      330,
-      390,
-      440,
-      510
-    ],
-    // Skill 3
-    heroSkillThreeName: "Animal training",
-    heroSkillThreeLevel: 0,
-    heroSkillThreeCooldown: 120000,
-    heroSkillThreeDuration: 40000,
-    isHeroSkillThreeReady: true,
-    isHeroSkillThreeActive: false,
-    heroSkillThreeDamageMultiplier: 25,
-    heroSkillThreeLevelToUnlock: 12,
-    heroSkillThreeLevelsToUpgrade: [
-      32,
-      44,
-      52,
-      67,
-      89,
-      108,
-      148,
-      202,
-      273,
-      308,
-      372,
-      419,
-      452,
-      523
-    ],
-    // Skill 4
-    heroSkillFourName: "Fruit of Madness",
-    heroSkillFourLevel: 0,
-    heroSkillFourCooldown: 30000,
-    isHeroSkillFourReady: true,
-    heroSkillFourNumberOfAttacks: 3,
-    heroSkillFourNumberOfAttacksLevelsToUpgrade: [53, 103, 153, 203, 343, 483],
-    heroSkillFourDamageMultiplier: 1.5,
-    heroSkillFourLevelToUnlock: 21,
-    heroSkillFourLevelsToUpgrade: [
-      33,
-      56,
-      83,
-      106,
-      143,
-      183,
-      241,
-      298,
-      334,
-      381,
-      412,
-      441,
-      501,
-      581,
-      623
-    ],
+
+    skills: {
+      skillOne: {
+        name: "Quick Stab",
+        level: 0,
+        cooldown: 30000,
+        cooldownReductionByLevelUp: 1000,
+        isReady: true,
+        numberOfAttacks: 3,
+        numberOfAttacksLevelsToUpgrade: [10, 50, 100, 200, 350, 500],
+        damageMultiplier: 2,
+        levelToUnlock: 3,
+        levelsToUpgrade: [
+          5,
+          10,
+          20,
+          30,
+          50,
+          70,
+          100,
+          150,
+          200,
+          250,
+          300,
+          350,
+          400,
+          450,
+          500
+        ]
+      },
+      skillTwo: {
+        name: "Mark of the Beast",
+        level: 0,
+        cooldown: 60000,
+        cooldownReductionByLevelUp: 2000,
+        duration: 10000,
+        isReady: true,
+        isActive: false,
+        damageMultiplier: 1.5,
+        levelToUnlock: 5,
+        levelsToUpgrade: [
+          15,
+          25,
+          40,
+          60,
+          80,
+          110,
+          150,
+          210,
+          240,
+          310,
+          330,
+          390,
+          440,
+          510
+        ]
+      },
+      skillThree: {
+        name: "Animal training",
+        level: 0,
+        cooldown: 120000,
+        cooldownReductionByLevelUp: 4000,
+        duration: 40000,
+        isReady: true,
+        isActive: false,
+        damageMultiplier: 25,
+        levelToUnlock: 12,
+        levelsToUpgrade: [
+          32,
+          44,
+          52,
+          67,
+          89,
+          108,
+          148,
+          202,
+          273,
+          308,
+          372,
+          419,
+          452,
+          523
+        ]
+      },
+      skillFour: {
+        name: "Fruit of Madness",
+        level: 0,
+        cooldown: 30000,
+        cooldownReductionByLevelUp: 1000,
+        isReady: true,
+        numberOfAttacks: 3,
+        numberOfAttacksLevelsToUpgrade: [53, 103, 153, 203, 343, 483],
+        damageMultiplier: 1.5,
+        levelToUnlock: 21,
+        levelsToUpgrade: [
+          33,
+          56,
+          83,
+          106,
+          143,
+          183,
+          241,
+          298,
+          334,
+          381,
+          412,
+          441,
+          501,
+          581,
+          623
+        ]
+      }
+    },
+
     /* Inventory values */
     adventurePoints: 0,
     coins: 0,
@@ -874,11 +886,21 @@ class UserInterface extends Component {
 
   // Render the button classes based on whether the user has enough money to buy the upgrade
   renderPetButtonClass = petNumber => {
-    if (this.state.coins >= this.state.pets[petNumber].upgradePrice) {
-      return "userInterface-pets-pet-button btn btn-dark mx-auto";
-    } else {
-      // If the user does not have enough money
-      return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+    if (this.state.pets[petNumber].upgradeLevel === 0) {
+      if (this.state.coins >= this.state.pets[petNumber].firstPurchasePrice) {
+        return "userInterface-pets-pet-button btn btn-dark mx-auto";
+      } else {
+        // If the user does not have enough money
+        return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+      }
+    }
+    if (this.state.pets[petNumber].upgradeLevel > 0) {
+      if (this.state.coins >= this.state.pets[petNumber].upgradePrice) {
+        return "userInterface-pets-pet-button btn btn-dark mx-auto";
+      } else {
+        // If the user does not have enough money
+        return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+      }
     }
   };
 
@@ -1018,6 +1040,80 @@ class UserInterface extends Component {
     );
   };
 
+  checkSkillForLevelUp = skillNumber => {
+    let skills = { ...this.state.skills };
+    // If the skill has not been unlocked yet
+    if (this.state.playerLevel === skills[skillNumber].levelToUnlock) {
+      skills[skillNumber].level += 1;
+      // Add a skill unlocked paragraph to the Battle Log
+      this.pushNewParagraphToBattleLog(
+        <p>
+          <small>You unlocked </small>
+          <small className="text-warning">{skills[skillNumber].name}!</small>
+        </p>
+      );
+    }
+    // If the skill has already been unlocked
+    if (skills[skillNumber].levelsToUpgrade.includes(this.state.playerLevel)) {
+      skills[skillNumber].cooldown -=
+        skills[skillNumber].cooldownReductionByLevelUp;
+      skills[skillNumber].level += 1;
+
+      // Add a skill leveled up paragraph to the Battle Log
+      this.pushNewParagraphToBattleLog(
+        <p>
+          <small>Your skill </small>
+          <small className="text-warning">{skills[skillNumber].name}</small>
+          <small> reached level </small>{" "}
+          <small>{skills[skillNumber].level}</small> <small>!</small>
+        </p>
+      );
+
+      // Level up attack count
+      if (
+        skills[skillNumber] === "skillOne" ||
+        skills[skillNumber] === "skillThree" ||
+        skills[skillNumber] === "skillFour"
+      ) {
+        if (
+          skills[skillNumber].numberOfAttacksLevelsToUpgrade.includes(
+            this.state.playerLevel
+          )
+        ) {
+          skills[skillNumber].numberOfAttacks += 1;
+        }
+      }
+
+      // Skill #1
+      if (skills[skillNumber] === "skillOne") {
+        skills[skillNumber].damageMultiplier =
+          // Round to 2 decimals max (if applies)
+          Math.round(2 * Math.pow(1.2, this.state.heroSkillOneLevel) * 100) /
+          100;
+      }
+
+      // Skill #2
+      if (skills[skillNumber] === "skillTwo") {
+        skills[skillNumber].damageMultiplier =
+          Math.round(2 * Math.pow(1.1, this.state.heroSkillTwoLevel) * 100) /
+          100;
+      }
+      // Skill #3
+      if (skills[skillNumber] === "skillThree") {
+        skills[skillNumber].damageMultiplier =
+          Math.round(25 * Math.pow(1.1, this.state.heroSkillThreeLevel) * 100) /
+          100;
+      }
+      // Skill #4
+      if (skills[skillNumber] === "skillFour") {
+        skills[skillNumber].damageMultiplier =
+          Math.round(1.5 * Math.pow(1.2, this.state.heroSkillFourLevel) * 100) /
+          100;
+      }
+    }
+    this.setState({ skills });
+  };
+
   // Level up the player
   playerLevelUp = () => {
     this.setState({
@@ -1035,206 +1131,18 @@ class UserInterface extends Component {
       )
     });
 
-    //Check if any of the skills are to be unlocked or leveled up
-    // Skill 1
-    // Unlock
-    if (this.state.playerLevel === this.state.heroSkillOneLevelToUnlock) {
-      this.setState({ heroSkillOneLevel: 1 });
-      // Add a skill unlocked paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>You unlocked </small>
-          <small className="text-warning">{this.state.heroSkillOneName}!</small>
-        </p>
-      );
-    }
-    // Level up skill level
-    if (
-      this.state.heroSkillOneLevelsToUpgrade.includes(this.state.playerLevel)
-    ) {
-      this.setState({
-        heroSkillOneCooldown: this.state.heroSkillOneCooldown - 200,
-        heroSkillOneLevel: this.state.heroSkillOneLevel + 1,
-        heroSkillOneDamageMultiplier:
-          // Round to 2 decimals max (if applies)
-          Math.round(2 * Math.pow(1.2, this.state.heroSkillOneLevel) * 100) /
-          100
-      });
-      // Add a skill leveled up paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>Your skill </small>
-          <small className="text-warning">{this.state.heroSkillOneName}</small>
-          <small> reached level </small>{" "}
-          <small>{this.state.heroSkillOneLevel}</small> <small>!</small>
-        </p>
-      );
-    }
-
-    // Level up attack count
-    if (
-      this.state.heroSkillOneNumberOfAttacksLevelsToUpgrade.includes(
-        this.state.playerLevel
-      )
-    ) {
-      this.setState({
-        heroSkillOneNumberOfAttacks: this.state.heroSkillOneNumberOfAttacks + 1
-      });
-    }
-
-    /* SKILL 2 */
-    // Unlock
-    if (this.state.playerLevel === this.state.heroSkillTwoLevelToUnlock) {
-      this.setState({ heroSkillTwoLevel: 1 });
-      // Add a skill unlocked paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>You unlocked </small>
-          <small className="text-warning">{this.state.heroSkillTwoName}!</small>
-        </p>
-      );
-    }
-    // Level up skill level
-    if (
-      this.state.heroSkillTwoLevelsToUpgrade.includes(this.state.playerLevel)
-    ) {
-      this.setState({
-        heroSkillTwoCooldown: this.state.heroSkillTwoCooldown - 200,
-        heroSkillTwoLevel: this.state.heroSkillTwoLevel + 1,
-        heroSkillTwoDamageMultiplier:
-          // Round to 2 decimals max (if applies)
-          Math.round(2 * Math.pow(1.1, this.state.heroSkillTwoLevel) * 100) /
-          100
-      });
-      // Add a skill leveled up paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>Your skill </small>
-          <small className="text-warning">{this.state.heroSkillTwoName}</small>
-          <small> reached level </small>{" "}
-          <small>{this.state.heroSkillTwoLevel}</small> <small>!</small>
-        </p>
-      );
-    }
-    /* SKILL 3 */
-    // Unlock
-    if (this.state.playerLevel === this.state.heroSkillThreeLevelToUnlock) {
-      this.setState({ heroSkillThreeLevel: 1 });
-      // Add a skill unlocked paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>You unlocked </small>
-          <small className="text-warning">
-            {this.state.heroSkillThreeName}!
-          </small>
-        </p>
-      );
-    }
-    // Level up skill level
-    if (
-      this.state.heroSkillThreeLevelsToUpgrade.includes(this.state.playerLevel)
-    ) {
-      this.setState({
-        heroSkillThreeCooldown: this.state.heroSkillThreeCooldown - 1000,
-        heroSkillThreeLevel: this.state.heroSkillThreeLevel + 1,
-        heroSkillThreeDamageMultiplier:
-          // Round to 2 decimals max (if applies)
-          Math.round(25 * Math.pow(1.1, this.state.heroSkillThreeLevel) * 100) /
-          100
-      });
-      // Add a skill leveled up paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>Your skill </small>
-          <small className="text-warning">
-            {this.state.heroSkillThreeName}
-          </small>
-          <small> reached level </small>{" "}
-          <small>{this.state.heroSkillThreeLevel}</small> <small>!</small>
-        </p>
-      );
-    }
-    // Skill 4
-    // Unlock
-    if (this.state.playerLevel === this.state.heroSkillFourLevelToUnlock) {
-      this.setState({ heroSkillFourLevel: 1 });
-      // Add a skill unlocked paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>You unlocked </small>
-          <small className="text-warning">
-            {this.state.heroSkillFourName}!
-          </small>
-        </p>
-      );
-    }
-    // Level up skill level
-    if (
-      this.state.heroSkillFourLevelsToUpgrade.includes(this.state.playerLevel)
-    ) {
-      this.setState({
-        heroSkillFourCooldown: this.state.heroSkillFourCooldown - 200,
-        heroSkillFourLevel: this.state.heroSkillFourLevel + 1,
-        heroSkillFourDamageMultiplier:
-          // Round to 2 decimals max (if applies)
-          Math.round(1.5 * Math.pow(1.2, this.state.heroSkillFourLevel) * 100) /
-          100
-      });
-      // Add a skill leveled up paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>Your skill </small>
-          <small className="text-warning">{this.state.heroSkillFourName}</small>
-          <small> reached level </small>{" "}
-          <small>{this.state.heroSkillFourLevel}</small> <small>!</small>
-        </p>
-      );
-    }
-
-    // Level up attack count
-    if (
-      this.state.heroSkillFourNumberOfAttacksLevelsToUpgrade.includes(
-        this.state.playerLevel
-      )
-    ) {
-      this.setState({
-        heroSkillFourNumberOfAttacks:
-          this.state.heroSkillFourNumberOfAttacks + 1
-      });
-    }
+    this.checkSkillForLevelUp("skillOne");
+    this.checkSkillForLevelUp("skillTwo");
+    this.checkSkillForLevelUp("skillThree");
+    this.checkSkillForLevelUp("skillFour");
   };
 
   renderSkillBadge = skillNumber => {
-    // Skill 1
-    if (skillNumber === 1) {
-      let classes = "userInterface-skills-skill-img scale ";
-      return this.state.isHeroSkillOneReady && this.state.heroSkillOneLevel > 0
-        ? classes
-        : classes + "cooldown";
-    }
-    // Skill 2
-    if (skillNumber === 2) {
-      let classes = "userInterface-skills-skill-img scale ";
-      return this.state.isHeroSkillTwoReady && this.state.heroSkillTwoLevel > 0
-        ? classes
-        : classes + "cooldown";
-    }
-    // Skill 3
-    if (skillNumber === 3) {
-      let classes = "userInterface-skills-skill-img scale ";
-      return this.state.isHeroSkillThreeReady &&
-        this.state.heroSkillThreeLevel > 0
-        ? classes
-        : classes + "cooldown";
-    }
-    // Skill 4
-    if (skillNumber === 4) {
-      let classes = "userInterface-skills-skill-img scale ";
-      return this.state.isHeroSkillFourReady &&
-        this.state.heroSkillFourLevel > 0
-        ? classes
-        : classes + "cooldown";
-    }
+    let classes = "userInterface-skills-skill-img scale ";
+    return this.state.skills[skillNumber].isReady &&
+      this.state.skills[skillNumber].level > 0
+      ? classes
+      : classes + "cooldown";
   };
 
   // Get the input from the keyboard, document-wide
@@ -1249,16 +1157,16 @@ class UserInterface extends Component {
     }
     // Use [1,2,3,4] to use skills
     if (event.key === "1") {
-      this.playerUseActiveSkill(1);
+      this.playerUseActiveSkill("skillOne");
     }
     if (event.key === "2") {
-      this.playerUseActiveSkill(2);
+      this.playerUseActiveSkill("skillTwo");
     }
     if (event.key === "3") {
-      this.playerUseActiveSkill(3);
+      this.playerUseActiveSkill("skillThree");
     }
     if (event.key === "4") {
-      this.playerUseActiveSkill(4);
+      this.playerUseActiveSkill("skillFour");
     }
     if (event.key === "d") {
       this.setState({
@@ -1442,205 +1350,132 @@ class UserInterface extends Component {
   };
 
   playerUseActiveSkill = skillNumber => {
-    // If the player clicked on the first skill, and it's cooldown is over
+    // Create a copy of the object
+    let skills = { ...this.state.skills };
+    // Skill is [Ready/Unlocked] and enemy is alive
     if (
-      skillNumber === 1 &&
-      this.state.isHeroSkillOneReady &&
-      this.state.heroSkillOneLevel !== 0 &&
+      skills[skillNumber].isReady &&
+      skills[skillNumber].level !== 0 &&
       this.state.enemyHasHealth
     ) {
-      this.setState({ isHeroSkillOneReady: false });
-
-      let numberOfAttacks = this.state.heroSkillOneNumberOfAttacks;
-      // Attack the enemy X times by XXX% of the Click Damage
-      let skillOneActivate = () => {
-        if (numberOfAttacks !== 0) {
-          numberOfAttacks--;
-          setTimeout(() => {
-            this.setState({
-              enemyHealthCurrent:
-                this.state.enemyHealthCurrent -
-                this.calculateTotalClickDamage() *
-                  this.state.heroSkillOneDamageMultiplier
-            });
-            skillOneActivate();
-          }, 250);
-        } else {
-          setTimeout(() => {
-            this.setState({ isHeroSkillOneReady: true });
-          }, this.state.heroSkillOneCooldown);
-        }
-      };
-      skillOneActivate();
-      // Add a 'Skill used' paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>
-            {this.state.heroSkillOneName} deals{" "}
-            <span className="text-warning">
-              {this.renderNumberWithAbbreviations(
-                Math.round(
+      // Set the skill on cooldown
+      skills[skillNumber].isReady = false;
+      setTimeout(() => {
+        skills[skillNumber].isReady = this.setState({ skills });
+      }, skills[skillNumber].cooldown);
+      // Skills #1 and #4
+      if (skillNumber === "skillOne" || skillNumber === "skillFour") {
+        let numberOfAttacks = skills[skillNumber].numberOfAttacks;
+        let skillActivate = () => {
+          if (numberOfAttacks !== 0) {
+            numberOfAttacks--;
+            setTimeout(() => {
+              this.setState({
+                enemyHealthCurrent:
+                  this.state.enemyHealthCurrent -
                   this.calculateTotalClickDamage() *
-                    this.state.heroSkillOneDamageMultiplier *
-                    this.state.heroSkillOneNumberOfAttacks
-                )
-              )}{" "}
-              DMG
-            </span>
-            !
-          </small>
-        </p>
-      );
-    }
-    // If the player clicked on the second skill, and it's cooldown is over
-    if (
-      skillNumber === 2 &&
-      this.state.isHeroSkillTwoReady &&
-      this.state.heroSkillTwoLevel !== 0 &&
-      this.state.enemyHasHealth
-    ) {
-      this.setState({ isHeroSkillTwoReady: false });
+                    skills[skillNumber].damageMultiplier
+              });
+              skillActivate();
+            }, 250);
+          }
+        };
+        skillActivate();
+        this.setState({ skills });
+      }
 
-      // Double the damage of all pets for the duration of the skill
-      this.setState({
-        isHeroSkillTwoActive: true
-      });
+      if (skillNumber === "skillTwo" || skillNumber === "skillThree") {
+        skills[skillNumber].isActive = true;
+        this.setState({ skills });
+        // Set the skill back to inactive
+        setTimeout(() => {
+          skills[skillNumber].isActive = false;
+          this.setState({ skills });
+          // Add a 'Skill finished' paragraph to the Battle Log
+          this.pushNewParagraphToBattleLog(
+            <p>
+              <small className="text-warning">{skills[skillNumber].name}</small>
+              <small> expired.</small>
+            </p>
+          );
+        }, this.state.skills[skillNumber].duration);
+      }
 
-      // Set the damage of the pets back to the original value
-      setTimeout(() => {
-        this.setState({
-          isHeroSkillTwoActive: false
-        });
-        // Add a 'Skill finished' paragraph to the Battle Log
+      if (skillNumber === "skillOne") {
+        // Add a 'Skill used' paragraph to the Battle Log
         this.pushNewParagraphToBattleLog(
           <p>
-            <small className="text-warning">
-              {this.state.heroSkillTwoName}
+            <small>
+              {skills[skillNumber].name} deals{" "}
+              <span className="text-warning">
+                {this.renderNumberWithAbbreviations(
+                  Math.round(
+                    this.calculateTotalClickDamage() *
+                      skills[skillNumber].damageMultiplier *
+                      skills[skillNumber].numberOfAttacks
+                  )
+                )}{" "}
+                DMG
+              </span>
+              !
             </small>
-            <small> expired.</small>
           </p>
         );
-      }, this.state.heroSkillTwoDuration);
+      }
 
-      setTimeout(() => {
-        this.setState({
-          isHeroSkillTwoReady: true
-        });
-      }, this.state.heroSkillTwoCooldown);
-
-      // Add a 'Skill used' paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>
-            <span className="text-warning">{this.state.heroSkillTwoName} </span>
-            makes your pets{" "}
-            <span className="text-warning">
-              {Math.round(this.state.heroSkillTwoDamageMultiplier * 100)}%
-            </span>{" "}
-            stronger!
-          </small>
-        </p>
-      );
-    }
-    // If the player clicked on the third skill, and it's cooldown is over
-    if (
-      skillNumber === 3 &&
-      this.state.isHeroSkillThreeReady &&
-      this.state.heroSkillThreeLevel !== 0 &&
-      this.state.enemyHasHealth
-    ) {
-      this.setState({ isHeroSkillThreeReady: false });
-
-      // Increase the click damage by a percentage of the total DPS
-      this.setState({
-        isHeroSkillThreeActive: true
-      });
-
-      // Set the click damage back to the original value
-      setTimeout(() => {
-        this.setState({
-          isHeroSkillThreeActive: false
-        });
-        // Add a 'Skill finished' paragraph to the Battle Log
+      if (skillNumber === "skillTwo") {
+        // Add a 'Skill used' paragraph to the Battle Log
         this.pushNewParagraphToBattleLog(
           <p>
-            <small className="text-warning">
-              {this.state.heroSkillThreeName}
+            <small>
+              <span className="text-warning">{skills[skillNumber].name} </span>
+              makes your pets{" "}
+              <span className="text-warning">
+                {Math.round(skills[skillNumber].damageMultiplier * 100)}%
+              </span>{" "}
+              stronger!
             </small>
-            <small> expired.</small>
           </p>
         );
-      }, this.state.heroSkillThreeDuration);
+      }
 
-      setTimeout(() => {
-        this.setState({
-          isHeroSkillThreeReady: true
-        });
-      }, this.state.heroSkillThreeCooldown);
+      if (skillNumber === "skillThree") {
+        // Add a 'Skill used' paragraph to the Battle Log
+        this.pushNewParagraphToBattleLog(
+          <p>
+            <small>
+              <span className="text-warning">
+                {this.state.skills[skillNumber].name}{" "}
+              </span>
+              makes your click damage stronger!
+            </small>
+          </p>
+        );
+      }
 
-      // Add a 'Skill used' paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>
-            <span className="text-warning">
-              {this.state.heroSkillThreeName}{" "}
-            </span>
-            makes your click damage stronger!
-          </small>
-        </p>
-      );
+      if (skillNumber === "skillFour") {
+        // Add a 'Skill used' paragraph to the Battle Log
+        this.pushNewParagraphToBattleLog(
+          <p>
+            <small>
+              {this.state.skills[skillNumber].name} deals{" "}
+              <span className="text-warning">
+                {this.renderNumberWithAbbreviations(
+                  Math.round(
+                    this.calculateTotalDamagePerSecond() *
+                      this.state.skills[skillNumber].damageMultiplier *
+                      this.state.skills[skillNumber].numberOfAttacks
+                  )
+                )}{" "}
+                DMG
+              </span>
+              !
+            </small>
+          </p>
+        );
+      }
     }
 
-    // If the player clicked on the fourth skill, and its cooldown is over
-    if (
-      skillNumber === 4 &&
-      this.state.isHeroSkillFourReady &&
-      this.state.heroSkillFourLevel !== 0 &&
-      this.state.enemyHasHealth
-    ) {
-      this.setState({ isHeroSkillFourReady: false });
-
-      let numberOfAttacks = this.state.heroSkillFourNumberOfAttacks;
-      // Attack the enemy X times by XXX% of DPS
-      let skillFourActivate = () => {
-        if (numberOfAttacks !== 1) {
-          numberOfAttacks--;
-          setTimeout(() => {
-            this.setState({
-              enemyHealthCurrent:
-                this.state.enemyHealthCurrent -
-                this.calculateTotalDamagePerSecond() *
-                  this.state.heroSkillFourDamageMultiplier
-            });
-            skillFourActivate();
-          }, 250);
-        } else {
-          setTimeout(() => {
-            this.setState({ isHeroSkillFourReady: true });
-          }, this.state.heroSkillFourCooldown);
-        }
-      };
-      skillFourActivate();
-      // Add a 'Skill used' paragraph to the Battle Log
-      this.pushNewParagraphToBattleLog(
-        <p>
-          <small>
-            {this.state.heroSkillFourName} deals{" "}
-            <span className="text-warning">
-              {this.renderNumberWithAbbreviations(
-                Math.round(
-                  this.calculateTotalDamagePerSecond() *
-                    this.state.heroSkillFourDamageMultiplier *
-                    this.state.heroSkillFourNumberOfAttacks
-                )
-              )}{" "}
-              DMG
-            </span>
-            !
-          </small>
-        </p>
-      );
-    }
     // Update the stats counter
     this.setState({ totalSkillsUsed: this.state.totalSkillsUsed + 1 });
     // Check if the quests are completed
@@ -1648,29 +1483,29 @@ class UserInterface extends Component {
   };
 
   renderSkillOneDescription = () => {
-    if (this.state.heroSkillOneLevel === 0) {
+    if (this.state.skills.skillOne.level === 0) {
       return (
-        this.state.heroSkillOneName +
+        this.state.skills.skillOne.name +
         "  -  [Lv. Req: " +
-        this.state.heroSkillOneLevelToUnlock +
+        this.state.skills.skillOne.levelToUnlock +
         "] "
       );
     } else {
       return (
         "Lv. " +
-        this.state.heroSkillOneLevel +
+        this.state.skills.skillOne.level +
         " " +
-        this.state.heroSkillOneName +
+        this.state.skills.skillOne.name +
         "  -  Attack the enemy " +
-        this.state.heroSkillOneNumberOfAttacks +
+        this.state.skills.skillOne.numberOfAttacks +
         " times, each time dealing damage equal to " +
-        Math.round(this.state.heroSkillOneDamageMultiplier * 100) +
+        Math.round(this.state.skills.skillOne.damageMultiplier * 100) +
         "% of click damage. [Cooldown: " +
-        this.state.heroSkillOneCooldown / 1000 +
+        this.state.skills.skillOne.cooldown / 1000 +
         "s]" +
         // Display the player level required for the skills to level up
         "  -  [Skill+ Lv Req: " +
-        this.state.heroSkillOneLevelsToUpgrade.find(element => {
+        this.state.skills.skillOne.levelsToUpgrade.find(element => {
           return element > this.state.playerLevel;
         }) +
         "]" +
@@ -1680,29 +1515,29 @@ class UserInterface extends Component {
   };
 
   renderSkillTwoDescription = () => {
-    if (this.state.heroSkillTwoLevel === 0) {
+    if (this.state.skills.skillTwo.level === 0) {
       return (
-        this.state.heroSkillTwoName +
+        this.state.skills.skillTwo.name +
         "  -  [Lv. Req: " +
-        this.state.heroSkillTwoLevelToUnlock +
+        this.state.skills.skillTwo.levelToUnlock +
         "] "
       );
     } else {
       return (
         "Lv. " +
-        this.state.heroSkillTwoLevel +
+        this.state.skills.skillTwo.level +
         " " +
-        this.state.heroSkillTwoName +
+        this.state.skills.skillTwo.name +
         "  -  Makes your pets angry, causing their DPS to increase by " +
-        Math.round(this.state.heroSkillTwoDamageMultiplier * 100) +
+        Math.round(this.state.skills.skillTwo.damageMultiplier * 100) +
         "% for " +
-        this.state.heroSkillTwoDuration / 1000 +
+        this.state.skills.skillTwo.duration / 1000 +
         " seconds. [Cooldown: " +
-        this.state.heroSkillTwoCooldown / 1000 +
+        this.state.skills.skillTwo.cooldown / 1000 +
         "s]" +
         // Display the player level required for the skills to level up
         "  -  [Skill+ Lv Req: " +
-        this.state.heroSkillTwoLevelsToUpgrade.find(element => {
+        this.state.skills.skillTwo.levelsToUpgrade.find(element => {
           return element > this.state.playerLevel;
         }) +
         "]" +
@@ -1712,29 +1547,29 @@ class UserInterface extends Component {
   };
 
   renderSkillThreeDescription = () => {
-    if (this.state.heroSkillThreeLevel === 0) {
+    if (this.state.skills.skillThree.level === 0) {
       return (
-        this.state.heroSkillThreeName +
+        this.state.skills.skillThree.name +
         "  -  [Lv. Req: " +
-        this.state.heroSkillThreeLevelToUnlock +
+        this.state.skills.skillThree.levelToUnlock +
         "] "
       );
     } else {
       return (
         "Lv. " +
-        this.state.heroSkillThreeLevel +
+        this.state.skills.skillThree.level +
         " " +
-        this.state.heroSkillThreeName +
+        this.state.skills.skillThree.name +
         "  -  Become one with your pets, and increase your click damage by " +
-        this.state.heroSkillThreeDamageMultiplier +
+        this.state.skills.skillThree.damageMultiplier +
         "% of their DPS for " +
-        this.state.heroSkillThreeDuration / 1000 +
+        this.state.skills.skillThree.duration / 1000 +
         " seconds. [Cooldown: " +
-        this.state.heroSkillThreeCooldown / 1000 +
+        this.state.skills.skillThree.cooldown / 1000 +
         "s]" +
         // Display the player level required for the skills to level up
         "  -  [Skill+ Lv Req: " +
-        this.state.heroSkillThreeLevelsToUpgrade.find(element => {
+        this.state.skills.skillThree.levelsToUpgrade.find(element => {
           return element > this.state.playerLevel;
         }) +
         "]" +
@@ -1744,29 +1579,29 @@ class UserInterface extends Component {
   };
 
   renderSkillFourDescription = () => {
-    if (this.state.heroSkillFourLevel === 0) {
+    if (this.state.skills.skillFour.level === 0) {
       return (
-        this.state.heroSkillFourName +
+        this.state.skills.skillFour.name +
         "  -  [Lv. Req: " +
-        this.state.heroSkillFourLevelToUnlock +
+        this.state.skills.skillFour.levelToUnlock +
         "] "
       );
     } else {
       return (
         "Lv. " +
-        this.state.heroSkillFourLevel +
+        this.state.skills.skillFour.level +
         " " +
-        this.state.heroSkillFourName +
+        this.state.skills.skillFour.name +
         "  -  All your pets get together to attack the enemy " +
-        this.state.heroSkillFourNumberOfAttacks +
+        this.state.skills.skillFour.numberOfAttacks +
         " times, each time dealing damage equal to " +
-        Math.round(this.state.heroSkillFourDamageMultiplier * 100) +
+        Math.round(this.state.skills.skillFour.damageMultiplier * 100) +
         "% of your total DPS. [Cooldown: " +
-        this.state.heroSkillFourCooldown / 1000 +
+        this.state.skills.skillFour.cooldown / 1000 +
         "s]" +
         // Display the player level required for the skills to level up
         "  -  [Skill+ Lv Req: " +
-        this.state.heroSkillFourLevelsToUpgrade.find(element => {
+        this.state.skills.skillFour.levelsToUpgrade.find(element => {
           return element > this.state.playerLevel;
         }) +
         "]" +
@@ -3449,10 +3284,10 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 1"
-              className={this.renderSkillBadge(1)}
+              className={this.renderSkillBadge("skillOne")}
               src={skillImageOne}
               onClick={() => {
-                this.playerUseActiveSkill(1);
+                this.playerUseActiveSkill("skillOne");
               }}
               data-toggle="tooltip"
               title={this.renderSkillOneDescription()}
@@ -3463,10 +3298,10 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 2"
-              className={this.renderSkillBadge(2)}
+              className={this.renderSkillBadge("skillTwo")}
               src={skillImageTwo}
               onClick={() => {
-                this.playerUseActiveSkill(2);
+                this.playerUseActiveSkill("skillTwo");
               }}
               data-toggle="tooltip"
               title={this.renderSkillTwoDescription()}
@@ -3477,10 +3312,10 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 3"
-              className={this.renderSkillBadge(3)}
+              className={this.renderSkillBadge("skillThree")}
               src={skillImageThree}
               onClick={() => {
-                this.playerUseActiveSkill(3);
+                this.playerUseActiveSkill("skillThree");
               }}
               data-toggle="tooltip"
               title={this.renderSkillThreeDescription()}
@@ -3491,10 +3326,10 @@ class UserInterface extends Component {
             <img
               draggable="false"
               alt="skill 4"
-              className={this.renderSkillBadge(4)}
+              className={this.renderSkillBadge("skillFour")}
               src={skillImageFour}
               onClick={() => {
-                this.playerUseActiveSkill(4);
+                this.playerUseActiveSkill("skillFour");
               }}
               data-toggle="tooltip"
               title={this.renderSkillFourDescription()}
