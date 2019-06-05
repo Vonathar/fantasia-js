@@ -59,16 +59,24 @@ If you want to know more about your adventure, you can read through the battle l
 
 ## Change log
 
-### 1.5.3
+### 1.5.4
 
 #### Gameplay
 
 - Rebalance skills and upgrades
-- Change cooldowns and the way they are calculated
+- Allow scrolling on left menu tabs to prevent overflowing on smaller resolutions
+- Increase font size to improve readability
 
 #### Other
 
-- Fix a bug which caused the pet buttons to render as enabled when the money held was not enough to purchase the first level
+- Fix a bug which caused the first hero upgrade of each kind to deduct the wrong amount of coins
+- Fix a bug which affected the rendering of enemy drops on smaller screen resolutions
+- Add space between the drop icons to improve visibility
+- Automatic drop collection is now based on total amount of items instead of individual amounts
+- Automatic drop collection is now triggered by 40+ items instead of 75/80+
+- Fix a bug which caused the skill Animal Training not to affect click damage
+- Fix upgrade window to have a responsive size throughout the game
+- Improve mobile support
 
 ## License
 

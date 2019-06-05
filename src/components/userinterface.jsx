@@ -138,7 +138,11 @@ class UserInterface extends Component {
           150000,
           200000,
           500000,
-          1000000
+          1000000,
+          2500000,
+          5000000,
+          7500000,
+          10000000
         ]
       },
       skillsUsed: {
@@ -181,7 +185,22 @@ class UserInterface extends Component {
           50000000,
           100000000,
           250000000,
-          500000000
+          500000000,
+          1000000000,
+          5000000000,
+          10000000000,
+          25000000000,
+          50000000000,
+          100000000000,
+          250000000000,
+          500000000000,
+          1000000000000,
+          2500000000000,
+          5000000000000,
+          10000000000000,
+          25000000000000,
+          50000000000000,
+          100000000000000
         ]
       },
       petDamageDealt: {
@@ -203,7 +222,22 @@ class UserInterface extends Component {
           50000000,
           100000000,
           250000000,
-          500000000
+          500000000,
+          1000000000,
+          5000000000,
+          10000000000,
+          25000000000,
+          50000000000,
+          100000000000,
+          250000000000,
+          500000000000,
+          1000000000000,
+          2500000000000,
+          5000000000000,
+          10000000000000,
+          25000000000000,
+          50000000000000,
+          100000000000000
         ]
       },
       enemiesKilled: {
@@ -500,20 +534,20 @@ class UserInterface extends Component {
       },
       doubleAttackChance: {
         level: 0,
-        priceMultiplier: 1.25,
-        price: 2500,
+        priceMultiplier: 1.5,
+        price: 1500,
         purchasePrice: 1000
       },
       criticalChance: {
         level: 0,
-        priceMultiplier: 1.15,
-        price: 1000,
+        priceMultiplier: 1.5,
+        price: 750,
         purchasePrice: 500
       },
       criticalMultiplier: {
         level: 0,
-        priceMultiplier: 1.1,
-        price: 1000,
+        priceMultiplier: 1.5,
+        price: 750,
         purchasePrice: 500
       }
     },
@@ -736,14 +770,29 @@ class UserInterface extends Component {
     // Create a copy of the object from the state
     let heroUpgrades = { ...this.state.heroUpgrades };
     // If the player has enough coins to buy the upgrade
-    if (this.state.coins >= heroUpgrades[upgradeName].price) {
-      this.setState({
-        // Take off the money from the player
-        coins: this.state.coins - heroUpgrades[upgradeName].price,
-        // Update player stats
-        totalMoneySpent:
-          this.state.totalMoneySpent + heroUpgrades[upgradeName].price
-      });
+    if (
+      this.state.coins >= heroUpgrades[upgradeName].price &&
+      this.state.coins >= heroUpgrades[upgradeName].purchasePrice
+    ) {
+      // If it's the first upgrade
+      if (heroUpgrades[upgradeName].level === 0) {
+        this.setState({
+          // Take off the money from the player
+          coins: this.state.coins - heroUpgrades[upgradeName].purchasePrice,
+          // Update player stats
+          totalMoneySpent:
+            this.state.totalMoneySpent + heroUpgrades[upgradeName].purchasePrice
+        });
+        // If it's not the first upgrade
+      } else {
+        this.setState({
+          // Take off the money from the player
+          coins: this.state.coins - heroUpgrades[upgradeName].price,
+          // Update player stats
+          totalMoneySpent:
+            this.state.totalMoneySpent + heroUpgrades[upgradeName].price
+        });
+      }
       // If the player is upgrading the click damage
       if (upgradeName === "clickDamage") {
         this.setState({
@@ -771,7 +820,7 @@ class UserInterface extends Component {
       if (upgradeName === "doubleAttackChance") {
         this.setState({
           // Increase the double attack chance
-          playerDoubleAttackChance: this.state.playerDoubleAttackChance + 0.5
+          playerDoubleAttackChance: this.state.playerDoubleAttackChance + 0.3
         });
       }
       heroUpgrades[upgradeName].price = Math.round(
@@ -784,6 +833,13 @@ class UserInterface extends Component {
       heroUpgrades[upgradeName].level += 1;
       this.setState({ heroUpgrades });
     }
+  };
+
+  // Render the upgrade price next to the purchase button
+  renderUpgradePriceParagraph = upgradeName => {
+    return this.state.heroUpgrades[upgradeName].level === 0
+      ? this.state.heroUpgrades[upgradeName].purchasePrice
+      : this.state.heroUpgrades[upgradeName].price;
   };
 
   // Render the button classes based on whether the user has enough money to buy the upgrade
@@ -925,11 +981,11 @@ class UserInterface extends Component {
 
   // Sum of all the DPS sources
   calculateTotalClickDamage = () => {
-    if (this.state.isHeroSkillThreeActive) {
+    if (this.state.skills.skillThree.isActive) {
       return Math.round(
         this.state.playerAttackPlaceholder * this.state.playerAttackMultiplier +
           (this.calculateTotalDamagePerSecond() / 100) *
-            this.state.heroSkillThreeDamageMultiplier
+            this.state.skills.skillThree.damageMultiplier
       );
     } else {
       return Math.round(
@@ -1196,14 +1252,10 @@ class UserInterface extends Component {
       });
     }
 
-    // If there are more than 75 uncollected coins
-    if (this.state.coinsToBeCollected > 75) {
+    // If there are more than 50 uncollected drops
+    if (this.state.coinsToBeCollected + this.state.foodToBeCollected > 40) {
       // Collect all of them
       this.collectCoinsOnHover();
-    }
-    // If there are more than 10 uncollected food drops
-    if (this.state.foodToBeCollected > 10) {
-      // Collect all of them
       this.collectFoodOnHover();
     }
 
@@ -2064,205 +2116,249 @@ class UserInterface extends Component {
           </p>
           {/* Upgrade #1 - Click DMG */}
           <div className="userInterface-upgrades-upgrade-div">
-            <div className="userInterface-upgrades-upgrade-div-holder mx-auto">
-              <img
-                draggable="false"
-                alt="Upgrade one"
-                src={heroUpgradeOneImage}
-                className="userInterface-upgrades-upgrade-image mx-auto"
-              />
-              <small className="userInterface-upgrades-upgrade-name">
-                Click DMG
-              </small>
-              <small className="userInterface-upgrades-upgrade-level">
-                Lv. {this.state.heroUpgrades.clickDamage.level}
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <div className="userInterface-upgrades-upgrade-div-holder mx-auto  my-auto">
+                <img
+                  draggable="false"
+                  alt="Upgrade one"
+                  src={heroUpgradeOneImage}
+                  className="userInterface-upgrades-upgrade-image mx-auto"
+                />
+                <small className="userInterface-upgrades-upgrade-name">
+                  Click Damage
+                </small>
+                <small className="userInterface-upgrades-upgrade-level">
+                  Lv. {this.state.heroUpgrades.clickDamage.level}
+                </small>
+              </div>
+            </div>
+            <div className="userInterface-upgrades-upgrade-div-child  mx-auto my-auto">
+              <small className="userInterface-upgrades-upgrade-damage mx-auto">
+                <img
+                  className="userInterface-upgrades-upgrade-damage-increment-image"
+                  draggable="false"
+                  alt="click damage"
+                  src={clickDamageImage}
+                />
+                {/* Show the increase the upgrade would have on the current player damage */}
+                +
+                {this.renderNumberWithAbbreviations(
+                  Math.round(
+                    50 *
+                      Math.pow(1.045, this.state.heroUpgrades.clickDamage.level)
+                  ) - this.state.playerAttackPlaceholder
+                )}
               </small>
             </div>
-            <small className="userInterface-upgrades-upgrade-damage mx-auto">
-              <img
-                draggable="false"
-                alt="click damage"
-                src={clickDamageImage}
-              />
-              {/* Show the increase the upgrade would have on the current player damage */}
-              +
-              {this.renderNumberWithAbbreviations(
-                Math.round(
-                  50 *
-                    Math.pow(1.045, this.state.heroUpgrades.clickDamage.level)
-                ) - this.state.playerAttackPlaceholder
-              )}
-            </small>
-            <small
-              id="userInterface-upgrades-upgradeOne-price"
-              className="userInterface-upgrades-upgrade-price mx-auto"
-            >
-              {this.renderNumberWithAbbreviations(
-                this.state.heroUpgrades.clickDamage.price
-              )}
-              <img
-                draggable="false"
-                alt="coin"
-                className="userInterface-upgrades-upgrade-price-image"
-                src={coinImageOne}
-              />
-            </small>
-            <button
-              type="button"
-              className={this.renderUpgradeButtonClasses("clickDamage")}
-              onClick={() => {
-                this.heroUpgradeLevelUp("clickDamage");
-              }}
-            >
-              +
-            </button>
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <small
+                id="userInterface-upgrades-upgradeOne-price"
+                className="userInterface-upgrades-upgrade-price mx-auto"
+              >
+                {this.renderNumberWithAbbreviations(
+                  this.renderUpgradePriceParagraph("clickDamage")
+                )}
+                <img
+                  draggable="false"
+                  alt="coin"
+                  className="userInterface-upgrades-upgrade-price-image"
+                  src={coinImageOne}
+                />
+              </small>
+            </div>
+
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto  my-auto">
+              <button
+                type="button"
+                className={this.renderUpgradeButtonClasses("clickDamage")}
+                onClick={() => {
+                  this.heroUpgradeLevelUp("clickDamage");
+                }}
+              >
+                +
+              </button>
+            </div>
           </div>
           {/* Upgrade #2 - Critical Rate */}
           <div className="userInterface-upgrades-upgrade-div">
-            <div className="userInterface-upgrades-upgrade-div-holder mx-auto">
-              <img
-                draggable="false"
-                alt="Upgrade two"
-                src={criticalChanceImage}
-                className="userInterface-upgrades-upgrade-image mx-auto"
-              />
-              <small className="userInterface-upgrades-upgrade-name">
-                Critical chance
-              </small>
-              <small className="userInterface-upgrades-upgrade-level">
-                Lv. {this.state.heroUpgrades.criticalChance.level}
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <div className="userInterface-upgrades-upgrade-div-holder mx-auto">
+                <img
+                  draggable="false"
+                  alt="Upgrade two"
+                  src={criticalChanceImage}
+                  className="userInterface-upgrades-upgrade-image mx-auto"
+                />
+                <small className="userInterface-upgrades-upgrade-name">
+                  Critical chance
+                </small>
+                <small className="userInterface-upgrades-upgrade-level">
+                  Lv. {this.state.heroUpgrades.criticalChance.level}
+                </small>
+              </div>
+            </div>
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <small className="userInterface-upgrades-upgrade-damage mx-auto">
+                <img
+                  className="userInterface-upgrades-upgrade-damage-increment-image"
+                  draggable="false"
+                  alt="critical chance"
+                  src={criticalChanceImage}
+                />
+                {/* Show the increase the upgrade would have on the current player damage */}
+                +0.3%
               </small>
             </div>
-            <small className="userInterface-upgrades-upgrade-damage mx-auto">
-              <img
-                draggable="false"
-                alt="critical chance"
-                src={criticalChanceImage}
-              />
-              {/* Show the increase the upgrade would have on the current player damage */}
-              +0.3%
-            </small>
-            <small
-              id="userInterface-upgrades-upgradeOne-price"
-              className="userInterface-upgrades-upgrade-price mx-auto"
-            >
-              {this.renderNumberWithAbbreviations(
-                this.state.heroUpgrades.criticalChance.price
-              )}
-              <img
-                draggable="false"
-                alt="coin"
-                className="userInterface-upgrades-upgrade-price-image"
-                src={coinImageOne}
-              />
-            </small>
-            <button
-              type="button"
-              className={this.renderUpgradeButtonClasses("criticalChance")}
-              onClick={() => {
-                this.heroUpgradeLevelUp("criticalChance");
-              }}
-            >
-              +
-            </button>
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <small
+                id="userInterface-upgrades-upgradeOne-price"
+                className="userInterface-upgrades-upgrade-price mx-auto"
+              >
+                {this.renderNumberWithAbbreviations(
+                  this.renderUpgradePriceParagraph("criticalChance")
+                )}
+                <img
+                  draggable="false"
+                  alt="coin"
+                  className="userInterface-upgrades-upgrade-price-image"
+                  src={coinImageOne}
+                />
+              </small>
+            </div>
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <button
+                type="button"
+                className={this.renderUpgradeButtonClasses("criticalChance")}
+                onClick={() => {
+                  this.heroUpgradeLevelUp("criticalChance");
+                }}
+              >
+                +
+              </button>
+            </div>
           </div>
           {/* Upgrade #3 - Crit Multiplier */}
           <div className="userInterface-upgrades-upgrade-div">
-            <div className="userInterface-upgrades-upgrade-div-holder mx-auto">
-              <img
-                draggable="false"
-                alt="Upgrade three"
-                src={criticalMultiplierImage}
-                className="userInterface-upgrades-upgrade-image mx-auto"
-              />
-              <small className="userInterface-upgrades-upgrade-name">
-                Critical multiplier
-              </small>
-              <small className="userInterface-upgrades-upgrade-level">
-                Lv. {this.state.heroUpgrades.criticalMultiplier.level}
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <div className="userInterface-upgrades-upgrade-div-holder mx-auto">
+                <img
+                  draggable="false"
+                  alt="Upgrade three"
+                  src={criticalMultiplierImage}
+                  className="userInterface-upgrades-upgrade-image mx-auto"
+                />
+                <small className="userInterface-upgrades-upgrade-name">
+                  Critical multiplier
+                </small>
+                <small className="userInterface-upgrades-upgrade-level">
+                  Lv. {this.state.heroUpgrades.criticalMultiplier.level}
+                </small>
+              </div>
+            </div>
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <small className="userInterface-upgrades-upgrade-damage mx-auto">
+                <img
+                  className="userInterface-upgrades-upgrade-damage-increment-image"
+                  draggable="false"
+                  alt="critical multiplier"
+                  src={criticalMultiplierImage}
+                />
+                {/* Show the increase the upgrade would have on the current player damage */}
+                +5%
               </small>
             </div>
-            <small className="userInterface-upgrades-upgrade-damage mx-auto">
-              <img
-                draggable="false"
-                alt="critical multiplier"
-                src={criticalMultiplierImage}
-              />
-              {/* Show the increase the upgrade would have on the current player damage */}
-              +5%
-            </small>
-            <small
-              id="userInterface-upgrades-upgradeOne-price"
-              className="userInterface-upgrades-upgrade-price mx-auto"
-            >
-              {this.renderNumberWithAbbreviations(
-                this.state.heroUpgrades.criticalMultiplier.price
-              )}
-              <img
-                draggable="false"
-                alt="coin"
-                className="userInterface-upgrades-upgrade-price-image"
-                src={coinImageOne}
-              />
-            </small>
-            <button
-              type="button"
-              className={this.renderUpgradeButtonClasses("criticalMultiplier")}
-              onClick={() => {
-                this.heroUpgradeLevelUp("criticalMultiplier");
-              }}
-            >
-              +
-            </button>
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <small
+                id="userInterface-upgrades-upgradeOne-price"
+                className="userInterface-upgrades-upgrade-price mx-auto"
+              >
+                {this.renderNumberWithAbbreviations(
+                  this.renderUpgradePriceParagraph("criticalMultiplier")
+                )}
+                <img
+                  draggable="false"
+                  alt="coin"
+                  className="userInterface-upgrades-upgrade-price-image"
+                  src={coinImageOne}
+                />
+              </small>
+            </div>
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <button
+                type="button"
+                className={this.renderUpgradeButtonClasses(
+                  "criticalMultiplier"
+                )}
+                onClick={() => {
+                  this.heroUpgradeLevelUp("criticalMultiplier");
+                }}
+              >
+                +
+              </button>
+            </div>
           </div>
           {/* Upgrade #4 - Double attack % */}
           <div className="userInterface-upgrades-upgrade-div">
-            <div className="userInterface-upgrades-upgrade-div-holder mx-auto">
-              <img
-                draggable="false"
-                alt="Upgrade four"
-                src={doubleAttackImage}
-                className="userInterface-upgrades-upgrade-image mx-auto"
-              />
-              <small className="userInterface-upgrades-upgrade-name">
-                Double attack
-              </small>
-              <small className="userInterface-upgrades-upgrade-level">
-                Lv. {this.state.heroUpgrades.doubleAttackChance.level}
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <div className="userInterface-upgrades-upgrade-div-holder mx-auto">
+                <img
+                  draggable="false"
+                  alt="Upgrade four"
+                  src={doubleAttackImage}
+                  className="userInterface-upgrades-upgrade-image mx-auto"
+                />
+                <small className="userInterface-upgrades-upgrade-name">
+                  Double attack
+                </small>
+                <small className="userInterface-upgrades-upgrade-level">
+                  Lv. {this.state.heroUpgrades.doubleAttackChance.level}
+                </small>
+              </div>
+            </div>
+
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <small className="userInterface-upgrades-upgrade-damage mx-auto">
+                <img
+                  className="userInterface-upgrades-upgrade-damage-increment-image"
+                  draggable="false"
+                  alt="double attack"
+                  src={doubleAttackImage}
+                />
+                {/* Show the increase the upgrade would have on the current double attack chance */}
+                +0.3%
               </small>
             </div>
-            <small className="userInterface-upgrades-upgrade-damage mx-auto">
-              <img
-                draggable="false"
-                alt="double attack"
-                src={doubleAttackImage}
-              />
-              {/* Show the increase the upgrade would have on the current double attack chance */}
-              +0.5%
-            </small>
-            <small
-              id="userInterface-upgrades-upgradeOne-price"
-              className="userInterface-upgrades-upgrade-price mx-auto"
-            >
-              {this.renderNumberWithAbbreviations(
-                this.state.heroUpgrades.doubleAttackChance.price
-              )}
-              <img
-                draggable="false"
-                alt="coin"
-                className="userInterface-upgrades-upgrade-price-image"
-                src={coinImageOne}
-              />
-            </small>
-            <button
-              type="button"
-              className={this.renderUpgradeButtonClasses("doubleAttackChance")}
-              onClick={() => {
-                this.heroUpgradeLevelUp("doubleAttackChance");
-              }}
-            >
-              +
-            </button>
+
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <small
+                id="userInterface-upgrades-upgradeOne-price"
+                className="userInterface-upgrades-upgrade-price mx-auto"
+              >
+                {this.renderNumberWithAbbreviations(
+                  this.renderUpgradePriceParagraph("doubleAttackChance")
+                )}
+                <img
+                  draggable="false"
+                  alt="coin"
+                  className="userInterface-upgrades-upgrade-price-image"
+                  src={coinImageOne}
+                />
+              </small>
+            </div>
+
+            <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
+              <button
+                type="button"
+                className={this.renderUpgradeButtonClasses(
+                  "doubleAttackChance"
+                )}
+                onClick={() => {
+                  this.heroUpgradeLevelUp("doubleAttackChance");
+                }}
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
       );
@@ -2401,7 +2497,7 @@ class UserInterface extends Component {
                 />
                 <small className="userInterface-stats-summary-section-paragraph">
                   {this.renderNumberWithAbbreviations(
-                    this.state.playerDoubleAttackChance
+                    this.state.playerDoubleAttackChance.toFixed(1)
                   )}
                   %
                 </small>
@@ -2802,6 +2898,7 @@ class UserInterface extends Component {
               +
             </button>
           </div>
+
           {/* Pet 2 */}
           <div className="userInterface-pets-pet-div">
             <div className="userInterface-pets-pet-div-holder">
