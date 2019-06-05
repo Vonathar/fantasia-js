@@ -6,18 +6,17 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-### 1.5.5
+### 1.5.6
 
 #### Gameplay
 
-- New pet worm!
+- N/a
 
 #### Other
 
-- Fix a bug which caused the skill bar not to be rendered properly on smaller screens
-- Fix a bug which caused the left menu tabs to break on smaller screens
-- Fix a bug which caused the stage tabs to break on smaller screens
-- Fix the rendering of upgrade prices, pet prices, pet images and pet prices to support smaller screens
+- Refactor the entire code to split the code into different components (13 including the main UI renderer)
+- All component-specific rendering functions have been moved from userInterface.jsx to the specific Component
+- All components apart from userInterface.jsx are stateless, and all rely on userInterface's state passed via props
 
 ## Gameplay
 
