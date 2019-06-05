@@ -6,6 +6,7 @@ import Inventory from "./inventory";
 import StagesBar from "./stagesBar";
 import BattleArea from "./battleArea";
 import SkillBar from "./skillBar";
+import TutorialScreen from "./tutorialScreen";
 /* [IMG] Boss */
 import bossImageOne from "../img/boss_1.png";
 import bossImageTwo from "../img/boss_2.png";
@@ -71,19 +72,15 @@ class UserInterface extends Component {
       </p>,
       <p>
         <small>
-          Kill monsters to <span className="text-primary">level up</span> your
-          character; leveling up grants you extra HP, as well as click power.
-          Reach player level 70 to find out more about rebirthing!
-        </small>
-      </p>,
-      <p>
-        <small className="text-info">
-          ** Press [D] to enable Debug Mode **
+          To read the <span className="text-warning">tutorial</span>, press [
+          <span className="text-warning">T</span>]!
         </small>
       </p>
     ],
     /* Global settings */
     isDebugModeActive: false,
+    isTutorialScreenActive: false,
+    tutorialScreenSettingSelected: "Player",
     backgroundImageCurrent: backgroundImageTwo,
     backgroundImages: [
       backgroundImageOne,
@@ -1114,6 +1111,13 @@ class UserInterface extends Component {
         leftMenuSettingSelected: "Hero"
       });
     }
+    if (event.key === "t") {
+      this.setState({
+        isTutorialScreenActive: !this.state.isTutorialScreenActive,
+        leftMenuSettingSelected: "Hero"
+      });
+      console.log("Tutorial mode toggled");
+    }
   };
 
   calculateRandomDropChance = chanceInPercentage => {
@@ -1729,6 +1733,10 @@ class UserInterface extends Component {
     this.setState({ leftMenuSettingSelected: event.target.textContent });
   };
 
+  fetchTutorialScreenSettingSelection = event => {
+    this.setState({ tutorialScreenSettingSelected: event.target.textContent });
+  };
+
   changeToRandomBackground = () => {
     let randomImageNumber = Math.round(Math.random() * 5);
     // If the current background image is not the same as the new randomised one
@@ -1791,6 +1799,12 @@ class UserInterface extends Component {
     }
   };
 
+  renderStageBar = () => {
+    if (!this.state.isTutorialScreenActive) {
+      return <StagesBar mainState={this.state} />;
+    }
+  };
+
   render() {
     return (
       <div style={this.renderBackgroundImage()} id="userInterface-div">
@@ -1818,7 +1832,7 @@ class UserInterface extends Component {
           renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
         />
         {/* Stages [ TOP ] */}
-        <StagesBar mainState={this.state} />
+        {this.renderStageBar()}
 
         {/* Battle [ MIDDLE ] */}
         <BattleArea
@@ -1833,6 +1847,14 @@ class UserInterface extends Component {
         <SkillBar
           mainState={this.state}
           playerUseActiveSkill={this.playerUseActiveSkill}
+        />
+        {/* Tutorial [MIDDLE] */}
+        <TutorialScreen
+          mainState={this.state}
+          fetchTutorialScreenSettingSelection={
+            this.fetchTutorialScreenSettingSelection
+          }
+          renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
         />
       </div>
     );

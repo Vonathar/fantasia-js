@@ -6,17 +6,16 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-### 1.5.6
+### 1.6.0
 
 #### Gameplay
 
-- N/a
+- Tutorial has now been added to the game! Press [T] to view it at any time.
 
 #### Other
 
-- Refactor the entire code to split the code into different components (13 including the main UI renderer)
-- All component-specific rendering functions have been moved from userInterface.jsx to the specific Component
-- All components apart from userInterface.jsx are stateless, and all rely on userInterface's state passed via props
+- Change text rendered in the battle log at the beginning of the game
+- Change the way the stage div is rendered in accordance to the new tutorial implementation
 
 ## Gameplay
 

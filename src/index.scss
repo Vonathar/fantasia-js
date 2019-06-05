@@ -942,6 +942,38 @@ code {
   cursor: default;
 }
 
+#tutorialScreen-div {
+  background-color: rgba(0, 0, 0, 0.829);
+  border: 1px solid rgba(95, 95, 95, 0.486);
+
+  border-radius: 15px;
+  color: white;
+  width: 40vw;
+  height: 30vh;
+  top: 28vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 0.8vw;
+  overflow: auto;
+}
+
+.tutorialScreen-h5 {
+  font-size: 1.3vw;
+  padding: 0.5vw 0 0 0;
+}
+
+.tutorialScreen-p {
+  margin: 0 2vw 2vw 2vw;
+  position: relative;
+}
+
+.tutorialScreen-image {
+  width: 3vw;
+  margin: 0.5vw;
+}
+
 #userInterface-chatlog-div-paragraphs {
   position: relative;
   overflow-y: auto;
