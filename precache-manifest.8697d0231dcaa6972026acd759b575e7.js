@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a5a19f39fbb1ca412784f4d73e4cab4e",
+    "revision": "2493b21a8cb897a2daba8431c1a3c7ad",
     "url": "/fantasia-js/index.html"
   },
   {
-    "revision": "7ae9bf752ce97f5d3234",
+    "revision": "e7b7a18f45e035e18053",
     "url": "/fantasia-js/static/css/2.a4c6d6ca.chunk.css"
   },
   {
-    "revision": "1e2d1e3ac181d8a6a5be",
-    "url": "/fantasia-js/static/css/main.7a844469.chunk.css"
+    "revision": "b78f341a51e10b9bcf63",
+    "url": "/fantasia-js/static/css/main.d5c3694e.chunk.css"
   },
   {
-    "revision": "7ae9bf752ce97f5d3234",
-    "url": "/fantasia-js/static/js/2.548505b4.chunk.js"
+    "revision": "e7b7a18f45e035e18053",
+    "url": "/fantasia-js/static/js/2.5c9b555e.chunk.js"
   },
   {
-    "revision": "1e2d1e3ac181d8a6a5be",
-    "url": "/fantasia-js/static/js/main.26951e15.chunk.js"
+    "revision": "b78f341a51e10b9bcf63",
+    "url": "/fantasia-js/static/js/main.8fe070e1.chunk.js"
   },
   {
     "revision": "369c4ecfd27df2315bc5",
@@ -58,6 +58,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "2be713952fd8720c1263fce488b7e95d",
     "url": "/fantasia-js/static/media/boss_3.2be71395.png"
+  },
+  {
+    "revision": "f8b0ea533e6d2820e2f33eddfc3691dd",
+    "url": "/fantasia-js/static/media/clickDamageTutorial.f8b0ea53.png"
   },
   {
     "revision": "81fbd0566147abf56c4e0fc549f94985",
@@ -166,6 +170,18 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "dfcaa044c2e1be1cde734b725424ebdf",
     "url": "/fantasia-js/static/media/enemy_9.dfcaa044.png"
+  },
+  {
+    "revision": "cdee35694b7b4d4f19b1afa2fc3cba43",
+    "url": "/fantasia-js/static/media/hotkeysIcon.cdee3569.png"
+  },
+  {
+    "revision": "84386c4d42db4a6d7ad7bad277289caa",
+    "url": "/fantasia-js/static/media/playerExperienceTutorial.84386c4d.png"
+  },
+  {
+    "revision": "218098454bee44513908cc70c71a53a8",
+    "url": "/fantasia-js/static/media/playerHealthTutorial.21809845.png"
   },
   {
     "revision": "db9837ebfe684c651c66d9e7b0de5027",
