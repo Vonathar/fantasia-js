@@ -4,6 +4,21 @@ Fantasia is an _idle/incremental clicker RPG_.
 The mechanic of the games are customised to make the entire adventure as enjoyable as possible - avoiding sudden bumps in the progression or major roadblocks down the way.
 Fantasia is a work in progress, so many more features are currently on the way!
 
+## Change log
+
+### 1.5.5
+
+#### Gameplay
+
+- New pet worm!
+
+#### Other
+
+- Fix a bug which caused the skill bar not to be rendered properly on smaller screens
+- Fix a bug which caused the left menu tabs to break on smaller screens
+- Fix a bug which caused the stage tabs to break on smaller screens
+- Fix the rendering of upgrade prices, pet prices, pet images and pet prices to support smaller screens
+
 ## Gameplay
 
 ### Player
@@ -56,27 +71,6 @@ If you want to know more about your adventure, you can read through the battle l
 - Player class system
 - New hero upgrades
 - Inventory system
-
-## Change log
-
-### 1.5.4
-
-#### Gameplay
-
-- Rebalance skills and upgrades
-- Allow scrolling on left menu tabs to prevent overflowing on smaller resolutions
-- Increase font size to improve readability
-
-#### Other
-
-- Fix a bug which caused the first hero upgrade of each kind to deduct the wrong amount of coins
-- Fix a bug which affected the rendering of enemy drops on smaller screen resolutions
-- Add space between the drop icons to improve visibility
-- Automatic drop collection is now based on total amount of items instead of individual amounts
-- Automatic drop collection is now triggered by 40+ items instead of 75/80+
-- Fix a bug which caused the skill Animal Training not to affect click damage
-- Fix upgrade window to have a responsive size throughout the game
-- Improve mobile support
 
 ## License
 

@@ -564,7 +564,9 @@ code {
   text-align: center;
 }
 
-.userInterface-upgrades-upgrade-image {
+.userInterface-upgrades-upgrade-image,
+.userInterface-pets-pet-dps-child,
+.userInterface-pets-pet-price-image {
   width: 1.7vw;
 }
 
@@ -746,11 +748,15 @@ code {
   border-radius: 50px;
   margin: 1vw;
   height: 2vw;
+  padding: 0.2vw 0.6vw 0.2vw 0.6vw;
+  font-size: 0.8vw;
 }
 
 .userInterface-upgrades-upgrade-button-disabled:hover,
 .userInterface-pets-pet-button-disabled:hover {
   background-color: rgba(0, 0, 0, 0);
+  padding: 0.2vw 0.6vw 0.2vw 0.6vw;
+  font-size: 0.8vw;
 }
 
 .userInterface-pets-pet-button,
@@ -759,15 +765,15 @@ code {
   height: 2vw;
   background-color: rgba(228, 228, 228, 0.568);
   color: rgb(0, 0, 0);
-}
-
-.userInterface-upgrades-upgrade-button {
-  margin: 1vw;
+  padding: 0.2vw 0.6vw 0.2vw 0.6vw;
+  font-size: 0.8vw;
 }
 
 .userInterface-upgrades-upgrade-button:hover,
 .userInterface-pets-pet-button:hover {
   background-color: rgba(125, 190, 106, 0.568);
+  padding: 0.2vw 0.6vw 0.2vw 0.6vw;
+  font-size: 0.8vw;
 }
 
 .userInterface-topSummary-section {
@@ -807,6 +813,7 @@ code {
   font-size: 0.8vw;
   border-radius: 25px;
   margin: 0.25vw;
+  padding: 0.2vw 0.6vw 0.2vw 0.6vw;
 }
 
 .userInterface-stages-unlocked {
@@ -837,6 +844,7 @@ code {
 }
 
 .userInterface-userSettings-menu-tab-button {
+  padding: 0.2vw 0.6vw 0.2vw 0.6vw;
   background-color: rgba(173, 173, 173, 0.308);
   font-size: 0.8vw;
 
@@ -915,6 +923,7 @@ code {
   position: absolute;
   right: 2.5vw;
   width: 25vw;
+  height: 25vh;
   padding: 10px;
   cursor: default;
 }
@@ -924,7 +933,7 @@ code {
   border-radius: 25px;
   color: white;
   position: absolute;
-  top: 35vh;
+  top: 30vh;
   height: 30vh;
   right: 2.5vw;
   margin: auto;
@@ -985,7 +994,7 @@ code {
   left: 0;
   right: 0;
   position: fixed;
-  top: 90vh;
+  bottom: 2vh;
 }
 
 .userInterface-skills-skill-div {
