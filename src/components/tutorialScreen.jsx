@@ -90,10 +90,9 @@ class TutorialScreen extends Component {
               <br />
               <br />
               There are two types of attack: <strong> DPS</strong> (damage per
-              second) and <strong> CD </strong>
-              (click damage).
-              <em>DPS</em> is the damage your pets deal to the enemy every
-              second, even when you are not actively playing. <br /> <em>CD</em>{" "}
+              second) and <strong> CD </strong> (click damage).
+              <em> DPS</em> is the damage your pets deal to the enemy every
+              second, even when you are not actively playing.<br /> <em>CD</em>{" "}
               is the damage you deal the enemy when you are playing actively; to
               maximise it, you can click with your mouse and your keyboard at
               the same time! <br /> <br />
@@ -118,7 +117,7 @@ class TutorialScreen extends Component {
                 className="tutorialScreen-image"
               />
               <p />
-              Your level dictates how much HP you have, as well as how strong
+              Your level dictates how many HP you have, as well as how strong
               your skills are.
               <br />
               To level up you have to kill enemies, which drop XP (experience
@@ -306,11 +305,19 @@ class TutorialScreen extends Component {
               <p>
                 [
                 <span className="text-warning">
+                  <strong>H</strong>
+                </span>
+                ] - Heal
+              </p>
+              {/* Hotkey #3 */}
+              <p>
+                [
+                <span className="text-warning">
                   <strong>1</strong>
                 </span>
                 ] - Quick Stab
               </p>
-              {/* Hotkey #3 */}
+              {/* Hotkey #4 */}
               <p>
                 [
                 <span className="text-warning">
@@ -318,7 +325,7 @@ class TutorialScreen extends Component {
                 </span>
                 ] - Mark of the Beast
               </p>
-              {/* Hotkey #4 */}
+              {/* Hotkey #5 */}
               <p>
                 [
                 <span className="text-warning">
@@ -326,7 +333,7 @@ class TutorialScreen extends Component {
                 </span>
                 ] - Animal Training
               </p>
-              {/* Hotkey #5 */}
+              {/* Hotkey #6 */}
               <p>
                 [
                 <span className="text-warning">
@@ -334,7 +341,7 @@ class TutorialScreen extends Component {
                 </span>
                 ] - Fruit of Madness
               </p>
-              {/* Hotkey #6 */}
+              {/* Hotkey #7 */}
               <p>
                 [
                 <span className="text-warning">
@@ -401,8 +408,7 @@ class TutorialScreen extends Component {
             <h5 className="tutorialScreen-h5 text-primary">Double attack</h5>
             <img src={doubleAttackImage} className="tutorialScreen-image" />
             <p className="tutorialScreen-p">
-              Increase the chance of dealing a 2nd attack automatically after
-              the 1st one.
+              Increase the chance of attacking twice with a single click.
               <br />
               <br />
               <span className="text-warning">Current Double Hit %:</span>
