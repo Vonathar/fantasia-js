@@ -47,6 +47,16 @@ import enemyImageTwentyfour from "../img/enemy_24.png";
 import enemyImageTwentyfive from "../img/enemy_25.png";
 import enemyImageTwentysix from "../img/enemy_26.png";
 import enemyImageTwentyseven from "../img/enemy_27.png";
+// Deck
+import playerExperienceImage from "../img/playerExperienceTutorial.png";
+import coinImage from "../img/coin_1.png";
+import playerHealthImage from "../img/health_1.png";
+import healthPotionImage from "../img/resource_3.png";
+import doubleAttackImage from "../img/doubleAttack_1.png";
+import criticalMultiplierImage from "../img/critical_1.png";
+import criticalChanceImage from "../img/critical_2.png";
+import clickDamageImage from "../img/cps_1.png";
+import clickPerSecondDamageImage from "../img/dps_1.png";
 
 class UserInterface extends Component {
   state = {
@@ -346,20 +356,26 @@ class UserInterface extends Component {
 
     */
     playerLevel: 1,
-    playerRankCurrent: "Novice",
+    playerRankCurrent: "Rogue",
     playerRanks: [
-      "Novice",
+      "Rogue",
       "Hunter",
+      "Mercenary",
       "Fighter",
       "Soldier",
+      "Assassin",
       "Champion",
+      "Knight",
+      "Templar",
+      "Slayer",
+      "Berserker",
       "Hero",
       "Legend"
     ],
     playerHealthCurrent: 500,
     playerHealthMax: 500,
     playerExperienceCurrent: 0,
-    playerExperienceRequired: 500,
+    playerExperienceRequired: 750,
     playerAttack: 50,
     playerDoubleAttackChance: 0,
     playerCriticalChance: 0.1,
@@ -388,6 +404,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusExperience",
+        bonusImage: playerExperienceImage,
         currentBonusMultiplier: 0
       },
       cardTwo: {
@@ -396,6 +413,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusHealth",
+        bonusImage: playerHealthImage,
         currentBonusMultiplier: 0
       },
       cardThree: {
@@ -404,6 +422,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusClickDamage",
+        bonusImage: clickDamageImage,
         currentBonusMultiplier: 0
       },
       cardFour: {
@@ -412,6 +431,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusDamagePerSecond",
+        bonusImage: clickPerSecondDamageImage,
         currentBonusMultiplier: 0
       },
       cardFive: {
@@ -420,6 +440,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusCoinDrop",
+        bonusImage: coinImage,
         currentBonusMultiplier: 0
       },
       cardSix: {
@@ -428,6 +449,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusCriticalChance",
+        bonusImage: criticalChanceImage,
         basicBonusMultiplier: 1.01,
         currentBonusMultiplier: 0
       },
@@ -437,6 +459,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusCriticalDamage",
+        bonusImage: criticalMultiplierImage,
         currentBonusMultiplier: 0
       },
       cardEight: {
@@ -445,6 +468,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusDoubleAttackChance",
+        bonusImage: doubleAttackImage,
         currentBonusMultiplier: 0
       },
       cardNine: {
@@ -453,6 +477,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusPotionDropRate",
+        bonusImage: healthPotionImage,
         currentBonusMultiplier: 0
       },
       cardTen: {
@@ -461,6 +486,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusCriticalDamage",
+        bonusImage: criticalMultiplierImage,
         currentBonusMultiplier: 0
       },
       cardEleven: {
@@ -469,6 +495,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusDoubleAttackChance",
+        bonusImage: doubleAttackImage,
         currentBonusMultiplier: 0
       },
       cardTwelve: {
@@ -477,6 +504,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusPotionDropRate",
+        bonusImage: healthPotionImage,
         currentBonusMultiplier: 0
       },
       cardThirteen: {
@@ -485,6 +513,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusExperience",
+        bonusImage: playerExperienceImage,
         currentBonusMultiplier: 0
       },
       cardFourteen: {
@@ -493,6 +522,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusHealth",
+        bonusImage: playerHealthImage,
         currentBonusMultiplier: 0
       },
       cardFifteen: {
@@ -501,6 +531,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusClickDamage",
+        bonusImage: clickDamageImage,
         currentBonusMultiplier: 0
       },
       cardSixteen: {
@@ -509,6 +540,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusDamagePerSecond",
+        bonusImage: clickPerSecondDamageImage,
         currentBonusMultiplier: 0
       },
       cardSeventeen: {
@@ -517,6 +549,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusCoinDrop",
+        bonusImage: coinImage,
         currentBonusMultiplier: 0
       },
       cardEighteen: {
@@ -525,6 +558,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusCriticalChance",
+        bonusImage: criticalChanceImage,
         basicBonusMultiplier: 1.01,
         currentBonusMultiplier: 0
       },
@@ -534,6 +568,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusCriticalDamage",
+        bonusImage: criticalMultiplierImage,
         currentBonusMultiplier: 0
       },
       cardTwenty: {
@@ -542,6 +577,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusDoubleAttackChance",
+        bonusImage: doubleAttackImage,
         currentBonusMultiplier: 0
       },
       cardTwentyone: {
@@ -550,6 +586,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusPotionDropRate",
+        bonusImage: healthPotionImage,
         currentBonusMultiplier: 0
       },
 
@@ -559,6 +596,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusExperience",
+        bonusImage: playerExperienceImage,
         currentBonusMultiplier: 0
       },
       cardTwentythree: {
@@ -567,6 +605,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusHealth",
+        bonusImage: playerHealthImage,
         currentBonusMultiplier: 0
       },
       cardTwentyfour: {
@@ -575,6 +614,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusClickDamage",
+        bonusImage: clickDamageImage,
         currentBonusMultiplier: 0
       },
       cardTwentyfive: {
@@ -583,6 +623,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusDamagePerSecond",
+        bonusImage: clickPerSecondDamageImage,
         currentBonusMultiplier: 0
       },
       cardTwentysix: {
@@ -591,6 +632,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusCoinDrop",
+        bonusImage: coinImage,
         currentBonusMultiplier: 0
       },
       cardTwentyseven: {
@@ -599,6 +641,7 @@ class UserInterface extends Component {
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusCriticalChance",
+        bonusImage: criticalChanceImage,
         basicBonusMultiplier: 1.01,
         currentBonusMultiplier: 0
       }
@@ -1380,7 +1423,7 @@ class UserInterface extends Component {
         this.state.playerExperienceCurrent -
         this.state.playerExperienceRequired,
       // Raise the experience required for the next level
-      playerExperienceRequired: 500 * Math.pow(1.05, this.state.playerLevel),
+      playerExperienceRequired: 500 * Math.pow(1.06, this.state.playerLevel),
       // Increase the max health, including the deck health bonus
       playerHealthMax: Math.round(
         500 *
@@ -1399,7 +1442,13 @@ class UserInterface extends Component {
       this.state.playerLevel === 80 ||
       this.state.playerLevel === 100 ||
       this.state.playerLevel === 120 ||
-      this.state.playerLevel === 150
+      this.state.playerLevel === 150 ||
+      this.state.playerLevel === 180 ||
+      this.state.playerLevel === 200 ||
+      this.state.playerLevel === 230 ||
+      this.state.playerLevel === 250 ||
+      this.state.playerLevel === 270 ||
+      this.state.playerLevel === 300
     ) {
       // Increase the rank
       this.playerRankUp();

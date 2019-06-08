@@ -122,6 +122,17 @@ class DeckCard extends Component {
             role="progressbar"
           />
         </div>
+        <img
+          src={this.props.mainState.deck[this.props.cardNumber].bonusImage}
+          className="deckMenu-row-section-bonusImage"
+        />
+        <small>
+          {"+" +
+            (
+              0.2 * this.props.mainState.deck[this.props.cardNumber].level
+            ).toFixed(2) +
+            "%"}
+        </small>
       </div>
     );
   }

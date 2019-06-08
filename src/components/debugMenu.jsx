@@ -3,12 +3,7 @@ import React, { Component } from "react";
 class DebugMenu extends Component {
   render() {
     return (
-      <div
-        id="userInterface-debug-div"
-        data-toggle="tooltip"
-        title="The idle interface is currently a work in progress!"
-        data-placement="top"
-      >
+      <div id="userInterface-debug-div">
         <p>
           <strong>Debug</strong>
         </p>

@@ -6,18 +6,17 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-### 1.7.0
+### 1.7.1
 
 #### Gameplay
 
-- New feature - **Card Decks**! Kill enemies of the same type to level up cards in your deck, which in return grant you passive bonuses!
-- Increase _overall game speed_ (duration of all main actions has been halved to 500s)
-- Introduce _player ranks_, which are displayed next to the player level and increase by leveling up!
-- Change enemy names
+- Display the image and the value of the bonus granted by the cards in the deck (fixes #22)
+- Game rebalancing
+- Add new player titles
 
 #### Other
 
-- Rearrange player/enemy names and respecitive levels
+- Fix a bug causing an irrelevant tooltip to be displayed in the debug screen (fixes #21)
 
 ## Gameplay
 
