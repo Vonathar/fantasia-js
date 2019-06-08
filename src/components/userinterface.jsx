@@ -346,6 +346,16 @@ class UserInterface extends Component {
 
     */
     playerLevel: 1,
+    playerRankCurrent: "Novice",
+    playerRanks: [
+      "Novice",
+      "Hunter",
+      "Fighter",
+      "Soldier",
+      "Champion",
+      "Hero",
+      "Legend"
+    ],
     playerHealthCurrent: 500,
     playerHealthMax: 500,
     playerExperienceCurrent: 0,
@@ -371,7 +381,239 @@ class UserInterface extends Component {
       - DPS: 1631
       
     */
+    deck: {
+      cardOne: {
+        name: "Flager",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusExperience",
+        currentBonusMultiplier: 0
+      },
+      cardTwo: {
+        name: "Vilkas",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusHealth",
+        currentBonusMultiplier: 0
+      },
+      cardThree: {
+        name: "Serpe",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusClickDamage",
+        currentBonusMultiplier: 0
+      },
+      cardFour: {
+        name: "Escarab",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusDamagePerSecond",
+        currentBonusMultiplier: 0
+      },
+      cardFive: {
+        name: "Dudu",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusCoinDrop",
+        currentBonusMultiplier: 0
+      },
+      cardSix: {
+        name: "Plandai",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusCriticalChance",
+        basicBonusMultiplier: 1.01,
+        currentBonusMultiplier: 0
+      },
+      cardSeven: {
+        name: "Gomba",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusCriticalDamage",
+        currentBonusMultiplier: 0
+      },
+      cardEight: {
+        name: "Larme",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusDoubleAttackChance",
+        currentBonusMultiplier: 0
+      },
+      cardNine: {
+        name: "Draugur",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusPotionDropRate",
+        currentBonusMultiplier: 0
+      },
+      cardTen: {
+        name: "Slugus",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusCriticalDamage",
+        currentBonusMultiplier: 0
+      },
+      cardEleven: {
+        name: "Renard",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusDoubleAttackChance",
+        currentBonusMultiplier: 0
+      },
+      cardTwelve: {
+        name: "Lacerta",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusPotionDropRate",
+        currentBonusMultiplier: 0
+      },
+      cardThirteen: {
+        name: "Rhith",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusExperience",
+        currentBonusMultiplier: 0
+      },
+      cardFourteen: {
+        name: "Okolo",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusHealth",
+        currentBonusMultiplier: 0
+      },
+      cardFifteen: {
+        name: "Pajaro",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusClickDamage",
+        currentBonusMultiplier: 0
+      },
+      cardSixteen: {
+        name: "Veiviser",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusDamagePerSecond",
+        currentBonusMultiplier: 0
+      },
+      cardSeventeen: {
+        name: "Arania",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusCoinDrop",
+        currentBonusMultiplier: 0
+      },
+      cardEighteen: {
+        name: "Stir",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusCriticalChance",
+        basicBonusMultiplier: 1.01,
+        currentBonusMultiplier: 0
+      },
+      cardNineteen: {
+        name: "Nube",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusCriticalDamage",
+        currentBonusMultiplier: 0
+      },
+      cardTwenty: {
+        name: "Ovum",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusDoubleAttackChance",
+        currentBonusMultiplier: 0
+      },
+      cardTwentyone: {
+        name: "Skape",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusPotionDropRate",
+        currentBonusMultiplier: 0
+      },
 
+      cardTwentytwo: {
+        name: "Drysor",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusExperience",
+        currentBonusMultiplier: 0
+      },
+      cardTwentythree: {
+        name: "Lapis",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusHealth",
+        currentBonusMultiplier: 0
+      },
+      cardTwentyfour: {
+        name: "Maus",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusClickDamage",
+        currentBonusMultiplier: 0
+      },
+      cardTwentyfive: {
+        name: "Frango",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusDamagePerSecond",
+        currentBonusMultiplier: 0
+      },
+      cardTwentysix: {
+        name: "Helovinas",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusCoinDrop",
+        currentBonusMultiplier: 0
+      },
+      cardTwentyseven: {
+        name: "Diabolus",
+        level: 0,
+        experienceCurrent: 0,
+        experienceRequired: 3,
+        bonusType: "bonusCriticalChance",
+        basicBonusMultiplier: 1.01,
+        currentBonusMultiplier: 0
+      }
+    },
+    deckBonuses: {
+      bonusExperience: 1,
+      bonusHealth: 1,
+      bonusClickDamage: 1,
+      bonusDamagePerSecond: 1,
+      bonusCoinDrop: 1,
+      bonusCriticalChance: 1,
+      bonusCriticalDamage: 1,
+      bonusDoubleAttackChance: 1,
+      bonusPotionDropRate: 1
+    },
     pets: {
       petOne: {
         basicPrice: 100,
@@ -472,37 +714,37 @@ class UserInterface extends Component {
     ],
     enemyImageCurrent: enemyImageTwentytwo,
     enemyNames: [
-      "Bat",
-      "Wolf",
-      "Snake",
-      "Beetle",
-      "Worm",
-      "Plant",
-      "Mushroom",
-      "Tear",
-      "Ghost",
-      "Minion",
-      "Wolf",
-      "Lizard",
-      "Phantom",
-      "Cyclop",
-      "Gryph",
-      "Wiz",
-      "Spider",
-      "Scorpion",
-      "Cloud",
-      "Egg",
-      "Sheep",
-      "Chest",
-      "Golem",
-      "Mouse",
-      "Chicken",
-      "Halloweeno",
-      "Devil"
+      "Flager",
+      "Vilkas",
+      "Serpe",
+      "Escarab",
+      "Dudu",
+      "Plandai",
+      "Gomba",
+      "Larme",
+      "Draugur",
+      "Slugus",
+      "Renard",
+      "Lacerta",
+      "Rhith",
+      "Okolo",
+      "Pajaro",
+      "Veiviser",
+      "Arania",
+      "Stir",
+      "Nube",
+      "Ovum",
+      "Skape",
+      "Drysor",
+      "Lapis",
+      "Maus",
+      "Frango",
+      "Helovinas",
+      "Diabolus"
     ],
     bossImages: [bossImageOne, bossImageTwo, bossImageThree],
-    bossNames: ["Vir", "Umbra", "Oculus"],
-    enemyNameCurrent: "Chest",
+    bossNames: ["Ira", "Superbia", "Avaritia"],
+    enemyNameCurrent: "Drysor",
     enemyLevel: 1,
     enemyIsBoss: false,
     enemyHasHealth: true,
@@ -689,6 +931,66 @@ class UserInterface extends Component {
     playerAttackInterval: setInterval(() => {
       this.playerAttackPerSecond();
     }, 1000)
+  };
+
+  // Card deck UI
+
+  // Check which deck card should receive experience
+  deckCardAddExperience = () => {
+    // Create a copy of the object from the state
+    let deck = { ...this.state.deck };
+    // Iterate through each key of the object
+    for (let card in deck) {
+      // If the name of the card is the same as the enemy which has just been killed
+      if (deck[card].name === this.state.enemyNameCurrent) {
+        // Add 1 experience point to the relative card
+        deck[card].experienceCurrent += 1;
+        if (deck[card].experienceCurrent >= deck[card].experienceRequired) {
+          this.deckCardLevelUp(card);
+        }
+      }
+    }
+    // Set the state with the copy of deck
+    this.setState({ deck });
+  };
+
+  // Increase the level of the card passes as a parameter
+  deckCardLevelUp = cardNumber => {
+    // Create a copy of the object from the state
+    let deck = { ...this.state.deck };
+    // Increase the level
+    deck[cardNumber].level += 1;
+    // Increase the experience required
+    deck[cardNumber].experienceRequired = deck[cardNumber].level * 6;
+    // Reset the current experience
+    deck[cardNumber].experienceCurrent = 0;
+    this.deckBonusIncreaseOnCardLevelUp([cardNumber]);
+    // Set the state with the copy of deck
+    this.setState({ deck });
+    this.pushNewParagraphToBattleLog(
+      <p>
+        <small className="text-warning">
+          Your {deck[cardNumber].name} card reached level{" "}
+          {deck[cardNumber].level}!
+        </small>
+      </p>
+    );
+  };
+
+  // Increase the overall deck bonus on level up
+  deckBonusIncreaseOnCardLevelUp = cardNumber => {
+    // Create a copy of the object from the state
+    let deckBonuses = { ...this.state.deckBonuses };
+    // Iterate through each key of the object
+    for (let bonus in deckBonuses) {
+      // Find the bonus type of the card passed as a parameter
+      if (bonus === this.state.deck.cardOne.bonusType) {
+        // Increase it value
+        deckBonuses[bonus] += 0.05;
+      }
+    }
+    // Set the state with the copy of deckBonuses
+    this.setState({ deckBonuses });
   };
 
   /*
@@ -913,7 +1215,7 @@ class UserInterface extends Component {
   calculateTotalClickDamage = () => {
     if (this.state.skills.skillThree.isActive) {
       return Math.round(
-        this.state.playerAttackPlaceholder * this.state.playerAttackMultiplier +
+        this.state.playerAttackPlaceholder +
           (this.calculateTotalDamagePerSecond() / 100) *
             this.state.skills.skillThree.damageMultiplier
       );
@@ -1059,6 +1361,15 @@ class UserInterface extends Component {
     this.setState({ skills });
   };
 
+  // Change the title of the player
+  playerRankUp = () => {
+    this.setState({
+      playerRankCurrent: this.state.playerRanks[
+        this.state.playerRanks.indexOf(this.state.playerRankCurrent) + 1
+      ]
+    });
+  };
+
   // Level up the player
   playerLevelUp = () => {
     this.setState({
@@ -1070,11 +1381,29 @@ class UserInterface extends Component {
         this.state.playerExperienceRequired,
       // Raise the experience required for the next level
       playerExperienceRequired: 500 * Math.pow(1.05, this.state.playerLevel),
-      playerHealthMax: Math.round(500 * Math.pow(1.05, this.state.playerLevel)),
+      // Increase the max health, including the deck health bonus
+      playerHealthMax: Math.round(
+        500 *
+          Math.pow(1.05, this.state.playerLevel) *
+          this.state.deckBonuses.bonusHealth
+      ),
       playerHealthCurrent: Math.round(
         500 * Math.pow(1.05, this.state.playerLevel)
       )
     });
+
+    // If the player is at the required level
+    if (
+      this.state.playerLevel === 20 ||
+      this.state.playerLevel === 50 ||
+      this.state.playerLevel === 80 ||
+      this.state.playerLevel === 100 ||
+      this.state.playerLevel === 120 ||
+      this.state.playerLevel === 150
+    ) {
+      // Increase the rank
+      this.playerRankUp();
+    }
 
     this.checkSkillForLevelUp("skillOne");
     this.checkSkillForLevelUp("skillTwo");
@@ -1133,7 +1462,11 @@ class UserInterface extends Component {
       });
     }
     // Calculate food drops
-    if (this.calculateRandomDropChance(this.state.foodDropChance)) {
+    if (
+      this.calculateRandomDropChance(
+        this.state.foodDropChance * this.state.deckBonuses.bonusPotionDropRate
+      )
+    ) {
       this.setState({
         foodToBeCollected:
           this.state.foodToBeCollected + this.state.enemyFoodHeld
@@ -1151,8 +1484,8 @@ class UserInterface extends Component {
     // Give coins, 100% chance
     let coinsDroppedByEnemy;
     if (
-      // If the enemy is a Chest enemy
-      this.state.enemyNameCurrent === "Chest" ||
+      // If the enemy is a Drysor enemy
+      this.state.enemyNameCurrent === "Drysor" ||
       // If the enemy is a boss
       this.state.bossNames.includes(this.state.enemyNameCurrent)
     ) {
@@ -1168,16 +1501,20 @@ class UserInterface extends Component {
       coinsToBeCollected: this.state.coinsToBeCollected + coinsDroppedByEnemy,
       coinsToBeCollectedValue:
         this.state.coinsToBeCollectedValue +
-        coinsDroppedByEnemy * this.state.enemyCoinsValue
+        coinsDroppedByEnemy *
+          this.state.enemyCoinsValue *
+          this.state.deckBonuses.bonusCoinDrop
     });
     // Give XP, 100% chance
     this.setState({
       playerExperienceCurrent:
-        this.state.playerExperienceCurrent + this.state.enemyExperienceHeld
+        this.state.playerExperienceCurrent +
+        this.state.enemyExperienceHeld * this.state.deckBonuses.bonusExperience
     });
   };
 
   enemyDie = () => {
+    this.deckCardAddExperience();
     // Give the player all the drops
     this.calculateAllDrops();
     this.setState({
@@ -1234,21 +1571,33 @@ class UserInterface extends Component {
         playerAttack: this.state.playerAttackPlaceholder,
         playerAttackPerSecond: this.state.playerAttackPerSecondPlaceholder
       });
-      // After 1 second
-    }, 1000);
+      // After 0.5 seconds
+    }, 500);
   };
 
   // Calculate if the hit is critical based on the critical chance
   calculateDamageAfterMultipliers = () => {
     // The damage without any bonus
     let totalDamage = this.calculateTotalClickDamage();
+    // Deck damage bonus (if any)
+    totalDamage *= this.state.deckBonuses.bonusClickDamage;
     // If double hit
-    if (this.state.playerDoubleAttackChance >= Math.random() * 101) {
+    if (
+      this.state.playerDoubleAttackChance *
+        this.state.deckBonuses.bonusDoubleAttackChance >=
+      Math.random() * 101
+    ) {
       totalDamage *= 2;
     }
     // If critical hit
-    if (this.state.playerCriticalChance >= Math.random() * 101) {
-      totalDamage += this.state.playerCriticalMultiplier;
+    if (
+      this.state.playerCriticalChance *
+        this.state.deckBonuses.bonusCriticalChance >=
+      Math.random() * 101
+    ) {
+      totalDamage +=
+        this.state.playerCriticalMultiplier *
+        this.state.deckBonuses.bonusCriticalDamage;
     }
     return totalDamage;
   };
@@ -1490,7 +1839,9 @@ class UserInterface extends Component {
       this.setState({
         // Damage the enemy by the amount of player DPS
         enemyHealthCurrent:
-          this.state.enemyHealthCurrent - this.calculateTotalDamagePerSecond(),
+          this.state.enemyHealthCurrent -
+          this.calculateTotalDamagePerSecond() *
+            this.state.deckBonuses.bonusDamagePerSecond,
         // Update player stats
         totalPetDamageDealt:
           this.state.totalPetDamageDealt + this.calculateTotalDamagePerSecond()
@@ -1638,7 +1989,7 @@ class UserInterface extends Component {
           Whenever this function is called (by hovering over the dropped item), renderXxxDrop() is triggered by changing the state's 
           value of the boolean isXxxCollected; when this value is set to true, renderXxxDrop() will change the class name from 
           'xxx-appear' to 'xxx-collect', which causes the animation to change.
-          Once the animation in triggered, the function waits 1000ms (which is the time the animation takes to complete), and then
+          Once the animation in triggered, the function waits 500ms (which is the time the animation takes to complete), and then
           adds the collected item to the inventory
 
   */
@@ -1666,7 +2017,7 @@ class UserInterface extends Component {
         "moneyEarned",
         this.state.totalMoneyEarned
       );
-    }, 1000);
+    }, 500);
   };
 
   // Add food to the inventory
@@ -1685,7 +2036,7 @@ class UserInterface extends Component {
         // Prevent food spawned after to also be animated
         isFoodCollected: false
       });
-    }, 1000);
+    }, 5000);
   };
 
   // Add lootbags to the inventory
@@ -1702,7 +2053,7 @@ class UserInterface extends Component {
         // Prevent food spawned after to also be animated
         isLootBagCollected: false
       });
-    }, 1000);
+    }, 500);
   };
 
   // Increase the value of the player for debugging

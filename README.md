@@ -6,16 +6,18 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-### 1.6.0
+### 1.7.0
 
 #### Gameplay
 
-- Tutorial has now been added to the game! Press [T] to view it at any time.
+- New feature - **Card Decks**! Kill enemies of the same type to level up cards in your deck, which in return grant you passive bonuses!
+- Increase _overall game speed_ (duration of all main actions has been halved to 500s)
+- Introduce _player ranks_, which are displayed next to the player level and increase by leveling up!
+- Change enemy names
 
 #### Other
 
-- Change text rendered in the battle log at the beginning of the game
-- Change the way the stage div is rendered in accordance to the new tutorial implementation
+- Rearrange player/enemy names and respecitive levels
 
 ## Gameplay
 
@@ -53,6 +55,10 @@ To purchase new upgrades, press on the 'Hero' tab in the left menu.
 
 Tame and level up new pets to make it easier to progress. Pets you own will attack the player every second, even while you are away!
 To level up or tame new pets, press on the 'Pets' tab in the left menu.
+
+### Deck
+
+Kill enemies of the same type to level up cards in your deck - in return, the cards are going to grant you great bonuses! The stats boosts which can be obtained from deck cards affect player attack, XP received, gold received and many more!
 
 ### Stages
 

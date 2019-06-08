@@ -4,6 +4,7 @@ import SummaryMenu from "./summaryMenu";
 import QuestMenu from "./questMenu";
 import DebugMenu from "./debugMenu";
 import PetsMenu from "./petsMenu";
+import DeckMenu from "./deckMenu";
 
 class LeftMenu extends Component {
   renderDebugMenu = () => {
@@ -43,6 +44,17 @@ class LeftMenu extends Component {
           calculateTotalDamagePerSecond={
             this.props.calculateTotalDamagePerSecond
           }
+          renderNumberWithAbbreviations={
+            this.props.renderNumberWithAbbreviations
+          }
+        />
+      );
+    }
+    // Deck tab selected
+    if (this.props.mainState.leftMenuSettingSelected === "Deck") {
+      return (
+        <DeckMenu
+          mainState={this.props.mainState}
           renderNumberWithAbbreviations={
             this.props.renderNumberWithAbbreviations
           }
@@ -115,6 +127,15 @@ class LeftMenu extends Component {
               onClick={this.props.fetchLeftMenuSettingSelection}
             >
               <small>Stats</small>
+            </button>
+          </div>
+          <div className="mx-auto" id="userInterface-userSettings-menu-tab">
+            <button
+              type="button"
+              class="userInterface-userSettings-menu-tab-button btn btn-dark mx-auto"
+              onClick={this.props.fetchLeftMenuSettingSelection}
+            >
+              <small>Deck</small>
             </button>
           </div>
           {this.renderDebugMenu()}

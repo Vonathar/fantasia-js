@@ -163,7 +163,10 @@ class BattleArea extends Component {
             onClick={this.playerHeal}
           />
           <div id="userInterface-player-paragraph">
-            <p>Player Lv. {this.props.mainState.playerLevel}</p>
+            <p>
+              Lv. {this.props.mainState.playerLevel}{" "}
+              {this.props.mainState.playerRankCurrent}
+            </p>
           </div>
           <div class="progress">
             <div
@@ -196,8 +199,8 @@ class BattleArea extends Component {
           />
           <div id="userInterface-enemy-paragraph">
             <p>
-              {this.props.mainState.enemyNameCurrent} Lv.{" "}
-              {this.props.mainState.enemyLevel}
+              Lv. {this.props.mainState.enemyLevel}{" "}
+              {this.props.mainState.enemyNameCurrent}
             </p>
           </div>
           <div class="progress">

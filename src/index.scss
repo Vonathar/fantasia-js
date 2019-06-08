@@ -534,21 +534,51 @@ code {
   border-radius: 5px;
 }
 
-.userInterface-stats-summary-row {
+.userInterface-stats-summary-row,
+.deckMenu-row {
   display: flex;
   margin-bottom: 1vw;
 }
 
-.userInterface-stats-summary-section {
+.userInterface-stats-summary-section,
+.deckMenu-row-section {
   display: block;
   width: 4vw;
-  background-color: rgba(173, 173, 173, 0.178);
   padding: 0.2vw;
   border-radius: 15px;
 }
 
+.userInterface-stats-summary-section {
+  background-color: rgba(173, 173, 173, 0.178);
+}
+
 .userInterface-stats-summary-section-image {
   height: 2vh;
+}
+
+.deckMenu-row-image {
+  width: 5vw;
+  transition-duration: 0.2s;
+}
+
+.deckMenu-row-image:hover {
+  transform: scale(1.5) rotate(-10deg) translate(0, -10px);
+}
+
+.deckMenu-row-image-locked {
+  width: 5vw;
+  opacity: 0.1;
+}
+
+.deckMenu-row-section {
+  background-color: rgba(161, 161, 161, 0.445);
+  border: 1px solid rgba(255, 255, 255, 0.589);
+  width: 6vw;
+  font-size: 0.9vw;
+}
+
+.deckMenu-row-section-progress {
+  margin: 0.3vw;
 }
 
 .userInterface-stats-row {
@@ -580,7 +610,7 @@ code {
 }
 
 .userInterface-enemy-image-dead {
-  animation: killEnemy 1s;
+  animation: killEnemy 0.5s;
 }
 
 /* Enemy spins and shrinks */
@@ -661,11 +691,11 @@ code {
 }
 
 .userInterface-enemy-drop-coin-collect {
-  animation: collectCoin 1s;
+  animation: collectCoin 0.5s;
 }
 
 .userInterface-enemy-drop-food-collect {
-  animation: collectFood 1s;
+  animation: collectFood 0.5s;
 }
 
 /* Coin spawns below the enemy image */
