@@ -6,6 +6,17 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
+#### 1.8.1
+
+##### Gameplay
+
+- Skill effect is now shown on the relevant stat in the _stats menu_
+- _Game rebalancing_ to increase item drop chance in earlier levels
+
+##### Other
+
+- Change the way damage is calculated so that all damage bonuses now are included in the value produced by skills #2 and #3
+
 ### 1.8.0
 
 #### Gameplay

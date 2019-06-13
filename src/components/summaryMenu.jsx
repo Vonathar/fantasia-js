@@ -9,9 +9,60 @@ import clickDamageImage from "../img/cps_1.png";
 import clickPerSecondDamageImage from "../img/dps_1.png";
 import playerExperienceImage from "../img/playerExperienceTutorial.png";
 import coinImage from "../img/coin_1.png";
-import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 
 class SummaryMenu extends Component {
+  // Render the skill in <strong> text if the rendered value is currently affected by an active skill
+  renderBoldStatsIfSkillActive = stat => {
+    // Click Damage
+    if (stat === "clickDamage") {
+      // Skill #3 - Active
+      if (this.props.mainState.skills.skillThree.isActive) {
+        return (
+          <small className="userInterface-stats-summary-section-paragraph">
+            <strong>
+              {this.props.renderNumberWithAbbreviations(
+                Math.round(this.props.calculateClickDamageAllSources())
+              )}
+            </strong>
+          </small>
+        );
+        // Skill #3 - Inactive
+      } else {
+        return (
+          <small className="userInterface-stats-summary-section-paragraph">
+            {this.props.renderNumberWithAbbreviations(
+              Math.round(this.props.calculateClickDamageAllSources())
+            )}
+          </small>
+        );
+      }
+    }
+    // Damage Per Second
+    if (stat === "damagePerSecond") {
+      // Skill #2 - Active
+      if (this.props.mainState.skills.skillTwo.isActive) {
+        return (
+          <small className="userInterface-stats-summary-section-paragraph">
+            <strong>
+              {this.props.renderNumberWithAbbreviations(
+                Math.round(this.props.calculateDamagePerSecondAllSources())
+              )}
+            </strong>
+          </small>
+        );
+        // Skill #2 - Inactive
+      } else {
+        return (
+          <small className="userInterface-stats-summary-section-paragraph">
+            {this.props.renderNumberWithAbbreviations(
+              Math.round(this.props.calculateDamagePerSecondAllSources())
+            )}
+          </small>
+        );
+      }
+    }
+  };
+
   render() {
     return (
       <div id="userInterface-stats-div">
@@ -32,11 +83,7 @@ class SummaryMenu extends Component {
                 className="userInterface-stats-summary-section-image"
                 src={clickDamageImage}
               />
-              <small className="userInterface-stats-summary-section-paragraph">
-                {this.props.renderNumberWithAbbreviations(
-                  Math.round(this.props.calculateClickDamageAllSources())
-                )}
-              </small>
+              {this.renderBoldStatsIfSkillActive("clickDamage")}
             </div>
             <div className="userInterface-stats-summary-section mx-auto">
               <img
@@ -103,11 +150,7 @@ class SummaryMenu extends Component {
                 className="userInterface-stats-summary-section-image"
                 src={clickPerSecondDamageImage}
               />
-              <small className="userInterface-stats-summary-section-paragraph">
-                {this.props.renderNumberWithAbbreviations(
-                  this.props.calculateDamagePerSecondAllSources()
-                )}
-              </small>
+              {this.renderBoldStatsIfSkillActive("damagePerSecond")}
             </div>
             <div className="userInterface-stats-summary-section mx-auto">
               <img

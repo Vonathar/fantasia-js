@@ -1312,28 +1312,28 @@ class UserInterface extends Component {
     let equipmentDropRate;
     if (type === "weapon") {
       if (this.state.enemyLevel <= 10) {
-        equipmentDropRate = 10;
+        equipmentDropRate = 25;
       }
       if (this.state.enemyLevel > 10 && this.state.enemyLevel < 40) {
-        equipmentDropRate = 9;
+        equipmentDropRate = 20;
       }
       if (this.state.enemyLevel > 40 && this.state.enemyLevel < 70) {
-        equipmentDropRate = 8;
+        equipmentDropRate = 17;
       }
       if (this.state.enemyLevel > 70 && this.state.enemyLevel < 100) {
-        equipmentDropRate = 7;
+        equipmentDropRate = 14;
       }
       if (this.state.enemyLevel > 100 && this.state.enemyLevel < 150) {
-        equipmentDropRate = 6;
+        equipmentDropRate = 12;
       }
       if (this.state.enemyLevel > 150 && this.state.enemyLevel < 200) {
-        equipmentDropRate = 5;
+        equipmentDropRate = 9;
       }
       if (this.state.enemyLevel > 200 && this.state.enemyLevel < 300) {
-        equipmentDropRate = 4;
+        equipmentDropRate = 6;
       }
       if (this.state.enemyLevel > 300 && this.state.enemyLevel < 400) {
-        equipmentDropRate = 3;
+        equipmentDropRate = 4;
       }
       if (this.state.enemyLevel > 400 && this.state.enemyLevel < 500) {
         equipmentDropRate = 2;
@@ -1342,7 +1342,6 @@ class UserInterface extends Component {
         equipmentDropRate = 1;
       }
     }
-    console.log(equipmentDropRate);
     return equipmentDropRate;
   };
 
@@ -1810,16 +1809,27 @@ class UserInterface extends Component {
 
   // Calculate the total click damage multiplier
   calculateClickDamageAllSources = () => {
+    // Basic damage
     let damage =
       this.state.playerAttack + this.state.equipmentBonuses.bonusAttack;
+    // If the skill #3 is active
+    if (this.state.skills.skillThree.isActive) {
+      // Add to the basic the skill's extra damage
+      damage +=
+        (this.calculateDamagePerSecondAllSources() / 100) *
+        this.state.skills.skillThree.damageMultiplier;
+    }
+    // Basic multiplier
     let damageMultiplier = 1;
+    // Add deck bonus click damage
     damageMultiplier += this.state.deckBonuses.bonusClickDamage;
+
     return damage * damageMultiplier;
   };
 
   // Sum of all the DPS sources
   calculateDamagePerSecondAllSources = () => {
-    if (this.state.isHeroSkillTwoActive) {
+    if (this.state.skills.skillTwo.isActive) {
       return (
         (this.state.pets.petOne.damagePerSecondCurrent +
           this.state.pets.petTwo.damagePerSecondCurrent +
@@ -1851,16 +1861,7 @@ class UserInterface extends Component {
         this.state.playerCriticalMultiplier *
         this.calculateCriticalMultiplierAllSources();
     }
-    // If used while skill #3 is active
-    if (this.state.skills.skillThree.isActive) {
-      return Math.round(
-        totalDamage +
-          (this.calculateDamagePerSecondAllSources() / 100) *
-            this.state.skills.skillThree.damageMultiplier
-      );
-    } else {
-      return Math.round(totalDamage);
-    }
+    return Math.round(totalDamage);
   };
 
   // Attack the enemy
