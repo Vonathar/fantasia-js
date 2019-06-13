@@ -897,6 +897,7 @@ class UserInterface extends Component {
 
     /* Inventory values */
     inventory: [],
+    inventoryFullParagraphSent: false,
     equipmentToBeCollected: {
       weapon: []
     },
@@ -2294,7 +2295,6 @@ class UserInterface extends Component {
 
   // Sell an item from the inventory (unequipped) for it's itemValue prop
   playerSellItem = item => {
-    // Create a copy of the object from the state
     let inventory = [];
     for (let item in this.state.inventory) {
       inventory.push(this.state.inventory[item]);
@@ -2314,6 +2314,32 @@ class UserInterface extends Component {
       }
       this.setState({ inventory });
     }
+  };
+
+  // Sell all items from the inventory (unequipped) for their itemValue prop
+  playerSellAllUnequippedItems = () => {
+    // Create a copy of the object from the state
+    let inventory = [];
+    let totalSaleValue = 0;
+    for (let item in this.state.inventory) {
+      inventory.push(this.state.inventory[item]);
+    }
+
+    // Loop through every item in the inventory
+    for (let slot in inventory) {
+      if (!inventory[slot].itemIsEquipped) {
+        totalSaleValue += inventory[slot].itemValue;
+      }
+    }
+
+    inventory = [];
+    for (let item in this.state.inventory) {
+      if (this.state.inventory[item].itemIsEquipped) {
+        inventory.push(this.state.inventory[item]);
+      }
+    }
+
+    this.setState({ inventory, coins: this.state.coins + totalSaleValue });
   };
 
   /* Enemy drops UI 
@@ -2373,9 +2399,29 @@ class UserInterface extends Component {
     }, 500);
   };
 
+  // Push a paragraph to the battle log to notify of a full inventory
+  pushInventoryFullParagraphToBattleLog = () => {
+    // If an alert has not already been sent
+    if (!this.state.inventoryFullParagraphSent) {
+      // Push to the battle log
+      this.pushNewParagraphToBattleLog(
+        <p>
+          <small className="text-warning">Inventory full!</small>
+        </p>
+      );
+      // Set the alert as sent
+      this.setState({ inventoryFullParagraphSent: true });
+      // Allow another alert to be sent only after 1000ms
+      setTimeout(() => {
+        this.setState({ inventoryFullParagraphSent: false });
+      }, 1000);
+    }
+  };
+
   // Add the equipment to the inventory when the player hovers on uncollected equipment
   collectEquipmentOnHover = event => {
     // Weapons
+    let uncollectedEquipment = [];
     // Create a copy of the object from the state
     let equipmentToBeCollected = { ...this.state.equipmentToBeCollected };
     // Clone the inventory's current state into a newly declared variable
@@ -2389,10 +2435,23 @@ class UserInterface extends Component {
     setTimeout(() => {
       // Loop through every item in the array
       for (let item in equipmentToBeCollected.weapon) {
-        // And add it to the inventory
-        inventory.push(equipmentToBeCollected.weapon[item]);
+        // If the inventory is not full
+        if (inventory.length < 18) {
+          // Add the uncollected item to the inventory
+          inventory.push(equipmentToBeCollected.weapon[item]);
+          // If the inventory full
+        } else {
+          // Add the uncollected item to an 'uncollected items' array
+          uncollectedEquipment.push(equipmentToBeCollected.weapon[item]);
+        }
       }
+      //  Reinitialise the array of equipment to be collected
       equipmentToBeCollected.weapon = [];
+      // If there is any uncollected equipment
+      if (uncollectedEquipment.length > 1) {
+        equipmentToBeCollected.weapon = uncollectedEquipment;
+        this.pushInventoryFullParagraphToBattleLog();
+      }
       // Set the state with the modified array
       this.setState({ inventory, equipmentToBeCollected });
     }, 500);
@@ -2584,6 +2643,7 @@ class UserInterface extends Component {
           renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
           toggleItemEquippedState={this.toggleItemEquippedState}
           playerSellItem={this.playerSellItem}
+          playerSellAllUnequippedItems={this.playerSellAllUnequippedItems}
         />
         {/* Stages [ TOP ] */}
         {this.renderStageBar()}

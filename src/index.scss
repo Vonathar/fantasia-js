@@ -655,16 +655,16 @@ code {
 }
 
 .inventorySlot-itemImage {
-  width: 3.5vw;
-  padding: 0.2vw;
+  width: 2.8vw;
+  padding: 0.1vw;
   border: 3px outset rgba(255, 227, 191, 0.418);
   border-radius: 5px;
   background-color: rgba(255, 243, 220, 0.411);
 }
 
 .inventorySlot-itemImage-equipped {
-  width: 3.5vw;
-  padding: 0.3vw;
+  width: 2.8vw;
+  padding: 0.2vw;
   background-color: rgba(218, 218, 218, 0.432);
   border: 3px inset rgba(145, 255, 0, 0.945);
   border-radius: 5px;
@@ -1058,7 +1058,7 @@ code {
   right: 2.5vw;
   width: 25vw;
   top: -10vh;
-  height: 35vh;
+  height: 40vh;
   padding: 10px;
   cursor: default;
 }
@@ -1067,13 +1067,18 @@ code {
   display: flex;
 }
 
+.inventorySlot-button {
+  font-size: 0.7vw;
+  padding: 0.4vw;
+}
+
 #userInterface-chatlog-div {
   background-color: rgba(0, 0, 0, 0.829);
   border-radius: 25px;
   color: white;
   font-size: 0.9vw;
   position: absolute;
-  top: 60vh;
+  top: 65vh;
   height: 30vh;
   right: 2.5vw;
   margin: auto;

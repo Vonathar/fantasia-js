@@ -5,9 +5,11 @@ class InventorySlot extends Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
+    this.toggleByHover = this.toggleByHover.bind(this);
+    this.toggleByClick = this.toggleByClick.bind(this);
     this.state = {
-      popoverOpen: false
+      popoverOpenByHover: false,
+      popoverOpenByClick: false
     };
   }
   // Render the appropriate class for items in the inventory
@@ -18,26 +20,48 @@ class InventorySlot extends Component {
       : "inventorySlot-itemImage scale";
   };
 
-  toggle() {
+  // Opens the popover which immediately disappears whenever the user removes focus from the item
+  toggleByHover() {
+    if (!this.state.popoverOpenByClick) {
+      this.setState({
+        popoverOpenByHover: !this.state.popoverOpenByHover
+      });
+    }
+  }
+
+  // Keep the popover open until the user clicks the icon again, even if the users forces multiple hovers
+  toggleByClick() {
     this.setState({
-      popoverOpen: !this.state.popoverOpen
+      popoverOpenByClick: !this.state.popoverOpenByClick
     });
   }
+
+  hidePopoversAfterAction = () => {
+    if (this.props.mainState.isItemBeingSold) {
+      this.setState({ popoverOpenByClick: false, popoverOpenByHover: false });
+    }
+  };
 
   renderInventoryItem = () => {
     if (this.props.itemObject) {
       return (
         <div className="inventorySlot mx-auto">
+          {this.hidePopoversAfterAction()}
           <img
             id={"Popover" + this.props.slot}
             src={this.props.itemObject.itemImage}
             className={this.renderInventoryItemClass()}
             data-toggle="tooltip"
             data-html="true"
+            onClick={this.toggleByClick}
+            onMouseEnter={this.toggleByHover}
+            onMouseLeave={this.toggleByHover}
           />
           <Popover
             placement="bottom"
-            isOpen={this.state.popoverOpen}
+            isOpen={
+              this.state.popoverOpenByHover || this.state.popoverOpenByClick
+            }
             target={"Popover" + this.props.slot}
             toggle={this.toggle}
           >
@@ -92,22 +116,40 @@ class InventorySlot extends Component {
               </p>
               <div id="inventorySlot-buttons">
                 <button
-                  className="btn btn-dark mx-auto"
+                  className="btn btn-dark mx-auto inventorySlot-button"
                   onClick={() => {
-                    this.toggle();
+                    this.setState({
+                      popoverOpenByHover: false,
+                      popoverOpenByClick: false
+                    });
                     this.props.toggleItemEquippedState(this.props.itemObject);
                   }}
                 >
                   Equip
                 </button>
                 <button
-                  className="btn btn-dark mx-auto"
+                  className="btn btn-dark mx-auto inventorySlot-button"
                   onClick={() => {
-                    this.toggle();
+                    this.setState({
+                      popoverOpenByHover: false,
+                      popoverOpenByClick: false
+                    });
                     this.props.playerSellItem(this.props.itemObject);
                   }}
                 >
                   Sell
+                </button>
+                <button
+                  className="btn btn-dark mx-auto inventorySlot-button"
+                  onClick={() => {
+                    this.setState({
+                      popoverOpenByHover: false,
+                      popoverOpenByClick: false
+                    });
+                    this.props.playerSellAllUnequippedItems();
+                  }}
+                >
+                  Sell All Unequipped
                 </button>
               </div>
             </PopoverBody>

@@ -6,16 +6,19 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-#### 1.8.1
+#### 1.8.2
 
 ##### Gameplay
 
-- Skill effect is now shown on the relevant stat in the _stats menu_
-- _Game rebalancing_ to increase item drop chance in earlier levels
+- _Hovering_ on items in the **inventory** now only shows a preview which automatically disappears; _clicking_ the item makes it possible to interact with it. (closes #24)
+- Add an option to **sell all items** in the inventory
+- Add a third row to the inventory
+- The image of inventory items is now smaller
+- The inventory now has a limit of 18 slots; once the limit is reached, unless space is freed, new items will not be collected (closes #25)
 
 ##### Other
 
-- Change the way damage is calculated so that all damage bonuses now are included in the value produced by skills #2 and #3
+- The inventory div is now taller
 
 ### 1.8.0
 

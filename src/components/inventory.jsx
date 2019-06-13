@@ -40,60 +40,84 @@ class Inventory extends Component {
           <div className="userInterface-inventory-row">
             {/* Slot #1 */}
             <InventorySlot
+              mainState={this.props.mainState}
               itemObject={this.props.mainState.inventory[0]}
               slot={0}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
             />
             {/* Slot #2 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={1}
               itemObject={this.props.mainState.inventory[1]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
             />
             {/* Slot #3 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={2}
               itemObject={this.props.mainState.inventory[2]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
             />
             {/* Slot #4 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={3}
               itemObject={this.props.mainState.inventory[3]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
             />
             {/* Slot #5 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={4}
               itemObject={this.props.mainState.inventory[4]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
             />
             {/* Slot #6 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={5}
               itemObject={this.props.mainState.inventory[5]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
@@ -103,60 +127,171 @@ class Inventory extends Component {
           <div className="userInterface-inventory-row">
             {/* Slot #1 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={6}
               itemObject={this.props.mainState.inventory[6]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
             />
             {/* Slot #2 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={7}
               itemObject={this.props.mainState.inventory[7]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
             />
             {/* Slot #3 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={8}
               itemObject={this.props.mainState.inventory[8]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
             />
             {/* Slot #4 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={9}
               itemObject={this.props.mainState.inventory[9]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
             />
             {/* Slot #5 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={10}
               itemObject={this.props.mainState.inventory[10]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
             />{" "}
             {/* Slot #6 */}
             <InventorySlot
+              mainState={this.props.mainState}
               slot={11}
               itemObject={this.props.mainState.inventory[11]}
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
+              renderNumberWithAbbreviations={
+                this.props.renderNumberWithAbbreviations
+              }
+            />
+          </div>
+          {/* Row #3 */}
+          <div className="userInterface-inventory-row">
+            {/* Slot #1 */}
+            <InventorySlot
+              mainState={this.props.mainState}
+              slot={12}
+              itemObject={this.props.mainState.inventory[12]}
+              toggleItemEquippedState={this.props.toggleItemEquippedState}
+              playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
+              renderNumberWithAbbreviations={
+                this.props.renderNumberWithAbbreviations
+              }
+            />
+            {/* Slot #2 */}
+            <InventorySlot
+              mainState={this.props.mainState}
+              slot={13}
+              itemObject={this.props.mainState.inventory[13]}
+              toggleItemEquippedState={this.props.toggleItemEquippedState}
+              playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
+              renderNumberWithAbbreviations={
+                this.props.renderNumberWithAbbreviations
+              }
+            />
+            {/* Slot #3 */}
+            <InventorySlot
+              mainState={this.props.mainState}
+              slot={14}
+              itemObject={this.props.mainState.inventory[14]}
+              toggleItemEquippedState={this.props.toggleItemEquippedState}
+              playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
+              renderNumberWithAbbreviations={
+                this.props.renderNumberWithAbbreviations
+              }
+            />
+            {/* Slot #4 */}
+            <InventorySlot
+              mainState={this.props.mainState}
+              slot={15}
+              itemObject={this.props.mainState.inventory[15]}
+              toggleItemEquippedState={this.props.toggleItemEquippedState}
+              playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
+              renderNumberWithAbbreviations={
+                this.props.renderNumberWithAbbreviations
+              }
+            />
+            {/* Slot #5 */}
+            <InventorySlot
+              mainState={this.props.mainState}
+              slot={16}
+              itemObject={this.props.mainState.inventory[16]}
+              toggleItemEquippedState={this.props.toggleItemEquippedState}
+              playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
+              renderNumberWithAbbreviations={
+                this.props.renderNumberWithAbbreviations
+              }
+            />{" "}
+            {/* Slot #6 */}
+            <InventorySlot
+              mainState={this.props.mainState}
+              slot={17}
+              itemObject={this.props.mainState.inventory[17]}
+              toggleItemEquippedState={this.props.toggleItemEquippedState}
+              playerSellItem={this.props.playerSellItem}
+              playerSellAllUnequippedItems={
+                this.props.playerSellAllUnequippedItems
+              }
               renderNumberWithAbbreviations={
                 this.props.renderNumberWithAbbreviations
               }
