@@ -6,17 +6,30 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-### 1.7.1
+### 1.8.0
 
 #### Gameplay
 
-- Display the image and the value of the bonus granted by the cards in the deck (fixes #22)
-- Game rebalancing
-- Add new player titles
+- **Inventory** and **equipment** are now live. Killing enemies now has a chance to drop equipment with randomly generated stats!
+- _Progress bars_ in the battle area are now rendered without animation delay, making them more reactive to changes
+- Increase _font size_ for readability
+- Fix a bug which caused _manual stage progression_ to crash the website
+- Fix a bug which caused _deck bonuses_ not to increase upon level up
+- Fix a bug which caused a 5s delay before _potions_ would disappear upon collection
+- Stats in the _summary menu_ are now rounded to increase readability
+- Player experience multiplier and coin drop chance multiplier are now displayed in the _stats screen_
+- _Game rebalancing_ to account for extra damage from equipment
 
 #### Other
 
-- Fix a bug causing an irrelevant tooltip to be displayed in the debug screen (fixes #21)
+- The calculation of total multipliers is now handled by a function instead of targeted calculations
+- The width of progress bars has now been modified to fit the new rendering of progress bars
+- Add Reactstrap as a dependency
+- The enemy drops' position has now been fixed to fit the new div rearrangement
+- Bootstrap's progress bar rendering is now only used in the deck menu
+- Remove outdated sample calculation of player and enemy stats
+- Deck bonuses are now added to a global multiplier instead of being multiplier directly
+- Remove unnecessary console logs
 
 ## Gameplay
 

@@ -5,6 +5,11 @@ import playerImageOne from "../img/player_1.png";
 import coinImageOne from "../img/coin_1.png";
 import resourceTwoImage from "../img/resource_2.png";
 import resourceThreeImage from "../img/resource_3.png";
+import swordOneImage from "../img/sword_1.png";
+import swordTwoImage from "../img/sword_2.png";
+import swordThreeImage from "../img/sword_3.png";
+import maceOneImage from "../img/mace_1.png";
+import spearOneImage from "../img/spear_1.png";
 
 class BattleArea extends Component {
   // Drop new coins on the floor
@@ -43,6 +48,19 @@ class BattleArea extends Component {
       return "userInterface-enemy-drop-food userInterface-enemy-drop-food-collect";
     }
   };
+
+  // Drop new equipment on the floor
+  renderEquipmentDrop = () => {
+    // Only when equipment has not been collected
+    if (!this.props.mainState.isEquipmentCollected) {
+      // Animate them so that they drop down from the enemy image
+      return "userInterface-enemy-drop-coin userInterface-enemy-drop-coin-appear";
+    } else {
+      // Animate them so that they move towards the inventory
+      return "userInterface-enemy-drop-coin userInterface-enemy-drop-coin-collect";
+    }
+  };
+
   // Create new coins dropped
   generateCoinDrop = () => {
     let coinsToBeRendered = [];
@@ -61,6 +79,34 @@ class BattleArea extends Component {
     }
     return coinsToBeRendered;
   };
+
+  // Create new coins dropped
+  generateEquipmentDrop = () => {
+    if (this.props.mainState.equipmentToBeCollected.weapon.length > 0) {
+      let equipmentToBeRendered = [];
+      // All the equipment which has not been collected yet (by hovering)
+      for (
+        let i = 0;
+        i < this.props.mainState.equipmentToBeCollected.weapon.length;
+        i++
+      ) {
+        // Add a new item
+        equipmentToBeRendered.push(
+          <img
+            draggable="false"
+            alt="item"
+            className={this.renderEquipmentDrop()}
+            src={
+              this.props.mainState.equipmentToBeCollected.weapon[i].itemImage
+            }
+            onMouseOver={this.props.collectEquipmentOnHover}
+          />
+        );
+      }
+      return equipmentToBeRendered;
+    }
+  };
+
   // Create new food dropped
   generateFoodDrop = () => {
     let foodToBeRendered = [];
@@ -97,19 +143,6 @@ class BattleArea extends Component {
       );
     }
     return lootbagsToBeRendered;
-  };
-  // Enemy HP progress bar
-  renderEnemyProgressHp = () => {
-    // Obtain the player experience in percentage
-    let enemyHealthPercentage = Math.round(
-      this.props.mainState.enemyHealthCurrent *
-        (100 / this.props.mainState.enemyHealthMax)
-    );
-    // Set the bar's width according to the percentage of health remaining
-    return (
-      "progress-bar bg-danger progress-bar-striped progress-bar-animated progress" +
-      enemyHealthPercentage
-    );
   };
 
   // Animate the enemy's image between active and dead
@@ -160,7 +193,9 @@ class BattleArea extends Component {
             draggable="false"
             className="userInterface-player-image scale"
             src={playerImageOne}
-            onClick={this.playerHeal}
+            onClick={() => {
+              this.props.playerHeal();
+            }}
           />
           <div id="userInterface-player-paragraph">
             <p>
@@ -168,26 +203,18 @@ class BattleArea extends Component {
               {this.props.mainState.playerRankCurrent}
             </p>
           </div>
-          <div class="progress">
-            <div
-              id="userInterface-player-progress-hp"
-              class={this.renderPlayerProgressHp()}
-              role="progressbar"
-              aria-valuenow="75"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            />
-          </div>
-          <div class="progress">
-            <div
-              id="userInterface-player-progress-xp"
-              class={this.renderPlayerProgressXp()}
-              role="progressbar"
-              aria-valuenow="75"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            />
-          </div>
+          <progress
+            className="battleArea-progress"
+            id="battleArea-progress-playerHealth"
+            max={this.props.mainState.playerHealthMax}
+            value={this.props.mainState.playerHealthCurrent}
+          />
+          <progress
+            className="battleArea-progress"
+            id="battleArea-progress-playerExperience"
+            max={this.props.mainState.playerExperienceRequired}
+            value={this.props.mainState.playerExperienceCurrent}
+          />
         </div>
         <div id="userInterface-enemy-div">
           <img
@@ -203,20 +230,17 @@ class BattleArea extends Component {
               {this.props.mainState.enemyNameCurrent}
             </p>
           </div>
-          <div class="progress">
-            <div
-              id="userInterface-enemy-progress-hp"
-              class={this.renderEnemyProgressHp()}
-              role="progressbar"
-              aria-valuenow="75"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            />
-          </div>
+          <progress
+            className="battleArea-progress"
+            id="battleArea-progress-enemyHealth"
+            max={this.props.mainState.enemyHealthMax}
+            value={this.props.mainState.enemyHealthCurrent}
+          />
           <div id="userInterface-enemy-drop-div">
             {this.generateCoinDrop()}
             {this.generateFoodDrop()}
             {this.generateLootBagDrop()}
+            {this.generateEquipmentDrop()}
           </div>
         </div>
       </div>

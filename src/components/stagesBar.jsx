@@ -30,7 +30,7 @@ class StagesBar extends Component {
             className={this.renderStageUnlockedBadge(
               this.props.mainState.stageCurrent + 1
             )}
-            onClick={this.playerStageAdvance}
+            onClick={this.props.playerStageAdvance}
           >
             <small>{this.props.mainState.stageCurrent + 1}</small>
           </button>
@@ -69,7 +69,7 @@ class StagesBar extends Component {
             type="checkbox"
             defaultChecked="true"
             id="userInterface-stages-stage-checkbox"
-            onClick={this.activateAutoStageAdvance}
+            onClick={this.props.activateAutoStageAdvance}
           />
           <label
             class="form-check-label"

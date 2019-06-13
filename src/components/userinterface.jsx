@@ -57,6 +57,10 @@ import criticalMultiplierImage from "../img/critical_1.png";
 import criticalChanceImage from "../img/critical_2.png";
 import clickDamageImage from "../img/cps_1.png";
 import clickPerSecondDamageImage from "../img/dps_1.png";
+// Inventory
+import swordOneImage from "../img/sword_1.png";
+import maceOneImage from "../img/mace_1.png";
+import spearOneImage from "../img/spear_1.png";
 
 class UserInterface extends Component {
   state = {
@@ -336,25 +340,7 @@ class UserInterface extends Component {
     stageEnemiesToKill: 5,
     stageMaxUnlocked: 1,
     isStageProgressAuto: true,
-    /* Player values
-
-      HP: (500)  - 500 * pow( 1.05 , P Level) [WHEN LEVEL UP]
-      XP Req: (500)  -  500 * pow(1.05 , P.Level) [WHEN LEVEL UP]
-      Click DMG: (50)  -  50 * pow ( 1.04 , P Level ) [WHEN SKILL UP]
-
-      Sample values:
-
-      @ Lv 50
-      - HP: 5734
-      - XP Req: 1147
-      - Click DMG: 355
-
-      @ Lv 100
-      - HP: 65751
-      - XP Req: 13150
-      - Click DMG: 2525
-
-    */
+    /* Player values */
     playerLevel: 1,
     playerRankCurrent: "Rogue",
     playerRanks: [
@@ -375,28 +361,14 @@ class UserInterface extends Component {
     playerHealthCurrent: 500,
     playerHealthMax: 500,
     playerExperienceCurrent: 0,
-    playerExperienceRequired: 750,
+    playerExperienceRequired: 250,
     playerAttack: 50,
     playerDoubleAttackChance: 0,
     playerCriticalChance: 0.1,
     playerCriticalMultiplier: 1.2,
     playerAttackMultiplier: 1,
     playerAttackPerSecond: 50,
-
-    /* Pet values
-
-      Price: (100)  -  100 * pow ( 1.05, P Level )
-      DPS: (20)  -  20 * pow ( 1.045 , P Level )
-      
-      @ Lv 50
-      - Price: 1147
-      - DPS: 181
-
-      @ Lv 100
-      - Price: 54320
-      - DPS: 1631
-      
-    */
+    /* Pet values */
     deck: {
       cardOne: {
         name: "Flager",
@@ -647,15 +619,20 @@ class UserInterface extends Component {
       }
     },
     deckBonuses: {
-      bonusExperience: 1,
-      bonusHealth: 1,
-      bonusClickDamage: 1,
-      bonusDamagePerSecond: 1,
-      bonusCoinDrop: 1,
-      bonusCriticalChance: 1,
-      bonusCriticalDamage: 1,
-      bonusDoubleAttackChance: 1,
-      bonusPotionDropRate: 1
+      bonusExperience: 0,
+      bonusHealth: 0,
+      bonusClickDamage: 0,
+      bonusDamagePerSecond: 0,
+      bonusCoinDrop: 0,
+      bonusCriticalChance: 0,
+      bonusCriticalDamage: 0,
+      bonusDoubleAttackChance: 0,
+      bonusPotionDropRate: 0
+    },
+    equipmentBonuses: {
+      bonusAttack: 0,
+      bonusDoubleAttackChance: 0,
+      bonusCriticalChance: 0
     },
     pets: {
       petOne: {
@@ -703,29 +680,7 @@ class UserInterface extends Component {
         damagePerSecondPlaceholder: 0
       }
     },
-
-    /* Enemy values
-
-      HP: (500)  -  500 * pow( 1.05 , E Level)
-      XP Held: (100)  -  100 * pow( 1.04 , E Level)
-      DPS: (50)  -  50 * pow ( 1.04 , E Level)
-      Coin Value: (25)  -  25 * pow ( 1.05 , E Level)
-
-      Sample values:
-
-      @ Lv 50
-      - HP: 5734
-      - XP Held: 142
-      - DPS: 355
-      - Coin value: 1147 (avg)
-
-      @ Lv 100
-      - HP: 65751
-      - XP Req: 13150
-      - DPS: 2525
-      - Coin value: 13150 (avg)
-      
-    */
+    /* Enemy values */
     enemyImages: [
       enemyImageOne,
       enemyImageTwo,
@@ -793,7 +748,7 @@ class UserInterface extends Component {
     enemyHasHealth: true,
     enemyHealthCurrent: 500,
     enemyHealthMax: 500,
-    enemyExperienceHeld: 104,
+    enemyExperienceHeld: 27,
     enemyCoinsValue: 25,
     enemyFoodHeld: 1,
     enemyFoodValue: 1,
@@ -941,6 +896,14 @@ class UserInterface extends Component {
     },
 
     /* Inventory values */
+    inventory: [],
+    equipmentToBeCollected: {
+      weapon: []
+    },
+    isEquipmentCollected: false,
+    playerEquipment: {
+      weapon: null
+    },
     adventurePoints: 0,
     coins: 0,
     coinsToBeCollected: 0,
@@ -954,6 +917,7 @@ class UserInterface extends Component {
     foodToBeCollected: 0,
     lootBagsToBeCollected: 0,
     // Chance in percentage
+    equipmentDropChance: 3,
     lootBagsDropChance: 0.2,
     foodDropChance: 25,
     isFoodCollected: false,
@@ -1007,7 +971,7 @@ class UserInterface extends Component {
     deck[cardNumber].experienceRequired = deck[cardNumber].level * 6;
     // Reset the current experience
     deck[cardNumber].experienceCurrent = 0;
-    this.deckBonusIncreaseOnCardLevelUp([cardNumber]);
+    this.deckBonusIncreaseOnCardLevelUp(cardNumber);
     // Set the state with the copy of deck
     this.setState({ deck });
     this.pushNewParagraphToBattleLog(
@@ -1027,9 +991,9 @@ class UserInterface extends Component {
     // Iterate through each key of the object
     for (let bonus in deckBonuses) {
       // Find the bonus type of the card passed as a parameter
-      if (bonus === this.state.deck.cardOne.bonusType) {
+      if (bonus === this.state.deck[cardNumber].bonusType) {
         // Increase it value
-        deckBonuses[bonus] += 0.05;
+        deckBonuses[bonus] += 0.02;
       }
     }
     // Set the state with the copy of deckBonuses
@@ -1233,43 +1197,8 @@ class UserInterface extends Component {
     this.setState({ pets });
   };
 
-  // Sum of all the DPS sources
-  calculateTotalDamagePerSecond = () => {
-    if (this.state.isHeroSkillTwoActive) {
-      return (
-        (this.state.pets.petOne.damagePerSecondCurrent +
-          this.state.pets.petTwo.damagePerSecondCurrent +
-          this.state.pets.petThree.damagePerSecondCurrent +
-          this.state.pets.petFour.damagePerSecondCurrent +
-          this.state.pets.petFive.damagePerSecondCurrent) *
-        this.state.heroSkillTwoDamageMultiplier
-      );
-    } else
-      return (
-        this.state.pets.petOne.damagePerSecondCurrent +
-        this.state.pets.petTwo.damagePerSecondCurrent +
-        this.state.pets.petThree.damagePerSecondCurrent +
-        this.state.pets.petFour.damagePerSecondCurrent +
-        this.state.pets.petFive.damagePerSecondCurrent
-      );
-  };
-
-  // Sum of all the DPS sources
-  calculateTotalClickDamage = () => {
-    if (this.state.skills.skillThree.isActive) {
-      return Math.round(
-        this.state.playerAttackPlaceholder +
-          (this.calculateTotalDamagePerSecond() / 100) *
-            this.state.skills.skillThree.damageMultiplier
-      );
-    } else {
-      return Math.round(
-        this.state.playerAttackPlaceholder * this.state.playerAttackMultiplier
-      );
-    }
-  };
-
   /* Player UI */
+
   // Player stage progress
   playerStageProgress = () => {
     // If the stage is not completed yet
@@ -1328,6 +1257,207 @@ class UserInterface extends Component {
     this.setState({
       isStageProgressAuto: event.target.checked
     });
+  };
+
+  // Calculate a random level to be given to the equipment which this function is called on
+  calculateNewEquipmentDropLevel = () => {
+    // Initialise the level to be that of the enemy which dropped it
+    let itemLevel =
+      this.state.enemyLevel +
+      // + 0-3 // - 0-6 levels
+      (this.calculateRandomDropChance(50)
+        ? Math.round(Math.random() * 3)
+        : Math.round(Math.random() * -6));
+    // If the result is one (easy to happen in the first stages), return 1; else, return the calculated level
+    return itemLevel > 0 ? itemLevel : 1;
+  };
+
+  /* Since every equipment has randomly generated stats, calls to calculateNewEquipmentStatsRange
+     are meant to make the randomisation of these much easier.
+
+     basicStat => The basic stat of each weapon, such as [Daggers: 50] / [Maces: 75] / [Spears: 100]
+     itemLevel => Used to calculate the basic value of the stat (basicStat * coefficient^itemLevel)
+     increaseCoefficient => The steepness of the curve; a higher coefficient will lead to much higher numbers in the long run
+     maxDifferenceMargin => How much is the object allowed to stray from the original values; expressed in percentage
+     
+     */
+  calculateNewEquipmentStatsRange = (
+    // The original value of the stat.
+    basicStat,
+    // Level of the item which calls this function.
+    itemLevel,
+    // How steep the increase of the value is based on the level.
+    increaseCoefficient,
+    // How much of a margin of difference there can be between the original value and the output value
+    // e.g. MAX +20% // MAX -20% of standard value.
+    maxDifferenceMargin
+  ) => {
+    let statsValue = Math.round(
+      basicStat * Math.pow(increaseCoefficient, itemLevel) +
+        ((basicStat * Math.pow(increaseCoefficient, itemLevel)) / 100) *
+          (this.calculateRandomDropChance(50)
+            ? Math.round(Math.random() * (maxDifferenceMargin * -1))
+            : Math.round(Math.random() * maxDifferenceMargin))
+    );
+    return statsValue;
+  };
+
+  /* Different drop rates are used to allow players to find more equipment in the earlier stages, and consequentially
+       less in higher stages.
+
+       All multiplier which might be applied in the future have to be added to this function directly.
+     
+     */
+  calculateNewEquipmentDropRate = type => {
+    let equipmentDropRate;
+    if (type === "weapon") {
+      if (this.state.enemyLevel <= 10) {
+        equipmentDropRate = 10;
+      }
+      if (this.state.enemyLevel > 10 && this.state.enemyLevel < 40) {
+        equipmentDropRate = 9;
+      }
+      if (this.state.enemyLevel > 40 && this.state.enemyLevel < 70) {
+        equipmentDropRate = 8;
+      }
+      if (this.state.enemyLevel > 70 && this.state.enemyLevel < 100) {
+        equipmentDropRate = 7;
+      }
+      if (this.state.enemyLevel > 100 && this.state.enemyLevel < 150) {
+        equipmentDropRate = 6;
+      }
+      if (this.state.enemyLevel > 150 && this.state.enemyLevel < 200) {
+        equipmentDropRate = 5;
+      }
+      if (this.state.enemyLevel > 200 && this.state.enemyLevel < 300) {
+        equipmentDropRate = 4;
+      }
+      if (this.state.enemyLevel > 300 && this.state.enemyLevel < 400) {
+        equipmentDropRate = 3;
+      }
+      if (this.state.enemyLevel > 400 && this.state.enemyLevel < 500) {
+        equipmentDropRate = 2;
+      }
+      if (this.state.enemyLevel > 400 && this.state.enemyLevel < 500) {
+        equipmentDropRate = 1;
+      }
+    }
+    console.log(equipmentDropRate);
+    return equipmentDropRate;
+  };
+
+  /* Drop a new piece of equipment.
+     
+     To add a new piece of equipment:
+      - Increase the randomly generated number's maximum value by 1
+      - Create a new if statement which accounts for the newly added numeric range
+      - Add the relevant object keys, excluding the ones which are shared (already added at the beginning)
+
+     */
+  generateNewEquipmentDropByType = type => {
+    let equipmentToBeCollected = { ...this.state.equipmentToBeCollected };
+    // Generate a random number between 1 - 100
+    let randomNumber = Math.round(Math.random() * 3);
+    /* Weapon Drop */
+    if (type === "weapon") {
+      // Create a blueprint with the shared keys of all weapons
+      let equipmentPiece = {
+        itemType: "weapon",
+        itemLevel: this.calculateNewEquipmentDropLevel(),
+        itemIsEquipped: false,
+        itemValue: this.calculateNewEquipmentStatsRange(
+          1000,
+          this.state.enemyLevel,
+          1.05,
+          15
+        )
+      };
+      // Weapon Type #1 - Dagger
+      if (randomNumber <= 1) {
+        equipmentPiece.itemName = "Training Dagger";
+        equipmentPiece.itemImage = swordOneImage;
+        equipmentPiece.itemDescription =
+          "A weak weapon with great attack speed";
+        equipmentPiece.itemStats = {
+          bonusAttack: this.calculateNewEquipmentStatsRange(
+            100,
+            equipmentPiece.itemLevel,
+            1.05,
+            5
+          ),
+          bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
+            3,
+            equipmentPiece.itemLevel,
+            1.01,
+            5
+          ),
+          bonusCriticalChance: this.calculateNewEquipmentStatsRange(
+            1,
+            equipmentPiece.itemLevel,
+            1.013,
+            5
+          )
+        };
+      }
+      // Weapon Type #2 - Mace
+      if (randomNumber > 1 && randomNumber <= 2) {
+        equipmentPiece.itemName = "Training Mace";
+        equipmentPiece.itemImage = maceOneImage;
+        equipmentPiece.itemDescription =
+          "A sturdy weapon which balances damage and attack speed";
+        equipmentPiece.itemStats = {
+          bonusAttack: this.calculateNewEquipmentStatsRange(
+            150,
+            equipmentPiece.itemLevel,
+            1.05,
+            5
+          ),
+          bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
+            1,
+            equipmentPiece.itemLevel,
+            1.01,
+            5
+          ),
+          bonusCriticalChance: this.calculateNewEquipmentStatsRange(
+            0.8,
+            equipmentPiece.itemLevel,
+            1.013,
+            5
+          )
+        };
+      }
+      // Weapon Type #3 - Spear
+      if (randomNumber > 2 && randomNumber <= 3) {
+        equipmentPiece.itemName = "Training Spear";
+        equipmentPiece.itemImage = spearOneImage;
+        equipmentPiece.itemDescription =
+          "A long spear with great critical capabilities";
+        equipmentPiece.itemStats = {
+          bonusAttack: this.calculateNewEquipmentStatsRange(
+            200,
+            equipmentPiece.itemLevel,
+            1.05,
+            5
+          ),
+          bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
+            0.2,
+            equipmentPiece.itemLevel,
+            1.01,
+            5
+          ),
+          bonusCriticalChance: this.calculateNewEquipmentStatsRange(
+            1.26,
+            equipmentPiece.itemLevel,
+            1.013,
+            5
+          )
+        };
+      }
+      // Add the dropped item(s) to the array
+      equipmentToBeCollected[type].push(equipmentPiece);
+      // Return the array
+    }
+    this.setState({ equipmentToBeCollected });
   };
 
   checkSkillForLevelUp = skillNumber => {
@@ -1423,12 +1553,12 @@ class UserInterface extends Component {
         this.state.playerExperienceCurrent -
         this.state.playerExperienceRequired,
       // Raise the experience required for the next level
-      playerExperienceRequired: 500 * Math.pow(1.06, this.state.playerLevel),
+      playerExperienceRequired: 250 * Math.pow(1.1, this.state.playerLevel),
       // Increase the max health, including the deck health bonus
       playerHealthMax: Math.round(
         500 *
           Math.pow(1.05, this.state.playerLevel) *
-          this.state.deckBonuses.bonusHealth
+          this.calculateExperienceMultiplierAllSources()
       ),
       playerHealthCurrent: Math.round(
         500 * Math.pow(1.05, this.state.playerLevel)
@@ -1494,12 +1624,31 @@ class UserInterface extends Component {
         isTutorialScreenActive: !this.state.isTutorialScreenActive,
         leftMenuSettingSelected: "Hero"
       });
-      console.log("Tutorial mode toggled");
     }
   };
 
   calculateRandomDropChance = chanceInPercentage => {
     return chanceInPercentage > Math.random() * 100;
+  };
+
+  // Include all EXP multipliers to return the final multiplier
+  calculateExperienceMultiplierAllSources = () => {
+    let experienceMultiplier = 1;
+    experienceMultiplier += this.state.deckBonuses.bonusExperience;
+    return experienceMultiplier;
+  };
+
+  // Include all Coin Drop % multipliers to return the final multiplier
+  calculateCoinDropMultiplierAllSources = () => {
+    let coinDropMultiplier = 1;
+    coinDropMultiplier += this.state.deckBonuses.bonusCoinDrop;
+    return coinDropMultiplier;
+  };
+  // Include all Potion Drop % multipliers to return the final multiplier
+  calculatePotionDropChanceAllSources = () => {
+    let potionDropChance = 1;
+    potionDropChance += this.state.deckBonuses.bonusPotionDropRate;
+    return potionDropChance;
   };
 
   calculateAllDrops = () => {
@@ -1510,10 +1659,19 @@ class UserInterface extends Component {
         lootBagsToBeCollected: this.state.lootBagsToBeCollected + 1
       });
     }
+    // Calculate weapon drops
+    if (
+      this.calculateRandomDropChance(
+        this.calculateNewEquipmentDropRate("weapon")
+      ) ||
+      this.state.totalEnemiesKilled === 0
+    ) {
+      this.generateNewEquipmentDropByType("weapon");
+    }
     // Calculate food drops
     if (
       this.calculateRandomDropChance(
-        this.state.foodDropChance * this.state.deckBonuses.bonusPotionDropRate
+        this.state.foodDropChance * this.calculatePotionDropChanceAllSources()
       )
     ) {
       this.setState({
@@ -1550,15 +1708,18 @@ class UserInterface extends Component {
       coinsToBeCollected: this.state.coinsToBeCollected + coinsDroppedByEnemy,
       coinsToBeCollectedValue:
         this.state.coinsToBeCollectedValue +
-        coinsDroppedByEnemy *
-          this.state.enemyCoinsValue *
-          this.state.deckBonuses.bonusCoinDrop
+        Math.round(
+          coinsDroppedByEnemy *
+            this.state.enemyCoinsValue *
+            this.calculateCoinDropMultiplierAllSources()
+        )
     });
     // Give XP, 100% chance
     this.setState({
       playerExperienceCurrent:
         this.state.playerExperienceCurrent +
-        this.state.enemyExperienceHeld * this.state.deckBonuses.bonusExperience
+        this.state.enemyExperienceHeld *
+          this.calculateExperienceMultiplierAllSources()
     });
   };
 
@@ -1624,31 +1785,82 @@ class UserInterface extends Component {
     }, 500);
   };
 
-  // Calculate if the hit is critical based on the critical chance
-  calculateDamageAfterMultipliers = () => {
-    // The damage without any bonus
-    let totalDamage = this.calculateTotalClickDamage();
-    // Deck damage bonus (if any)
-    totalDamage *= this.state.deckBonuses.bonusClickDamage;
+  // Calculate the final chance in % of landing a double attack
+  calculateDoubleAttackChanceAllSources = () => {
+    let doubleAttackChance = this.state.playerDoubleAttackChance;
+    doubleAttackChance += this.state.deckBonuses.bonusDoubleAttackChance;
+    doubleAttackChance += this.state.equipmentBonuses.bonusDoubleAttackChance;
+    return doubleAttackChance;
+  };
+
+  // Calculate the final chance in % of landing a critical hit
+  calculateCriticalChanceAllSources = () => {
+    let criticalChance = this.state.playerCriticalChance;
+    criticalChance += this.state.deckBonuses.bonusCriticalChance;
+    criticalChance += this.state.equipmentBonuses.bonusCriticalChance;
+    return criticalChance;
+  };
+
+  // Calculate the final critical damage multiplier
+  calculateCriticalMultiplierAllSources = () => {
+    let criticalMultiplier = this.state.playerCriticalMultiplier;
+    criticalMultiplier += this.state.deckBonuses.bonusCriticalDamage;
+    return criticalMultiplier;
+  };
+
+  // Calculate the total click damage multiplier
+  calculateClickDamageAllSources = () => {
+    let damage =
+      this.state.playerAttack + this.state.equipmentBonuses.bonusAttack;
+    let damageMultiplier = 1;
+    damageMultiplier += this.state.deckBonuses.bonusClickDamage;
+    return damage * damageMultiplier;
+  };
+
+  // Sum of all the DPS sources
+  calculateDamagePerSecondAllSources = () => {
+    if (this.state.isHeroSkillTwoActive) {
+      return (
+        (this.state.pets.petOne.damagePerSecondCurrent +
+          this.state.pets.petTwo.damagePerSecondCurrent +
+          this.state.pets.petThree.damagePerSecondCurrent +
+          this.state.pets.petFour.damagePerSecondCurrent +
+          this.state.pets.petFive.damagePerSecondCurrent) *
+        this.state.skills.skillTwo.damageMultiplier
+      );
+    } else
+      return (
+        this.state.pets.petOne.damagePerSecondCurrent +
+        this.state.pets.petTwo.damagePerSecondCurrent +
+        this.state.pets.petThree.damagePerSecondCurrent +
+        this.state.pets.petFour.damagePerSecondCurrent +
+        this.state.pets.petFive.damagePerSecondCurrent
+      );
+  };
+
+  // Calculate the final click damage after adding up all sources
+  calculateClickDamageAfterMultipliers = () => {
+    let totalDamage = this.calculateClickDamageAllSources();
     // If double hit
-    if (
-      this.state.playerDoubleAttackChance *
-        this.state.deckBonuses.bonusDoubleAttackChance >=
-      Math.random() * 101
-    ) {
+    if (this.calculateDoubleAttackChanceAllSources() >= Math.random() * 101) {
       totalDamage *= 2;
     }
     // If critical hit
-    if (
-      this.state.playerCriticalChance *
-        this.state.deckBonuses.bonusCriticalChance >=
-      Math.random() * 101
-    ) {
+    if (this.calculateCriticalChanceAllSources() >= Math.random() * 101) {
       totalDamage +=
         this.state.playerCriticalMultiplier *
-        this.state.deckBonuses.bonusCriticalDamage;
+        this.calculateCriticalMultiplierAllSources();
     }
-    return totalDamage;
+    // If used while skill #3 is active
+    if (this.state.skills.skillThree.isActive) {
+      return Math.round(
+        totalDamage +
+          (this.calculateDamagePerSecondAllSources() / 100) *
+            this.state.skills.skillThree.damageMultiplier
+      );
+    } else {
+      return Math.round(totalDamage);
+    }
   };
 
   // Attack the enemy
@@ -1659,13 +1871,13 @@ class UserInterface extends Component {
         // Remove the player damage from the enemy's health
         enemyHealthCurrent:
           this.state.enemyHealthCurrent -
-          this.calculateDamageAfterMultipliers(),
+          this.calculateClickDamageAfterMultipliers(),
         totalPlayerAttacks: this.state.totalPlayerAttacks + 1
       });
       this.setState({
         totalPlayerDamageDealt:
           this.state.totalPlayerDamageDealt +
-          this.calculateDamageAfterMultipliers()
+          this.calculateClickDamageAfterMultipliers()
       });
       // After every attack, check if the quests are completed
       this.checkIfQuestConditionsMet(
@@ -1699,7 +1911,8 @@ class UserInterface extends Component {
       // Set the skill on cooldown
       skills[skillNumber].isReady = false;
       setTimeout(() => {
-        skills[skillNumber].isReady = this.setState({ skills });
+        skills[skillNumber].isReady = true;
+        this.setState({ skills });
       }, skills[skillNumber].cooldown);
       // Skills #1 and #4
       if (skillNumber === "skillOne" || skillNumber === "skillFour") {
@@ -1711,7 +1924,7 @@ class UserInterface extends Component {
               this.setState({
                 enemyHealthCurrent:
                   this.state.enemyHealthCurrent -
-                  this.calculateTotalClickDamage() *
+                  this.calculateClickDamageAllSources() *
                     skills[skillNumber].damageMultiplier
               });
               skillActivate();
@@ -1748,7 +1961,7 @@ class UserInterface extends Component {
               <span className="text-warning">
                 {this.renderNumberWithAbbreviations(
                   Math.round(
-                    this.calculateTotalClickDamage() *
+                    this.calculateClickDamageAllSources() *
                       skills[skillNumber].damageMultiplier *
                       skills[skillNumber].numberOfAttacks
                   )
@@ -1800,7 +2013,7 @@ class UserInterface extends Component {
               <span className="text-warning">
                 {this.renderNumberWithAbbreviations(
                   Math.round(
-                    this.calculateTotalDamagePerSecond() *
+                    this.calculateDamagePerSecondAllSources() *
                       this.state.skills[skillNumber].damageMultiplier *
                       this.state.skills[skillNumber].numberOfAttacks
                   )
@@ -1889,11 +2102,11 @@ class UserInterface extends Component {
         // Damage the enemy by the amount of player DPS
         enemyHealthCurrent:
           this.state.enemyHealthCurrent -
-          this.calculateTotalDamagePerSecond() *
-            this.state.deckBonuses.bonusDamagePerSecond,
+          this.calculateDamagePerSecondAllSources(),
         // Update player stats
         totalPetDamageDealt:
-          this.state.totalPetDamageDealt + this.calculateTotalDamagePerSecond()
+          this.state.totalPetDamageDealt +
+          this.calculateDamagePerSecondAllSources()
       });
       // Check if the quests are completed
       this.checkIfQuestConditionsMet(
@@ -1980,9 +2193,9 @@ class UserInterface extends Component {
         // Reinitialise the values of the new enemy
         enemyHasHealth: true,
         enemyLevel: level,
-        enemyExperienceHeld: Math.round(100 * Math.pow(1.04, level)),
-        enemyHealthCurrent: Math.round(500 * Math.pow(1.07, level)),
-        enemyHealthMax: Math.round(500 * Math.pow(1.07, level)),
+        enemyExperienceHeld: Math.round(25 * Math.pow(1.08, level)),
+        enemyHealthCurrent: Math.round(500 * Math.pow(1.11, level)),
+        enemyHealthMax: Math.round(500 * Math.pow(1.11, level)),
         enemyAttack: Math.round(50 * Math.pow(1.045, level)),
         enemyCoinsValue: Math.round(25 * Math.pow(1.05, level)),
         // Reinitialise the values of the player
@@ -1995,21 +2208,110 @@ class UserInterface extends Component {
         enemyHasHealth: true,
         enemyLevel: this.state.stageCurrent,
         enemyExperienceHeld: Math.round(
-          300 * Math.pow(1.04, this.state.stageCurrent)
+          25 * Math.pow(1.08, this.state.stageCurrent)
         ),
         enemyHealthCurrent: Math.round(
-          2500 * Math.pow(1.07, this.state.stageCurrent)
+          2500 * Math.pow(1.11, this.state.stageCurrent)
         ),
         enemyHealthMax: Math.round(
-          2500 * Math.pow(1.07, this.state.stageCurrent)
+          2500 * Math.pow(1.11, this.state.stageCurrent)
         ),
-        enemyAttack: Math.round(100 * Math.pow(1.04, this.state.stageCurrent)),
+        enemyAttack: Math.round(50 * Math.pow(1.045, this.state.stageCurrent)),
         enemyCoinsValue: Math.round(
           100 * Math.pow(1.05, this.state.stageCurrent)
         ),
         // Reinitialise the values of the player
         playerHealthCurrent: this.state.playerHealthMax
       });
+    }
+  };
+
+  // Equip the player with all items who's isItemEquipped boolean resolves to true
+  addEquippedItemsToPlayer = () => {
+    // Create a copy of the object from the state
+    let playerEquipment = { ...this.state.playerEquipment };
+    let inventory = { ...this.state.inventory };
+    // Iterate through each key of the object
+    for (let item in inventory) {
+      // If the item is equipped
+      if (inventory[item].itemIsEquipped) {
+        playerEquipment[inventory[item].itemType] = inventory[item];
+      }
+    }
+    // Set the state with the copy of the object
+    this.setState({ playerEquipment });
+  };
+
+  // Fetch and apply all the equipment bonuses granted by worn equipment
+  addEquipmentBonusesToPlayer = () => {
+    // Create a copy of the object from the state
+    let playerEquipment = { ...this.state.playerEquipment };
+    let equipmentBonuses = { ...this.state.equipmentBonuses };
+    // Iterate through each bonus category
+    for (let bonus in equipmentBonuses) {
+      // And reset them to 0
+      equipmentBonuses[bonus] = 0;
+    }
+    // Iterate through each equipped item
+    for (let item in playerEquipment) {
+      // Iterate through each stat bonus granted by the item
+      for (let bonus in playerEquipment[item].itemStats) {
+        // Add the bonus to the relevant category
+        equipmentBonuses[bonus] += playerEquipment[item].itemStats[bonus];
+      }
+    }
+    // Set the state with the copy of the object
+    this.setState({ equipmentBonuses });
+  };
+
+  // Set's the item's equipped state in order to equip/unequip
+  toggleItemEquippedState = item => {
+    // Create a copy of the object from the state
+    let inventory = { ...this.state.inventory };
+    // If the item passed as a parameter is not already equipped
+    if (!item.itemIsEquipped) {
+      // Loop through every slot of the inventory
+      for (let slot in inventory) {
+        // When the item passed as a parameter in the inventory is found
+        if (inventory[slot] === item) {
+          // Set it as equipped
+          inventory[slot].itemIsEquipped = true;
+          // When all other items are found
+        } else {
+          // Set them as not equipped
+          inventory[slot].itemIsEquipped = false;
+        }
+      }
+    }
+    this.setState({ inventory });
+    this.addEquippedItemsToPlayer();
+    // Add to the end of the queue
+    setTimeout(() => {
+      this.addEquipmentBonusesToPlayer();
+    }, 0);
+  };
+
+  // Sell an item from the inventory (unequipped) for it's itemValue prop
+  playerSellItem = item => {
+    // Create a copy of the object from the state
+    let inventory = [];
+    for (let item in this.state.inventory) {
+      inventory.push(this.state.inventory[item]);
+    }
+    // If the item passed as a parameter is equipped
+    if (!item.itemIsEquipped) {
+      // Loop through every item in the inventory
+      for (let slot in inventory) {
+        // And when the item is found
+        if (inventory[slot] === item) {
+          // Delete it from the list and rearrange the whole array
+          this.setState({
+            coins: this.state.coins + inventory[slot].itemValue
+          });
+          inventory.splice(inventory.indexOf(inventory[slot]), 1);
+        }
+      }
+      this.setState({ inventory });
     }
   };
 
@@ -2061,11 +2363,37 @@ class UserInterface extends Component {
         // Prevent coins spawned after to also be animated
         isCoinCollected: false
       });
+
       // Check if the quests are completed
       this.checkIfQuestConditionsMet(
         "moneyEarned",
         this.state.totalMoneyEarned
       );
+    }, 500);
+  };
+
+  // Add the equipment to the inventory when the player hovers on uncollected equipment
+  collectEquipmentOnHover = event => {
+    // Weapons
+    // Create a copy of the object from the state
+    let equipmentToBeCollected = { ...this.state.equipmentToBeCollected };
+    // Clone the inventory's current state into a newly declared variable
+    let inventory = [];
+    for (let item in this.state.inventory) {
+      inventory.push(this.state.inventory[item]);
+    }
+    // Set the equipment on the floor as collected
+    this.setState({ isEquipmentCollected: true });
+    // After 500ms
+    setTimeout(() => {
+      // Loop through every item in the array
+      for (let item in equipmentToBeCollected.weapon) {
+        // And add it to the inventory
+        inventory.push(equipmentToBeCollected.weapon[item]);
+      }
+      equipmentToBeCollected.weapon = [];
+      // Set the state with the modified array
+      this.setState({ inventory, equipmentToBeCollected });
     }, 500);
   };
 
@@ -2085,7 +2413,7 @@ class UserInterface extends Component {
         // Prevent food spawned after to also be animated
         isFoodCollected: false
       });
-    }, 5000);
+    }, 500);
   };
 
   // Add lootbags to the inventory
@@ -2201,7 +2529,13 @@ class UserInterface extends Component {
 
   renderStageBar = () => {
     if (!this.state.isTutorialScreenActive) {
-      return <StagesBar mainState={this.state} />;
+      return (
+        <StagesBar
+          mainState={this.state}
+          activateAutoStageAdvance={this.activateAutoStageAdvance}
+          playerStageAdvance={this.playerStageAdvance}
+        />
+      );
     }
   };
 
@@ -2221,8 +2555,25 @@ class UserInterface extends Component {
           renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
           heroUpgradeLevelUp={this.heroUpgradeLevelUp}
           petLevelUpgrade={this.petLevelUpgrade}
-          calculateTotalClickDamage={this.calculateTotalClickDamage}
-          calculateTotalDamagePerSecond={this.calculateTotalDamagePerSecond}
+          calculateClickDamageAllSources={this.calculateClickDamageAllSources}
+          calculateDamagePerSecondAllSources={
+            this.calculateDamagePerSecondAllSources
+          }
+          calculateCriticalChanceAllSources={
+            this.calculateCriticalChanceAllSources
+          }
+          calculateCriticalMultiplierAllSources={
+            this.calculateCriticalMultiplierAllSources
+          }
+          calculateDoubleAttackChanceAllSources={
+            this.calculateDoubleAttackChanceAllSources
+          }
+          calculateExperienceMultiplierAllSources={
+            this.calculateExperienceMultiplierAllSources
+          }
+          calculateCoinDropMultiplierAllSources={
+            this.calculateCoinDropMultiplierAllSources
+          }
           giveItemDebug={this.giveItemDebug}
           petLevelUpgrade={this.petLevelUpgrade}
           fetchLeftMenuSettingSelection={this.fetchLeftMenuSettingSelection}
@@ -2230,6 +2581,8 @@ class UserInterface extends Component {
         <Inventory
           mainState={this.state}
           renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
+          toggleItemEquippedState={this.toggleItemEquippedState}
+          playerSellItem={this.playerSellItem}
         />
         {/* Stages [ TOP ] */}
         {this.renderStageBar()}
@@ -2240,7 +2593,9 @@ class UserInterface extends Component {
           collectCoinsOnHover={this.collectCoinsOnHover}
           collectFoodOnHover={this.collectFoodOnHover}
           collectLootBagOnHover={this.collectLootBagOnHover}
+          collectEquipmentOnHover={this.collectEquipmentOnHover}
           playerAttack={this.playerAttack}
+          calculateRandomDropChance={this.calculateRandomDropChance}
         />
 
         {/* Skills [ BOTTOM ] */}

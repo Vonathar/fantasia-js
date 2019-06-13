@@ -40,9 +40,26 @@ class LeftMenu extends Component {
       return (
         <SummaryMenu
           mainState={this.props.mainState}
-          calculateTotalClickDamage={this.props.calculateTotalClickDamage}
-          calculateTotalDamagePerSecond={
-            this.props.calculateTotalDamagePerSecond
+          calculateClickDamageAllSources={
+            this.props.calculateClickDamageAllSources
+          }
+          calculateDamagePerSecondAllSources={
+            this.props.calculateDamagePerSecondAllSources
+          }
+          calculateCriticalChanceAllSources={
+            this.props.calculateCriticalChanceAllSources
+          }
+          calculateCriticalMultiplierAllSources={
+            this.props.calculateCriticalMultiplierAllSources
+          }
+          calculateDoubleAttackChanceAllSources={
+            this.props.calculateDoubleAttackChanceAllSources
+          }
+          calculateExperienceMultiplierAllSources={
+            this.props.calculateExperienceMultiplierAllSources
+          }
+          calculateCoinDropMultiplierAllSources={
+            this.props.calculateCoinDropMultiplierAllSources
           }
           renderNumberWithAbbreviations={
             this.props.renderNumberWithAbbreviations

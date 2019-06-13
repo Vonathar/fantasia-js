@@ -7,6 +7,9 @@ import criticalMultiplierImage from "../img/critical_1.png";
 import criticalChanceImage from "../img/critical_2.png";
 import clickDamageImage from "../img/cps_1.png";
 import clickPerSecondDamageImage from "../img/dps_1.png";
+import playerExperienceImage from "../img/playerExperienceTutorial.png";
+import coinImage from "../img/coin_1.png";
+import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 
 class SummaryMenu extends Component {
   render() {
@@ -17,6 +20,7 @@ class SummaryMenu extends Component {
         </p>
         {/* Player summary  */}
         <div id="userInterface-stats-summary-div">
+          {/* Row #1  */}
           <div className="userInterface-stats-summary-row">
             <div className="userInterface-stats-summary-section mx-auto">
               <img
@@ -30,7 +34,7 @@ class SummaryMenu extends Component {
               />
               <small className="userInterface-stats-summary-section-paragraph">
                 {this.props.renderNumberWithAbbreviations(
-                  this.props.calculateTotalClickDamage()
+                  Math.round(this.props.calculateClickDamageAllSources())
                 )}
               </small>
             </div>
@@ -46,7 +50,7 @@ class SummaryMenu extends Component {
               />
               <small className="userInterface-stats-summary-section-paragraph">
                 {this.props.renderNumberWithAbbreviations(
-                  this.props.mainState.playerCriticalChance.toFixed(1)
+                  this.props.calculateCriticalChanceAllSources().toFixed(1)
                 )}
                 %
               </small>
@@ -64,13 +68,14 @@ class SummaryMenu extends Component {
               <small className="userInterface-stats-summary-section-paragraph">
                 {this.props.renderNumberWithAbbreviations(
                   Math.round(
-                    this.props.mainState.playerCriticalMultiplier * 100
+                    this.props.calculateCriticalMultiplierAllSources() * 100
                   )
                 )}
                 %
               </small>
             </div>
           </div>
+          {/* Row #2  */}
           <div className="userInterface-stats-summary-row">
             <div className="userInterface-stats-summary-section mx-auto">
               <img
@@ -100,7 +105,7 @@ class SummaryMenu extends Component {
               />
               <small className="userInterface-stats-summary-section-paragraph">
                 {this.props.renderNumberWithAbbreviations(
-                  this.props.calculateTotalDamagePerSecond()
+                  this.props.calculateDamagePerSecondAllSources()
                 )}
               </small>
             </div>
@@ -116,7 +121,48 @@ class SummaryMenu extends Component {
               />
               <small className="userInterface-stats-summary-section-paragraph">
                 {this.props.renderNumberWithAbbreviations(
-                  this.props.mainState.playerDoubleAttackChance.toFixed(1)
+                  this.props.calculateDoubleAttackChanceAllSources().toFixed(1)
+                )}
+                %
+              </small>
+            </div>
+          </div>
+          {/* Row #3  */}
+          <div className="userInterface-stats-summary-row">
+            <div className="userInterface-stats-summary-section mx-auto">
+              <img
+                data-toggle="tooltip"
+                title="EXP Multiplier"
+                data-placement="top"
+                draggable="false"
+                alt="player experience"
+                className="userInterface-stats-summary-section-image"
+                src={playerExperienceImage}
+              />
+              <small className="userInterface-stats-summary-section-paragraph">
+                {this.props.renderNumberWithAbbreviations(
+                  (
+                    this.props.calculateExperienceMultiplierAllSources() * 100
+                  ).toFixed(0)
+                )}
+                %
+              </small>
+            </div>
+            <div className="userInterface-stats-summary-section mx-auto">
+              <img
+                data-toggle="tooltip"
+                title="Coin drop multiplier"
+                data-placement="top"
+                draggable="false"
+                alt="coin drop rate"
+                className="userInterface-stats-summary-section-image"
+                src={coinImage}
+              />
+              <small className="userInterface-stats-summary-section-paragraph">
+                {this.props.renderNumberWithAbbreviations(
+                  (
+                    this.props.calculateCoinDropMultiplierAllSources() * 100
+                  ).toFixed(0)
                 )}
                 %
               </small>
