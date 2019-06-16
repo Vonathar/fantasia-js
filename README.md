@@ -6,21 +6,15 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-#### 1.8.3
+#### 1.8.4
 
 ##### Gameplay
 
-- Start back where you left - the game now automatically **saves the progress** in the local storage!
-- Implement an option to _reset the game_ save and start again (found in the debug menu)
-- The player attack is not reset to 0 anymore between stages to prevent issues upon saving
-- Fix a bug which caused the enemy to require an extra hit to be dead even after its HP have been depleted
-- Increase the damage multiplier of _Mark of The Beast_ and _Animal Training_!
-- Increase the damage multiplier of all pets for game balancing
+- **Damage dealt** is now visible next to the enemy image!
 
 ##### Other
 
-- Fix an issue which caused the damage multiplier of the skill _Animal Training_ to render improperly
-- Fix an issue which caused the skill Animal Training to have a null key handled upon skill level up
+- N/a
 
 ### 1.8.0
 

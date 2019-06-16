@@ -61,7 +61,6 @@ import clickPerSecondDamageImage from "../img/dps_1.png";
 import swordOneImage from "../img/sword_1.png";
 import maceOneImage from "../img/mace_1.png";
 import spearOneImage from "../img/spear_1.png";
-
 class UserInterface extends Component {
   state = {
     /* Battle log UI */
@@ -2762,6 +2761,8 @@ class UserInterface extends Component {
           collectEquipmentOnHover={this.collectEquipmentOnHover}
           playerAttack={this.playerAttack}
           calculateRandomDropChance={this.calculateRandomDropChance}
+          calculateClickDamageAllSources={this.calculateClickDamageAllSources}
+          renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
         />
 
         {/* Skills [ BOTTOM ] */}

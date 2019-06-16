@@ -1,17 +1,16 @@
 import React, { Component } from "react";
+import VisualDamage from "./visualDamage";
 /* [IMG] Player */
 import playerImageOne from "../img/player_1.png";
 /* [IMG] Inventory, resources */
 import coinImageOne from "../img/coin_1.png";
 import resourceTwoImage from "../img/resource_2.png";
 import resourceThreeImage from "../img/resource_3.png";
-import swordOneImage from "../img/sword_1.png";
-import swordTwoImage from "../img/sword_2.png";
-import swordThreeImage from "../img/sword_3.png";
-import maceOneImage from "../img/mace_1.png";
-import spearOneImage from "../img/spear_1.png";
 
 class BattleArea extends Component {
+  state = {
+    damageParagraphsToBeRendered: []
+  };
   // Drop new coins on the floor
   renderCoinDrop = () => {
     // If the coins have not already been collected
@@ -184,7 +183,43 @@ class BattleArea extends Component {
       playerExperiencePercentage
     );
   };
+
+  /* Visual Damage rendering */
+  // Add a new paragraph to be rendered to the UI
+  addDamageRenderingItem = () => {
+    // If the enemy has health
+    if (this.props.mainState.enemyHasHealth) {
+      this.setState(state => ({
+        damageParagraphsToBeRendered: [
+          ...state.damageParagraphsToBeRendered,
+          { id: Date.now() }
+        ]
+      }));
+    }
+  };
+  removeDamageRenderingItem = id => {
+    this.setState(state => ({
+      damageParagraphsToBeRendered: state.damageParagraphsToBeRendered.filter(
+        ({ id: itemid }) => itemid !== id
+      )
+    }));
+  };
+
+  handleGlobalKeyboardInput = event => {
+    // Use [W/E] to attack
+    if (event.key === "w" || event.key === "e") {
+      if (this.props.mainState.enemyHasHealth) {
+        this.addDamageRenderingItem();
+      }
+    }
+  };
+
+  componentDidMount() {
+    document.addEventListener("keyup", this.handleGlobalKeyboardInput, false);
+  }
+
   render() {
+    const { damageParagraphsToBeRendered } = this.state;
     return (
       <div id="userInterface-battle-div">
         <div id="userInterface-player-div">
@@ -222,7 +257,10 @@ class BattleArea extends Component {
             draggable="false"
             className={this.renderEnemyImageClass()}
             src={this.props.mainState.enemyImageCurrent}
-            onClick={this.props.playerAttack}
+            onClick={() => {
+              this.props.playerAttack();
+              this.addDamageRenderingItem();
+            }}
           />
           <div id="userInterface-enemy-paragraph">
             <p>
@@ -236,6 +274,27 @@ class BattleArea extends Component {
             max={this.props.mainState.enemyHealthMax}
             value={this.props.mainState.enemyHealthCurrent}
           />
+          <div
+            id="visualDamageContainer-div"
+            onClick={this.addDamageRenderingItem}
+          >
+            {damageParagraphsToBeRendered.map(item => (
+              <VisualDamage
+                mainState={this.props.mainState}
+                calculateClickDamageAllSources={
+                  this.props.calculateClickDamageAllSources
+                }
+                renderNumberWithAbbreviations={
+                  this.props.renderNumberWithAbbreviations
+                }
+                key={item.id}
+                {...item}
+                onDone={this.removeDamageRenderingItem}
+                delay={1000}
+                duration={1000}
+              />
+            ))}
+          </div>
           <div id="userInterface-enemy-drop-div">
             {this.generateCoinDrop()}
             {this.generateFoodDrop()}
