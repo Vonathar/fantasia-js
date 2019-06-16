@@ -363,6 +363,7 @@ class UserInterface extends Component {
     playerExperienceCurrent: 0,
     playerExperienceRequired: 250,
     playerAttack: 50,
+    playerCanAttack: true,
     playerDoubleAttackChance: 0,
     playerCriticalChance: 0.1,
     playerCriticalMultiplier: 1.2,
@@ -819,7 +820,7 @@ class UserInterface extends Component {
         duration: 10000,
         isReady: true,
         isActive: false,
-        damageMultiplier: 1.5,
+        damageMultiplier: 1.8,
         levelToUnlock: 5,
         levelsToUpgrade: [
           15,
@@ -873,7 +874,7 @@ class UserInterface extends Component {
         isReady: true,
         numberOfAttacks: 3,
         numberOfAttacksLevelsToUpgrade: [53, 103, 153, 203, 343, 483],
-        damageMultiplier: 1.5,
+        damageMultiplier: 1.8,
         levelToUnlock: 21,
         levelsToUpgrade: [
           33,
@@ -1158,12 +1159,12 @@ class UserInterface extends Component {
         // Increase pet damage
         pets[petNumber].damagePerSecondCurrent = Math.round(
           pets[petNumber].damagePerSecondBase *
-            Math.pow(1.05, pets[petNumber].upgradeLevel)
+            Math.pow(1.055, pets[petNumber].upgradeLevel)
         );
         // Increase pet damage
         pets[petNumber].damagePerSecondPlaceholder = Math.round(
           pets[petNumber].damagePerSecondBase *
-            Math.pow(1.05, pets[petNumber].upgradeLevel)
+            Math.pow(1.055, pets[petNumber].upgradeLevel)
         );
       }
     } else {
@@ -1492,7 +1493,6 @@ class UserInterface extends Component {
       // Level up attack count
       if (
         skills[skillNumber] === "skillOne" ||
-        skills[skillNumber] === "skillThree" ||
         skills[skillNumber] === "skillFour"
       ) {
         if (
@@ -1731,8 +1731,7 @@ class UserInterface extends Component {
       // Trigger enemy death animation
       enemyHasHealth: false,
       // Block the player from attacking while the enemy is respawning
-      playerAttack: 0,
-      playerAttackPerSecond: 0
+      playerCanAttack: false
     });
 
     if (
@@ -1778,9 +1777,11 @@ class UserInterface extends Component {
       this.playerStageProgress();
       // Set the player attack and DPS back to the origin values
       this.setState({
-        playerAttack: this.state.playerAttackPlaceholder,
-        playerAttackPerSecond: this.state.playerAttackPerSecondPlaceholder
+        playerCanAttack: true
       });
+      setTimeout(() => {
+        this.saveProgressToLocalStorage();
+      }, 0);
       // After 0.5 seconds
     }, 500);
   };
@@ -1868,7 +1869,7 @@ class UserInterface extends Component {
   // Attack the enemy
   playerAttack = () => {
     // If the enemy is not in the process of respawning
-    if (this.state.playerAttack !== 0) {
+    if (this.state.playerCanAttack) {
       this.setState({
         // Remove the player damage from the enemy's health
         enemyHealthCurrent:
@@ -1892,13 +1893,111 @@ class UserInterface extends Component {
       );
       if (
         // When enemy is dead
-        this.state.enemyHealthCurrent <= 1 &&
+        this.state.enemyHealthCurrent <= 0 &&
         // When XP has not already been given
         this.state.enemyHasHealth !== false
       ) {
         this.enemyDie();
       }
     }
+  };
+
+  saveProgressToLocalStorage = () => {
+    // for every item in React state
+    for (let key in this.state) {
+      // save to localStorage
+      localStorage.setItem(key, JSON.stringify(this.state[key]));
+    }
+  };
+
+  loadProgressFromLocalStorage = () => {
+    // Loop through all items stored in the local storage
+    for (let key in localStorage) {
+      // If the key found is part of the current state,
+      // && is not a key which should not be loaded
+      if (
+        this.state.hasOwnProperty(key) &&
+        key !== "battleLogParagraphsToBeRendered" &&
+        key !== "enemyHasHealth"
+      ) {
+        // Get the key's value from localStorage
+        let value = JSON.parse(localStorage.getItem(key));
+
+        // Set the state with it
+        this.setState({ [key]: value });
+      }
+    }
+    // Load skills
+    let skills = { ...this.state.skills };
+    // Load player level
+    let playerLevel = localStorage.playerLevel;
+    // Iterate through each skill
+    for (let skill in skills) {
+      // Set it to inactive
+      skills[skill].isActive = false;
+      // If the skill level is less than Lv. 1
+      if (playerLevel < skills[skill].levelsToUpgrade[1]) {
+        // If the player level is enough to unlock the skill
+        if (playerLevel > skills[skill].levelToUnlock) {
+          // Unlock it
+          skills[skill].level = 1;
+        }
+        // If the skill level is higher than Lv. 1
+      } else {
+        // Initiate a new variable to store the level of the skill
+        let skillLevelStorage = 0;
+        // Find the level of the skill and assign it to skillLevelStorage
+        skills[skill].level = skills[skill].levelsToUpgrade.reduce(
+          (total, value) => {
+            if (playerLevel > value) {
+              skillLevelStorage++;
+            }
+          }
+        );
+        // Set the level of the skill to the loaded one
+        skills[skill].level = skillLevelStorage;
+        // Set the cooldown of the skill to the loaded one
+        skills[skill].cooldown -=
+          skills[skill].cooldownReductionByLevelUp * skillLevelStorage;
+        // Set the number of attacks to the loaded one
+        if (
+          skills[skill].name === "Quick Stab" ||
+          skills[skill].name === "Fruit of Madness"
+        ) {
+          // Initiate a new variable to store the number of attacks of the skill
+          let skillNumberOfAttacks = 0;
+          // Find the added number of attacks of the skill and assign it to skillNumberOfAttacks
+          skills[skill].numberOfAttacksLevelsToUpgrade.reduce(
+            (total, value) => {
+              if (playerLevel > value) {
+                skillNumberOfAttacks++;
+              }
+            }
+          );
+          // Set the number of attacks of the skill to the loaded one
+          skills[skill].numberOfAttacks += skillNumberOfAttacks;
+        }
+        // Skill #1 & Skill #4
+        if (
+          skills[skill].name === "Quick Stab" ||
+          skills[skill].name === "Fruit of Madness"
+        ) {
+          skills[skill].damageMultiplier =
+            // Round to 2 decimals max (if applies)
+            Math.round(2 * Math.pow(1.07, skills[skill].level) * 100) / 100;
+        }
+
+        // Skill #2 & Skill #3
+        if (
+          skills[skill].name === "Mark of the Beast" ||
+          skills[skill].name === "Animal training"
+        ) {
+          skills[skill].damageMultiplier =
+            Math.round(1.8 * Math.pow(1.06, skills[skill].level) * 100) / 100;
+        }
+      }
+    }
+    this.setState({ skills });
   };
 
   playerUseActiveSkill = skillNumber => {
@@ -2514,6 +2613,11 @@ class UserInterface extends Component {
     if (itemName === "levels") {
       this.playerLevelUp();
     }
+    // Reset localStorage
+    if (itemName === "reset") {
+      localStorage.clear();
+      document.location.reload(true);
+    }
   };
 
   /* Inventory UI*/
@@ -2552,6 +2656,7 @@ class UserInterface extends Component {
 
   componentDidMount() {
     document.addEventListener("keyup", this.handleGlobalKeyboardInput, false);
+    this.loadProgressFromLocalStorage();
   }
   componentWillUnmount() {
     document.removeEventListener(

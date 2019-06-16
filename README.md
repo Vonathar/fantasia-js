@@ -6,19 +6,21 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-#### 1.8.2
+#### 1.8.3
 
 ##### Gameplay
 
-- _Hovering_ on items in the **inventory** now only shows a preview which automatically disappears; _clicking_ the item makes it possible to interact with it. (closes #24)
-- Add an option to **sell all items** in the inventory
-- Add a third row to the inventory
-- The image of inventory items is now smaller
-- The inventory now has a limit of 18 slots; once the limit is reached, unless space is freed, new items will not be collected (closes #25)
+- Start back where you left - the game now automatically **saves the progress** in the local storage!
+- Implement an option to _reset the game_ save and start again (found in the debug menu)
+- The player attack is not reset to 0 anymore between stages to prevent issues upon saving
+- Fix a bug which caused the enemy to require an extra hit to be dead even after its HP have been depleted
+- Increase the damage multiplier of _Mark of The Beast_ and _Animal Training_!
+- Increase the damage multiplier of all pets for game balancing
 
 ##### Other
 
-- The inventory div is now taller
+- Fix an issue which caused the damage multiplier of the skill _Animal Training_ to render improperly
+- Fix an issue which caused the skill Animal Training to have a null key handled upon skill level up
 
 ### 1.8.0
 

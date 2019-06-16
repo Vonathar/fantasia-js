@@ -90,7 +90,7 @@ class SkillBar extends Component {
         " " +
         this.props.mainState.skills.skillThree.name +
         "  -  Become one with your pets, and increase your click damage by " +
-        this.props.mainState.skills.skillThree.damageMultiplier +
+        this.props.mainState.skills.skillThree.damageMultiplier * 100 +
         "% of their DPS for " +
         this.props.mainState.skills.skillThree.duration / 1000 +
         " seconds. [Cooldown: " +
