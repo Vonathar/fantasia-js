@@ -1265,10 +1265,10 @@ class UserInterface extends Component {
     // Initialise the level to be that of the enemy which dropped it
     let itemLevel =
       this.state.enemyLevel +
-      // + 0-3 // - 0-6 levels
+      // + 0-3 // - 0-2 levels
       (this.calculateRandomDropChance(50)
         ? Math.round(Math.random() * 3)
-        : Math.round(Math.random() * -6));
+        : Math.round(Math.random() * -2));
     // If the result is one (easy to happen in the first stages), return 1; else, return the calculated level
     return itemLevel > 0 ? itemLevel : 1;
   };
@@ -1291,10 +1291,13 @@ class UserInterface extends Component {
     increaseCoefficient,
     // How much of a margin of difference there can be between the original value and the output value
     // e.g. MAX +20% // MAX -20% of standard value.
-    maxDifferenceMargin
+    maxDifferenceMargin,
+    itemRarity
   ) => {
     let statsValue = Math.round(
-      basicStat * Math.pow(increaseCoefficient, itemLevel) +
+      // Calculate the power of the item
+      (basicStat + (basicStat / 100) * ((itemRarity + 1) * 9)) *
+        Math.pow(increaseCoefficient, itemLevel) +
         ((basicStat * Math.pow(increaseCoefficient, itemLevel)) / 100) *
           (this.calculateRandomDropChance(50)
             ? Math.round(Math.random() * (maxDifferenceMargin * -1))
@@ -1313,19 +1316,19 @@ class UserInterface extends Component {
     let equipmentDropRate;
     if (type === "weapon") {
       if (this.state.enemyLevel <= 10) {
-        equipmentDropRate = 25;
-      }
-      if (this.state.enemyLevel > 10 && this.state.enemyLevel < 40) {
         equipmentDropRate = 20;
       }
+      if (this.state.enemyLevel > 10 && this.state.enemyLevel < 40) {
+        equipmentDropRate = 15;
+      }
       if (this.state.enemyLevel > 40 && this.state.enemyLevel < 70) {
-        equipmentDropRate = 17;
+        equipmentDropRate = 13;
       }
       if (this.state.enemyLevel > 70 && this.state.enemyLevel < 100) {
-        equipmentDropRate = 14;
+        equipmentDropRate = 12;
       }
       if (this.state.enemyLevel > 100 && this.state.enemyLevel < 150) {
-        equipmentDropRate = 12;
+        equipmentDropRate = 11;
       }
       if (this.state.enemyLevel > 150 && this.state.enemyLevel < 200) {
         equipmentDropRate = 9;
@@ -1346,6 +1349,32 @@ class UserInterface extends Component {
     return equipmentDropRate;
   };
 
+  // Calculate a rarity level for the new dropped items
+  calculateNewItemRarity = () => {
+    // Random number between 0 and 100
+    let randomItemRarity = Math.round(Math.random() * 100);
+    // 50% chance of common
+    if (randomItemRarity <= 50) {
+      return 0;
+    }
+    // 30% chance of uncommon
+    if (randomItemRarity > 50 && randomItemRarity <= 80) {
+      return 1;
+    }
+    // 12% chance of special
+    if (randomItemRarity > 80 && randomItemRarity <= 92) {
+      return 2;
+    }
+    // 5% chance of rare
+    if (randomItemRarity > 92 && randomItemRarity <= 97) {
+      return 3;
+    }
+    // 3% chance of legendary
+    if (randomItemRarity > 97 && randomItemRarity <= 100) {
+      return 4;
+    }
+  };
+
   /* Drop a new piece of equipment.
      
      To add a new piece of equipment:
@@ -1358,18 +1387,28 @@ class UserInterface extends Component {
     let equipmentToBeCollected = { ...this.state.equipmentToBeCollected };
     // Generate a random number between 1 - 100
     let randomNumber = Math.round(Math.random() * 3);
+    let randomItemRarity = this.calculateNewItemRarity();
     /* Weapon Drop */
     if (type === "weapon") {
       // Create a blueprint with the shared keys of all weapons
       let equipmentPiece = {
         itemType: "weapon",
+        /* Item stats are calculated based on their assigned rarity.
+          0 - Common
+          1 - Uncommon
+          2 - Special
+          3 - Rare
+          4 - Legendary 
+        */
+        itemRarity: randomItemRarity,
         itemLevel: this.calculateNewEquipmentDropLevel(),
         itemIsEquipped: false,
         itemValue: this.calculateNewEquipmentStatsRange(
           1000,
           this.state.enemyLevel,
           1.05,
-          15
+          5,
+          randomItemRarity
         )
       };
       // Weapon Type #1 - Dagger
@@ -1383,19 +1422,22 @@ class UserInterface extends Component {
             100,
             equipmentPiece.itemLevel,
             1.05,
-            5
+            3,
+            randomItemRarity
           ),
           bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
             3,
             equipmentPiece.itemLevel,
             1.01,
-            5
+            3,
+            randomItemRarity
           ),
           bonusCriticalChance: this.calculateNewEquipmentStatsRange(
             1,
             equipmentPiece.itemLevel,
             1.013,
-            5
+            3,
+            randomItemRarity
           )
         };
       }
@@ -1410,19 +1452,22 @@ class UserInterface extends Component {
             150,
             equipmentPiece.itemLevel,
             1.05,
-            5
+            3,
+            randomItemRarity
           ),
           bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
             1,
             equipmentPiece.itemLevel,
             1.01,
-            5
+            3,
+            randomItemRarity
           ),
           bonusCriticalChance: this.calculateNewEquipmentStatsRange(
             0.8,
             equipmentPiece.itemLevel,
             1.013,
-            5
+            3,
+            randomItemRarity
           )
         };
       }
@@ -1437,19 +1482,22 @@ class UserInterface extends Component {
             200,
             equipmentPiece.itemLevel,
             1.05,
-            5
+            3,
+            randomItemRarity
           ),
           bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
             0.2,
             equipmentPiece.itemLevel,
             1.01,
-            5
+            3,
+            randomItemRarity
           ),
           bonusCriticalChance: this.calculateNewEquipmentStatsRange(
             1.26,
             equipmentPiece.itemLevel,
             1.013,
-            5
+            3,
+            randomItemRarity
           )
         };
       }
@@ -2760,6 +2808,7 @@ class UserInterface extends Component {
           collectLootBagOnHover={this.collectLootBagOnHover}
           collectEquipmentOnHover={this.collectEquipmentOnHover}
           playerAttack={this.playerAttack}
+          playerHeal={this.playerHeal}
           calculateRandomDropChance={this.calculateRandomDropChance}
           calculateClickDamageAllSources={this.calculateClickDamageAllSources}
           renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}

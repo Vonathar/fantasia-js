@@ -6,15 +6,20 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-#### 1.8.4
+#### 1.8.5
 
 ##### Gameplay
 
-- **Damage dealt** is now visible next to the enemy image!
+- Items now have 5 different **tiers of rarity**! [1 - White] Common, [2 - Green] Uncommon, [3 - Blue] Special, [4 - Purple] Rare and [5 - Orange] Legendary!
+- _Stats_ on new _equipment_ parts are now calculated based on their rarity tier instead of using RNG
+- The _level margin_ of newly dropped _equipment_ has been reduced to keep the game balanced
+- The _drop rate_ in the early stages has been reduced
+- Fix a bug which caused all _rendered damage paragraph_ to share the value assigned to the latest paragraph rendered [Issue #29]
 
 ##### Other
 
-- N/a
+- Fix a bug which caused the game to crash when clicking the player to heal
+- Round the damage paragraphs before rendering [Issue #28]
 
 ### 1.8.0
 

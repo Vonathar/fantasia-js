@@ -20,6 +20,26 @@ class InventorySlot extends Component {
       : "inventorySlot-itemImage scale";
   };
 
+  renderItemRarityClass = () => {
+    let rarityClass = "itemRarity-";
+    if (this.props.itemObject.itemRarity === 0) {
+      rarityClass += "common";
+    }
+    if (this.props.itemObject.itemRarity === 1) {
+      rarityClass += "uncommon";
+    }
+    if (this.props.itemObject.itemRarity === 2) {
+      rarityClass += "special";
+    }
+    if (this.props.itemObject.itemRarity === 3) {
+      rarityClass += "rare";
+    }
+    if (this.props.itemObject.itemRarity === 4) {
+      rarityClass += "legendary";
+    }
+    return rarityClass;
+  };
+
   // Opens the popover which immediately disappears whenever the user removes focus from the item
   toggleByHover() {
     if (!this.state.popoverOpenByClick) {
@@ -67,10 +87,10 @@ class InventorySlot extends Component {
           >
             <PopoverHeader>
               <strong>
-                {"Lv. " +
-                  this.props.itemObject.itemLevel +
-                  " " +
-                  this.props.itemObject.itemName}
+                {"Lv. " + this.props.itemObject.itemLevel + " "}
+                <span className={this.renderItemRarityClass()}>
+                  {this.props.itemObject.itemName}
+                </span>
               </strong>
             </PopoverHeader>
             <PopoverBody>

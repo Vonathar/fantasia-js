@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 
 class VisualDamage extends Component {
-  state = { fading: false };
+  state = {
+    fading: false,
+    damage: this.props.calculateClickDamageAllSources()
+  };
   componentDidMount() {
     const { id, onDone, delay, duration } = this.props;
     setTimeout(() => {
@@ -20,7 +23,7 @@ class VisualDamage extends Component {
         style={{ top: y, left: x }}
       >
         {this.props.renderNumberWithAbbreviations(
-          this.props.calculateClickDamageAllSources()
+          Math.round(this.state.damage)
         )}
       </div>
     );

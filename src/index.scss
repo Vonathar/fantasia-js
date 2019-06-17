@@ -715,7 +715,8 @@ code {
 }
 
 .popover-header {
-  background-color: rgba(255, 194, 81, 0.37);
+  background-color: rgba(0, 0, 0, 0.884);
+  color: white;
 }
 
 .userInterface-inventory-row {
@@ -1100,6 +1101,26 @@ code {
   height: 40vh;
   padding: 10px;
   cursor: default;
+}
+
+.itemRarity-common {
+  color: white;
+}
+
+.itemRarity-uncommon {
+  color: rgb(160, 255, 123);
+}
+
+.itemRarity-special {
+  color: rgb(144, 183, 255);
+}
+
+.itemRarity-rare {
+  color: rgb(208, 137, 255);
+}
+
+.itemRarity-legendary {
+  color: rgb(255, 175, 110);
 }
 
 #inventorySlot-buttons {
