@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import VisualDamage from "./visualDamage";
+import PlayerVisualDamage from "./playerVisualDamage";
+import PetVisualDamage from "./petVisualDamage";
 /* [IMG] Player */
 import playerImageOne from "../img/player_1.png";
 /* [IMG] Inventory, resources */
@@ -9,7 +10,8 @@ import resourceThreeImage from "../img/resource_3.png";
 
 class BattleArea extends Component {
   state = {
-    damageParagraphsToBeRendered: []
+    playerDamageParagraphsToBeRendered: [],
+    petDamageParagraphsToBeRendered: []
   };
   // Drop new coins on the floor
   renderCoinDrop = () => {
@@ -185,21 +187,41 @@ class BattleArea extends Component {
   };
 
   /* Visual Damage rendering */
-  // Add a new paragraph to be rendered to the UI
-  addDamageRenderingItem = () => {
+  // Player damage
+  addPlayerDamageRenderingItem = () => {
     // If the enemy has health
     if (this.props.mainState.enemyHasHealth) {
       this.setState(state => ({
-        damageParagraphsToBeRendered: [
-          ...state.damageParagraphsToBeRendered,
+        playerDamageParagraphsToBeRendered: [
+          ...state.playerDamageParagraphsToBeRendered,
           { id: Date.now() }
         ]
       }));
     }
   };
-  removeDamageRenderingItem = id => {
+  removePlayerDamageRenderingItem = id => {
     this.setState(state => ({
-      damageParagraphsToBeRendered: state.damageParagraphsToBeRendered.filter(
+      playerDamageParagraphsToBeRendered: state.playerDamageParagraphsToBeRendered.filter(
+        ({ id: itemid }) => itemid !== id
+      )
+    }));
+  };
+
+  // Pet damage
+  addPetDamageRenderingItem = () => {
+    // If the enemy has health
+    if (this.props.mainState.enemyHasHealth) {
+      this.setState(state => ({
+        petDamageParagraphsToBeRendered: [
+          ...state.petDamageParagraphsToBeRendered,
+          { id: Date.now() }
+        ]
+      }));
+    }
+  };
+  removePetDamageRenderingItem = id => {
+    this.setState(state => ({
+      petDamageParagraphsToBeRendered: state.petDamageParagraphsToBeRendered.filter(
         ({ id: itemid }) => itemid !== id
       )
     }));
@@ -209,17 +231,21 @@ class BattleArea extends Component {
     // Use [W/E] to attack
     if (event.key === "w" || event.key === "e") {
       if (this.props.mainState.enemyHasHealth) {
-        this.addDamageRenderingItem();
+        this.addPlayerDamageRenderingItem();
       }
     }
   };
 
   componentDidMount() {
     document.addEventListener("keyup", this.handleGlobalKeyboardInput, false);
+    setInterval(() => {
+      this.addPetDamageRenderingItem();
+    }, 500);
   }
 
   render() {
-    const { damageParagraphsToBeRendered } = this.state;
+    const { playerDamageParagraphsToBeRendered } = this.state;
+    const { petDamageParagraphsToBeRendered } = this.state;
     return (
       <div id="userInterface-battle-div">
         <div id="userInterface-player-div">
@@ -259,7 +285,7 @@ class BattleArea extends Component {
             src={this.props.mainState.enemyImageCurrent}
             onClick={() => {
               this.props.playerAttack();
-              this.addDamageRenderingItem();
+              this.addPlayerDamageRenderingItem();
             }}
           />
           <div id="userInterface-enemy-paragraph">
@@ -274,12 +300,13 @@ class BattleArea extends Component {
             max={this.props.mainState.enemyHealthMax}
             value={this.props.mainState.enemyHealthCurrent}
           />
+          {/* Player visual damage */}
           <div
-            id="visualDamageContainer-div"
-            onClick={this.addDamageRenderingItem}
+            id="playerVisualDamageContainer-div"
+            onClick={this.addPlayerDamageRenderingItem}
           >
-            {damageParagraphsToBeRendered.map(item => (
-              <VisualDamage
+            {playerDamageParagraphsToBeRendered.map(item => (
+              <PlayerVisualDamage
                 mainState={this.props.mainState}
                 calculateClickDamageAllSources={
                   this.props.calculateClickDamageAllSources
@@ -289,7 +316,29 @@ class BattleArea extends Component {
                 }
                 key={item.id}
                 {...item}
-                onDone={this.removeDamageRenderingItem}
+                onDone={this.removePlayerDamageRenderingItem}
+                delay={1000}
+                duration={1000}
+              />
+            ))}
+          </div>
+          {/* Pet visual damage */}
+          <div
+            id="petVisualDamageContainer-div"
+            onClick={this.addPlayerDamageRenderingItem}
+          >
+            {petDamageParagraphsToBeRendered.map(item => (
+              <PetVisualDamage
+                mainState={this.props.mainState}
+                calculateDamagePerSecondAllSources={
+                  this.props.calculateDamagePerSecondAllSources
+                }
+                renderNumberWithAbbreviations={
+                  this.props.renderNumberWithAbbreviations
+                }
+                key={item.id}
+                {...item}
+                onDone={this.removePlayerDamageRenderingItem}
                 delay={1000}
                 duration={1000}
               />

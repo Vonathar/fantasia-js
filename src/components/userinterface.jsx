@@ -680,6 +680,7 @@ class UserInterface extends Component {
         damagePerSecondPlaceholder: 0
       }
     },
+    petDamageValueToBeRendered: 0,
     /* Enemy values */
     enemyImages: [
       enemyImageOne,
@@ -938,7 +939,7 @@ class UserInterface extends Component {
     }, 1000),
     playerAttackInterval: setInterval(() => {
       this.playerAttackPerSecond();
-    }, 1000)
+    }, 500)
   };
 
   // Card deck UI
@@ -2244,17 +2245,20 @@ class UserInterface extends Component {
 
   // DPS (Damage Per Second)
   playerAttackPerSecond = () => {
+    let damageDealt = this.calculateDamagePerSecondAllSources() / 2;
+    // Randomise the damage by +/- 5%
+    damageDealt +=
+      (damageDealt / 100) *
+      (Math.random() * 5 * (Math.random() * 100 >= 50 ? 1 : -1));
+    // Store a reference in the state of the random number generate to be rendered in petVisualDamage.jsx
+    this.setState({ petDamageValueToBeRendered: damageDealt });
     // If the enemy is not respawning
     if (this.state.playerAttackPerSecond !== 0) {
       this.setState({
         // Damage the enemy by the amount of player DPS
-        enemyHealthCurrent:
-          this.state.enemyHealthCurrent -
-          this.calculateDamagePerSecondAllSources(),
+        enemyHealthCurrent: this.state.enemyHealthCurrent - damageDealt,
         // Update player stats
-        totalPetDamageDealt:
-          this.state.totalPetDamageDealt +
-          this.calculateDamagePerSecondAllSources()
+        totalPetDamageDealt: this.state.totalPetDamageDealt + damageDealt
       });
       // Check if the quests are completed
       this.checkIfQuestConditionsMet(
@@ -2811,6 +2815,9 @@ class UserInterface extends Component {
           playerHeal={this.playerHeal}
           calculateRandomDropChance={this.calculateRandomDropChance}
           calculateClickDamageAllSources={this.calculateClickDamageAllSources}
+          calculateDamagePerSecondAllSources={
+            this.calculateDamagePerSecondAllSources
+          }
           renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
         />
 

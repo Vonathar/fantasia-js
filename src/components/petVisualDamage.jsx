@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
-class VisualDamage extends Component {
+class PetVisualDamage extends Component {
   state = {
     fading: false,
-    damage: this.props.calculateClickDamageAllSources()
+    damage: this.props.mainState.petDamageValueToBeRendered / 2
   };
   componentDidMount() {
     const { id, onDone, delay, duration } = this.props;
@@ -18,8 +18,8 @@ class VisualDamage extends Component {
     const { fading } = this.state;
     return (
       <div
-        id="visualDamage-div"
-        className={`fade-item  ${fading ? "fading" : ""}`}
+        id="petVisualDamage-div"
+        className={`petDamage-fade-item  ${fading ? "fading" : ""}`}
         style={{ top: y, left: x }}
       >
         {this.props.renderNumberWithAbbreviations(
@@ -30,4 +30,4 @@ class VisualDamage extends Component {
   }
 }
 
-export default VisualDamage;
+export default PetVisualDamage;
