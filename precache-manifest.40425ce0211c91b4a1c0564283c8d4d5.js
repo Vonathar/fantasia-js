@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "433b838737bb9a60013ce814bd69f876",
+    "revision": "bb1a425edabed64bfdf44ca567eb0ed5",
     "url": "/fantasia-js/index.html"
   },
   {
@@ -8,16 +8,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fantasia-js/static/css/2.a4c6d6ca.chunk.css"
   },
   {
-    "revision": "83558bd45dec10d113f7",
-    "url": "/fantasia-js/static/css/main.9ed9e11d.chunk.css"
+    "revision": "75664af084aaaafa8c29",
+    "url": "/fantasia-js/static/css/main.3be3b7ca.chunk.css"
   },
   {
     "revision": "8e092bf66ee397da77ea",
     "url": "/fantasia-js/static/js/2.b5784ebc.chunk.js"
   },
   {
-    "revision": "83558bd45dec10d113f7",
-    "url": "/fantasia-js/static/js/main.184e71a0.chunk.js"
+    "revision": "75664af084aaaafa8c29",
+    "url": "/fantasia-js/static/js/main.c3545937.chunk.js"
   },
   {
     "revision": "369c4ecfd27df2315bc5",
