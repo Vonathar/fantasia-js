@@ -6,6 +6,17 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
+#### 2.0.1
+
+##### Gameplay
+
+- Fix a bug which caused the skill Animal Training to have the wrong multiplier
+- Fix the calculation of hero skills' potential increase
+
+##### Other
+
+- Add a '%' sign in front of upgrade's effect when expressed in percentage
+
 ### 2.0.0
 
 #### Gameplay

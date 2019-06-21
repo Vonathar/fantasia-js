@@ -1680,8 +1680,9 @@ class UserInterface extends Component {
       // Skill #3
       if (skills[skillNumber] === "skillThree") {
         skills[skillNumber].damageMultiplier =
-          Math.round(25 * Math.pow(1.1, this.state.heroSkillThreeLevel) * 100) /
-          100;
+          Math.round(
+            2.5 * Math.pow(1.1, this.state.heroSkillThreeLevel) * 100
+          ) / 100;
       }
       // Skill #4
       if (skills[skillNumber] === "skillFour") {
@@ -2208,7 +2209,7 @@ class UserInterface extends Component {
         skillActivate();
         this.setState({ skills });
       }
-
+      // Skills #2 and #3
       if (skillNumber === "skillTwo" || skillNumber === "skillThree") {
         skills[skillNumber].isActive = true;
         this.setState({ skills });

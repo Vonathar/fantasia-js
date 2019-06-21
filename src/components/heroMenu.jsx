@@ -31,27 +31,36 @@ class HeroMenu extends Component {
     let totalEffect = 0;
     // X1 Upgrade
     if (this.props.mainState.heroMenuUpgradeSettingSelected === "X1") {
-      totalEffect =
-        upgradeName === "clickDamage"
-          ? Math.round(50 * Math.pow(priceMultiplier, level))
-          : 0.3;
+      if (upgradeName === "clickDamage") {
+        totalEffect = Math.round(50 * Math.pow(priceMultiplier, level));
+      } else if (upgradeName === "criticalMultiplier") {
+        totalEffect = 5;
+      } else {
+        totalEffect = 0.3;
+      }
       level++;
       // X5 Upgrades
     } else if (this.props.mainState.heroMenuUpgradeSettingSelected === "X5") {
       for (let i = 0; i < 5; i++) {
-        totalEffect =
-          upgradeName === "clickDamage"
-            ? Math.round(50 * Math.pow(priceMultiplier, level))
-            : 0.3 * (i + 1);
+        if (upgradeName === "clickDamage") {
+          totalEffect = Math.round(50 * Math.pow(priceMultiplier, level));
+        } else if (upgradeName === "criticalMultiplier") {
+          totalEffect = 5 * (i + 1);
+        } else {
+          totalEffect = 0.3 * (i + 1);
+        }
         level++;
       }
       // X25 Upgrades
     } else if (this.props.mainState.heroMenuUpgradeSettingSelected === "X25") {
       for (let i = 0; i < 25; i++) {
-        totalEffect =
-          upgradeName === "clickDamage"
-            ? Math.round(50 * Math.pow(priceMultiplier, level))
-            : 0.3 * (i + 1);
+        if (upgradeName === "clickDamage") {
+          totalEffect = Math.round(50 * Math.pow(priceMultiplier, level));
+        } else if (upgradeName === "criticalMultiplier") {
+          totalEffect = 5 * (i + 1);
+        } else {
+          totalEffect = 0.3 * (i + 1);
+        }
         level++;
       }
     }
@@ -229,7 +238,7 @@ class HeroMenu extends Component {
                 src={criticalChanceImage}
               />
               {/* Show the increase the upgrade would have on the current player damage */}
-              +{this.calculateSkillEffectAfterUpgradeSetting("criticalChance")}
+              +{this.calculateSkillEffectAfterUpgradeSetting("criticalChance")}%
             </small>
           </div>
           <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
@@ -293,6 +302,7 @@ class HeroMenu extends Component {
               {this.calculateSkillEffectAfterUpgradeSetting(
                 "criticalMultiplier"
               )}
+              %
             </small>
           </div>
           <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
@@ -357,6 +367,7 @@ class HeroMenu extends Component {
               {this.calculateSkillEffectAfterUpgradeSetting(
                 "doubleAttackChance"
               )}
+              %
             </small>
           </div>
 
