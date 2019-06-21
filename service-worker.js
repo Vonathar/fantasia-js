@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/fantasia-js/precache-manifest.3325e33941d57c3f3e7d5d037fb45254.js"
+  "/fantasia-js/precache-manifest.4d250581b3adc382f65a188b2a420929.js"
 );
 
 self.addEventListener('message', (event) => {
