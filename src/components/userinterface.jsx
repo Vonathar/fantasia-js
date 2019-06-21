@@ -362,6 +362,11 @@ class UserInterface extends Component {
     playerExperienceCurrent: 0,
     playerExperienceRequired: 250,
     playerAttack: 50,
+    playerLastAttack: {
+      damage: 50,
+      isCritical: false,
+      isDouble: false
+    },
     playerCanAttack: true,
     playerDoubleAttackChance: 0,
     playerCriticalChance: 0.1,
@@ -636,19 +641,19 @@ class UserInterface extends Component {
     },
     pets: {
       petOne: {
-        basicPrice: 100,
-        upgradePrice: 100,
+        basicPrice: 250,
+        upgradePrice: 250,
         upgradeLevel: 1,
-        damagePerSecondBase: 20,
-        damagePerSecondCurrent: 20,
-        damagePerSecondPlaceholder: 20
+        damagePerSecondBase: 35,
+        damagePerSecondCurrent: 35,
+        damagePerSecondPlaceholder: 35
       },
       petTwo: {
-        basicPrice: 500,
-        firstPurchasePrice: 2500,
-        upgradePrice: 500,
+        basicPrice: 1000,
+        firstPurchasePrice: 5000,
+        upgradePrice: 1000,
         upgradeLevel: 0,
-        damagePerSecondBase: 100,
+        damagePerSecondBase: 200,
         damagePerSecondCurrent: 0,
         damagePerSecondPlaceholder: 0
       },
@@ -926,6 +931,14 @@ class UserInterface extends Component {
     isLootBagCollected: false,
     /* Left menu values */
     leftMenuSettingSelected: "Hero",
+    /* Possible settings:
+        "X[n]" => Normal upgrade step
+        "To Bonus" => Enough levels to reach the next upgrade
+     */
+    petsMenuUpgradeSettingSelected: "X1",
+    heroMenuUpgradeSettingSelected: "X1",
+    isPetPriceParagraphRendered: false,
+    isHeroUpgradePriceParagraphRendered: false,
     /* Value placeholders 
        (used when temporarily setting a value to a different one) */
     enemyAttackPlaceholder: 50,
@@ -1074,7 +1087,7 @@ class UserInterface extends Component {
       this.state.coins >= heroUpgrades[upgradeName].price &&
       this.state.coins >= heroUpgrades[upgradeName].purchasePrice
     ) {
-      // If it's the first upgrade
+      // Upgrade is level 0
       if (heroUpgrades[upgradeName].level === 0) {
         this.setState({
           // Take off the money from the player
@@ -1083,7 +1096,7 @@ class UserInterface extends Component {
           totalMoneySpent:
             this.state.totalMoneySpent + heroUpgrades[upgradeName].purchasePrice
         });
-        // If it's not the first upgrade
+        // Upgrade is level 1 or more
       } else {
         this.setState({
           // Take off the money from the player
@@ -1135,7 +1148,85 @@ class UserInterface extends Component {
     }
   };
 
+  heroUpgradeLevelUpgradeByUserSettings = upgradeName => {
+    if (this.state.heroMenuUpgradeSettingSelected === "X1") {
+      this.heroUpgradeLevelUp(upgradeName);
+    }
+    if (this.state.heroMenuUpgradeSettingSelected === "X5") {
+      for (let i = 0; i < 5; i++) {
+        if (this.state.coins >= this.state.heroUpgrades[upgradeName].price) {
+          setTimeout(() => {
+            this.heroUpgradeLevelUp(upgradeName);
+          }, 0);
+        } else {
+          break;
+        }
+      }
+    }
+    if (this.state.heroMenuUpgradeSettingSelected === "X25") {
+      for (let i = 0; i < 25; i++) {
+        if (this.state.coins >= this.state.heroUpgrades[upgradeName].price) {
+          setTimeout(() => {
+            this.heroUpgradeLevelUp(upgradeName);
+          }, 0);
+        } else {
+          break;
+        }
+      }
+    }
+  };
+
   /* Pets UI */
+
+  fetchPetsMenuUpgradeSettings = event => {
+    this.setState({
+      petsMenuUpgradeSettingSelected: event.target.textContent,
+      isPetPriceParagraphRendered: false
+    });
+    setTimeout(() => {
+      this.setState({
+        isPetPriceParagraphRendered: true
+      });
+    }, 0);
+  };
+
+  petLevelUpgradeByUserSettings = petNumber => {
+    if (this.state.petsMenuUpgradeSettingSelected === "X1") {
+      this.petLevelUpgrade(petNumber);
+    }
+    if (this.state.petsMenuUpgradeSettingSelected === "To Bonus") {
+      let levelsToNextUpgrade =
+        5 - (this.state.pets[petNumber].upgradeLevel % 5);
+      for (let i = 0; i < levelsToNextUpgrade; i++) {
+        setTimeout(() => {
+          this.petLevelUpgrade(petNumber);
+        }, 0);
+      }
+    }
+    if (this.state.petsMenuUpgradeSettingSelected === "X5") {
+      for (let i = 0; i < 5; i++) {
+        if (this.state.coins >= this.state.pets[petNumber].upgradePrice) {
+          setTimeout(() => {
+            this.petLevelUpgrade(petNumber);
+          }, 0);
+        } else {
+          break;
+        }
+      }
+    }
+    if (this.state.petsMenuUpgradeSettingSelected === "X25") {
+      for (let i = 0; i < 25; i++) {
+        if (this.state.coins >= this.state.pets[petNumber].upgradePrice) {
+          setTimeout(() => {
+            this.petLevelUpgrade(petNumber);
+          }, 0);
+        } else {
+          break;
+        }
+      }
+    }
+  };
+
   petLevelUpgrade = petNumber => {
     let pets = { ...this.state.pets };
     // If the pet has not been bought yet
@@ -1157,15 +1248,11 @@ class UserInterface extends Component {
             Math.pow(1.06, pets[petNumber].upgradeLevel)
         );
         // Increase pet damage
-        pets[petNumber].damagePerSecondCurrent = Math.round(
-          pets[petNumber].damagePerSecondBase *
-            Math.pow(1.055, pets[petNumber].upgradeLevel)
-        );
+        pets[petNumber].damagePerSecondCurrent =
+          pets[petNumber].damagePerSecondBase;
         // Increase pet damage
-        pets[petNumber].damagePerSecondPlaceholder = Math.round(
-          pets[petNumber].damagePerSecondBase *
-            Math.pow(1.055, pets[petNumber].upgradeLevel)
-        );
+        pets[petNumber].damagePerSecondPlaceholder =
+          pets[petNumber].damagePerSecondBase;
       }
     } else {
       if (this.state.coins >= pets[petNumber].upgradePrice) {
@@ -1178,11 +1265,21 @@ class UserInterface extends Component {
         });
         // Increase pet level
         pets[petNumber].upgradeLevel += 1;
+        // Before every 5th level
+        if (pets[petNumber].upgradeLevel % 5 === 4) {
+          // Increase the basic price
+          pets[petNumber].basicPrice *= 1.25;
+          pets[petNumber].upgradePrice *= 2;
+        }
         // Increase pet price
         pets[petNumber].upgradePrice = Math.round(
           pets[petNumber].basicPrice *
             Math.pow(1.06, pets[petNumber].upgradeLevel)
         );
+        // Increase base damage every 5 levels
+        if (pets[petNumber].upgradeLevel % 5 === 0) {
+          pets[petNumber].damagePerSecondBase *= 1.25;
+        }
         // Increase pet damage
         pets[petNumber].damagePerSecondCurrent = Math.round(
           pets[petNumber].damagePerSecondBase *
@@ -1193,6 +1290,8 @@ class UserInterface extends Component {
           pets[petNumber].damagePerSecondBase *
             Math.pow(1.05, pets[petNumber].upgradeLevel)
         );
+      } else {
+        return false;
       }
     }
 
@@ -1200,6 +1299,18 @@ class UserInterface extends Component {
   };
 
   /* Player UI */
+
+  fetchHeroMenuUpgradeSettings = event => {
+    this.setState({
+      heroMenuUpgradeSettingSelected: event.target.textContent,
+      isHeroUpgradePriceParagraphRendered: false
+    });
+    setTimeout(() => {
+      this.setState({
+        isHeroUpgradePriceParagraphRendered: true
+      });
+    }, 0);
+  };
 
   // Player stage progress
   playerStageProgress = () => {
@@ -1900,17 +2011,32 @@ class UserInterface extends Component {
 
   // Calculate the final click damage after adding up all sources
   calculateClickDamageAfterMultipliers = () => {
+    let playerLastAttack = { ...this.state.playerLastAttack };
     let totalDamage = this.calculateClickDamageAllSources();
+    if (this.state.skills.skillThree.isActive) {
+      totalDamage *= this.state.skills.skillThree.damageMultiplier;
+    }
+    // Randomise the damage by +/- 25%
+    totalDamage +=
+      (totalDamage / 100) *
+      (Math.random() * 25 * (Math.random() * 100 >= 50 ? 1 : -1));
     // If double hit
     if (this.calculateDoubleAttackChanceAllSources() >= Math.random() * 101) {
+      playerLastAttack.isDouble = true;
       totalDamage *= 2;
+    } else {
+      playerLastAttack.isDouble = false;
     }
     // If critical hit
     if (this.calculateCriticalChanceAllSources() >= Math.random() * 101) {
       totalDamage +=
-        this.state.playerCriticalMultiplier *
-        this.calculateCriticalMultiplierAllSources();
+        this.calculateCriticalMultiplierAllSources() * this.state.playerAttack;
+      playerLastAttack.isCritical = true;
+    } else {
+      playerLastAttack.isCritical = false;
     }
+    playerLastAttack.damage = Math.round(totalDamage);
+    this.setState({ playerLastAttack });
     return Math.round(totalDamage);
   };
 
@@ -1927,8 +2053,7 @@ class UserInterface extends Component {
       });
       this.setState({
         totalPlayerDamageDealt:
-          this.state.totalPlayerDamageDealt +
-          this.calculateClickDamageAfterMultipliers()
+          this.state.totalPlayerDamageDealt + this.state.playerLastAttack.damage
       });
       // After every attack, check if the quests are completed
       this.checkIfQuestConditionsMet(
@@ -2246,10 +2371,10 @@ class UserInterface extends Component {
   // DPS (Damage Per Second)
   playerAttackPerSecond = () => {
     let damageDealt = this.calculateDamagePerSecondAllSources() / 2;
-    // Randomise the damage by +/- 5%
+    // Randomise the damage by +/- 25%
     damageDealt +=
       (damageDealt / 100) *
-      (Math.random() * 5 * (Math.random() * 100 >= 50 ? 1 : -1));
+      (Math.random() * 25 * (Math.random() * 100 >= 50 ? 1 : -1));
     // Store a reference in the state of the random number generate to be rendered in petVisualDamage.jsx
     this.setState({ petDamageValueToBeRendered: damageDealt });
     // If the enemy is not respawning
@@ -2767,10 +2892,16 @@ class UserInterface extends Component {
         <LeftMenu
           mainState={this.state}
           fetchLeftMenuSettingSelection={this.fetchLeftMenuSettingSelection}
+          fetchPetsMenuUpgradeSettings={this.fetchPetsMenuUpgradeSettings}
+          fetchHeroMenuUpgradeSettings={this.fetchHeroMenuUpgradeSettings}
           renderDebugMenu={this.renderDebugMenu}
           renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
           heroUpgradeLevelUp={this.heroUpgradeLevelUp}
+          heroUpgradeLevelUpgradeByUserSettings={
+            this.heroUpgradeLevelUpgradeByUserSettings
+          }
           petLevelUpgrade={this.petLevelUpgrade}
+          petLevelUpgradeByUserSettings={this.petLevelUpgradeByUserSettings}
           calculateClickDamageAllSources={this.calculateClickDamageAllSources}
           calculateDamagePerSecondAllSources={
             this.calculateDamagePerSecondAllSources

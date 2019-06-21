@@ -13,18 +13,30 @@ class PetVisualDamage extends Component {
       );
     }, delay);
   }
+
+  renderParagraphClasses = () => {
+    let classes = "";
+    return this.props.mainState.skills.skillTwo.isActive
+      ? (classes += "damage-skillEffect")
+      : classes;
+  };
+
   render() {
     const { x, y } = this.props;
     const { fading } = this.state;
     return (
       <div
         id="petVisualDamage-div"
-        className={`petDamage-fade-item  ${fading ? "fading" : ""}`}
+        className={`damageParagraph petDamage-fade-item  ${
+          fading ? "fading" : ""
+        }`}
         style={{ top: y, left: x }}
       >
-        {this.props.renderNumberWithAbbreviations(
-          Math.round(this.state.damage)
-        )}
+        <span className={this.renderParagraphClasses()}>
+          {this.props.renderNumberWithAbbreviations(
+            Math.round(this.state.damage)
+          )}
+        </span>
       </div>
     );
   }

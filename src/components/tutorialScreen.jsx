@@ -92,10 +92,10 @@ class TutorialScreen extends Component {
               There are two types of attack: <strong> DPS</strong> (damage per
               second) and <strong> CD </strong> (click damage).
               <em> DPS</em> is the damage your pets deal to the enemy every
-              second, even when you are not actively playing.<br /> <em>CD</em>{" "}
-              is the damage you deal the enemy when you are playing actively; to
-              maximise it, you can click with your mouse and your keyboard at
-              the same time! <br /> <br />
+              second, even when you are not actively playing.
+              <br /> <em>CD</em> is the damage you deal the enemy when you are
+              playing actively; to maximise it, you can click with your mouse
+              and your keyboard at the same time! <br /> <br />
               The main way to increase your attack is by upgrading you pets
               (DPS) and upgrading your hero (CD), but don't forget about other
               upgrades such as Critical Chance, Critical Damage and Double
@@ -275,6 +275,10 @@ class TutorialScreen extends Component {
               If you find youself stuck, you can pause stage progression and let
               your pets do the hard work for you; upon your return, your army of
               animals will have lots of gold and XP for you!
+              <br />
+              <br />
+              Every 5 levels, your pets will deal a lot more damage - however,
+              their price will increase, too!
             </p>
           </div>
         );

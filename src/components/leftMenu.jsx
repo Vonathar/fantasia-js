@@ -32,6 +32,10 @@ class LeftMenu extends Component {
             this.props.renderNumberWithAbbreviations
           }
           heroUpgradeLevelUp={this.props.heroUpgradeLevelUp}
+          heroUpgradeLevelUpgradeByUserSettings={
+            this.props.heroUpgradeLevelUpgradeByUserSettings
+          }
+          fetchHeroMenuUpgradeSettings={this.props.fetchHeroMenuUpgradeSettings}
         />
       );
     }
@@ -98,10 +102,14 @@ class LeftMenu extends Component {
       return (
         <PetsMenu
           mainState={this.props.mainState}
+          fetchPetsMenuUpgradeSettings={this.props.fetchPetsMenuUpgradeSettings}
           renderNumberWithAbbreviations={
             this.props.renderNumberWithAbbreviations
           }
           petLevelUpgrade={this.props.petLevelUpgrade}
+          petLevelUpgradeByUserSettings={
+            this.props.petLevelUpgradeByUserSettings
+          }
         />
       );
     }

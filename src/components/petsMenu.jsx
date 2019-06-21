@@ -11,53 +11,193 @@ import enemyImageFour from "../img/enemy_4.png";
 import enemyImageFive from "../img/enemy_5.png";
 
 class PetsMenu extends Component {
-  renderPetPriceParagraph = petNumber => {
-    let pets = { ...this.props.mainState.pets };
-
-    if (pets[petNumber].upgradeLevel === 0) {
-      return this.props.renderNumberWithAbbreviations(
-        pets[petNumber].firstPurchasePrice
-      );
-    } else {
-      return this.props.renderNumberWithAbbreviations(
-        pets[petNumber].upgradePrice
-      );
+  calculatePetPriceByUpgradeSetting = petNumber => {
+    let { upgradeLevel, firstPurchasePrice, upgradePrice, basicPrice } = {
+      ...this.props.mainState.pets[petNumber]
+    };
+    let totalPrice = 0;
+    // X1 Upgrade
+    if (this.props.mainState.petsMenuUpgradeSettingSelected === "X1") {
+      if (upgradeLevel === 0) {
+        // Pet is Lv. 0
+        totalPrice += firstPurchasePrice;
+      } else {
+        // Pet Lv. is a multiple of 5, -1
+        if (upgradeLevel % 5 === 4) {
+          totalPrice += upgradePrice * 2;
+          // Pet Lv. is not a multiple of 5, -1 and is not 0
+        } else {
+          totalPrice += upgradePrice;
+        }
+      }
+      // X5 Upgrades
+    } else if (this.props.mainState.petsMenuUpgradeSettingSelected === "X5") {
+      for (let i = 0; i < 5; i++) {
+        // Pet is Lv. 0
+        if (upgradeLevel === 0) {
+          totalPrice += firstPurchasePrice;
+          upgradeLevel++;
+        } else {
+          // Pet is Lv. 4/9/14/19 etc
+          if (upgradeLevel % 5 === 4) {
+            basicPrice *= 1.25;
+            upgradePrice *= 2;
+          }
+          upgradePrice = Math.round(basicPrice * Math.pow(1.06, upgradeLevel));
+          totalPrice += upgradePrice;
+          upgradeLevel++;
+        }
+      }
+      // X25 Upgrades
+    } else if (this.props.mainState.petsMenuUpgradeSettingSelected === "X25") {
+      for (let i = 0; i < 25; i++) {
+        // Pet is Lv. 0
+        if (upgradeLevel === 0) {
+          totalPrice += firstPurchasePrice;
+          upgradeLevel++;
+        } else {
+          // Pet is Lv. 4/9/14/19 etc
+          if (upgradeLevel % 5 === 4) {
+            basicPrice *= 1.25;
+            upgradePrice *= 2;
+          }
+          upgradePrice = Math.round(basicPrice * Math.pow(1.06, upgradeLevel));
+          totalPrice += upgradePrice;
+          upgradeLevel++;
+        }
+      }
+      // To Bonus
+    } else if (
+      this.props.mainState.petsMenuUpgradeSettingSelected === "To Bonus"
+    ) {
+      let levelsToNextUpgrade =
+        5 - (this.props.mainState.pets[petNumber].upgradeLevel % 5);
+      for (let i = 0; i < levelsToNextUpgrade; i++) {
+        // Pet is Lv. 0
+        if (upgradeLevel === 0) {
+          totalPrice += firstPurchasePrice;
+          upgradeLevel++;
+        } else {
+          // Pet is Lv. 4/9/14/19 etc
+          if (upgradeLevel % 5 === 4) {
+            basicPrice *= 1.25;
+            upgradePrice *= 2;
+          }
+          upgradePrice = Math.round(basicPrice * Math.pow(1.06, upgradeLevel));
+          totalPrice += upgradePrice;
+          upgradeLevel++;
+        }
+      }
     }
-    this.setState({ pets });
+    return totalPrice;
   };
+
   // Render the button classes based on whether the user has enough money to buy the upgrade
   renderPetButtonClass = petNumber => {
-    if (this.props.mainState.pets[petNumber].upgradeLevel === 0) {
-      if (
-        this.props.mainState.coins >=
-        this.props.mainState.pets[petNumber].firstPurchasePrice
-      ) {
-        return "userInterface-pets-pet-button btn btn-dark mx-auto";
-      } else {
-        // If the user does not have enough money
-        return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
-      }
-    }
-    if (this.props.mainState.pets[petNumber].upgradeLevel > 0) {
-      if (
-        this.props.mainState.coins >=
-        this.props.mainState.pets[petNumber].upgradePrice
-      ) {
-        return "userInterface-pets-pet-button btn btn-dark mx-auto";
-      } else {
-        // If the user does not have enough money
-        return "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
-      }
-    }
+    let classes = "";
+    // Available for purchase or not
+    classes +=
+      this.props.mainState.coins >=
+      this.calculatePetPriceByUpgradeSetting(petNumber)
+        ? "userInterface-pets-pet-button btn btn-dark mx-auto"
+        : "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
+    return classes;
   };
+
   // Return the damage increase that would be applied if the user were to purchase the next pet level
-  renderPetDamageAfterUpgrade = petNumber => {
+  calculatePetDamageAfterUpgradeSetting = petNumber => {
+    let { upgradeLevel, damagePerSecondBase, damagePerSecondCurrent } = {
+      ...this.props.mainState.pets[petNumber]
+    };
+    let totalDamage = 0;
+    // X1 Upgrade
+    if (this.props.mainState.petsMenuUpgradeSettingSelected === "X1") {
+      // Pet is Lv. 0
+      if (upgradeLevel === 0) {
+        totalDamage += damagePerSecondBase;
+      } else {
+        // Pet Lv. is a multiple of 5, -1
+        if (upgradeLevel % 5 === 4) {
+          damagePerSecondBase *= 1.25;
+        }
+        totalDamage += damagePerSecondBase * Math.pow(1.05, upgradeLevel + 1);
+      }
+      upgradeLevel++;
+      // X5 Upgrades
+    } else if (this.props.mainState.petsMenuUpgradeSettingSelected === "X5") {
+      for (let i = 0; i < 5; i++) {
+        // Pet is Lv. 0
+        if (upgradeLevel === 0) {
+          totalDamage += damagePerSecondBase - damagePerSecondCurrent;
+          upgradeLevel++;
+        } else {
+          // Pet Lv. is a multiple of 5, -1
+          if (upgradeLevel % 5 === 4) {
+            damagePerSecondBase *= 1.25;
+          }
+          totalDamage = damagePerSecondBase * Math.pow(1.05, upgradeLevel + 1);
+          damagePerSecondCurrent +=
+            damagePerSecondBase * Math.pow(1.05, upgradeLevel);
+          upgradeLevel++;
+        }
+      }
+      // X25 Upgrades
+    } else if (this.props.mainState.petsMenuUpgradeSettingSelected === "X25") {
+      for (let i = 0; i < 25; i++) {
+        // Pet is Lv. 0
+        if (upgradeLevel === 0) {
+          totalDamage += damagePerSecondBase - damagePerSecondCurrent;
+          upgradeLevel++;
+        } else {
+          // Pet Lv. is a multiple of 5, -1
+          if (upgradeLevel % 5 === 4) {
+            damagePerSecondBase *= 1.25;
+          }
+          totalDamage = damagePerSecondBase * Math.pow(1.05, upgradeLevel + 1);
+          damagePerSecondCurrent +=
+            damagePerSecondBase * Math.pow(1.05, upgradeLevel);
+          upgradeLevel++;
+        }
+      }
+      // To Bonus
+    } else if (
+      this.props.mainState.petsMenuUpgradeSettingSelected === "To Bonus"
+    ) {
+      let levelsToNextUpgrade =
+        5 - (this.props.mainState.pets[petNumber].upgradeLevel % 5);
+      for (let i = 0; i < levelsToNextUpgrade; i++) {
+        // Pet is Lv. 0
+        if (upgradeLevel === 0) {
+          totalDamage += damagePerSecondBase - damagePerSecondCurrent;
+          upgradeLevel++;
+        } else {
+          // Pet Lv. is a multiple of 5, -1
+          if (upgradeLevel % 5 === 4) {
+            damagePerSecondBase *= 1.25;
+          }
+          totalDamage = damagePerSecondBase * Math.pow(1.05, upgradeLevel + 1);
+          damagePerSecondCurrent +=
+            damagePerSecondBase * Math.pow(1.05, upgradeLevel);
+          upgradeLevel++;
+        }
+      }
+    }
     return this.props.renderNumberWithAbbreviations(
       Math.round(
-        this.props.mainState.pets[petNumber].damagePerSecondBase *
-          Math.pow(1.05, this.props.mainState.pets[petNumber].upgradeLevel + 1)
-      ) - this.props.mainState.pets[petNumber].damagePerSecondCurrent
+        totalDamage -
+          this.props.mainState.pets[petNumber].damagePerSecondCurrent
+      )
     );
+  };
+
+  renderUpgradeSettingsButtonClasses = option => {
+    let classes = "btn btn-dark mx-auto ";
+    classes +=
+      this.props.mainState.petsMenuUpgradeSettingSelected === option
+        ? "petsMenu-upgradeSettings-button-selected"
+        : "petsMenu-upgradeSettings-button";
+
+    return classes;
   };
 
   render() {
@@ -66,6 +206,32 @@ class PetsMenu extends Component {
         <p>
           <strong>Pets upgrades</strong>
         </p>
+        <div id="petsMenu-upgradeSettings-div">
+          <button
+            onClick={this.props.fetchPetsMenuUpgradeSettings}
+            className={this.renderUpgradeSettingsButtonClasses("X1")}
+          >
+            <small>X1</small>
+          </button>
+          <button
+            onClick={this.props.fetchPetsMenuUpgradeSettings}
+            className={this.renderUpgradeSettingsButtonClasses("X5")}
+          >
+            <small>X5</small>
+          </button>
+          <button
+            onClick={this.props.fetchPetsMenuUpgradeSettings}
+            className={this.renderUpgradeSettingsButtonClasses("X25")}
+          >
+            <small>X25</small>
+          </button>
+          <button
+            onClick={this.props.fetchPetsMenuUpgradeSettings}
+            className={this.renderUpgradeSettingsButtonClasses("To Bonus")}
+          >
+            <small>To Bonus</small>
+          </button>
+        </div>
         {/* Pet 1 */}
         <div className="userInterface-pets-pet-div">
           <div className="userInterface-pets-pet-div-holder">
@@ -91,11 +257,11 @@ class PetsMenu extends Component {
               this.props.mainState.pets.petOne.damagePerSecondCurrent
             )}{" "}
             (+
-            {this.renderPetDamageAfterUpgrade("petOne")})
+            {this.calculatePetDamageAfterUpgradeSetting("petOne")})
           </small>
           <small className="userInterface-pets-pet-price mx-auto">
             {this.props.renderNumberWithAbbreviations(
-              this.props.mainState.pets.petOne.upgradePrice
+              this.calculatePetPriceByUpgradeSetting("petOne")
             )}
             <img
               draggable="false"
@@ -108,7 +274,7 @@ class PetsMenu extends Component {
             type="button"
             class={this.renderPetButtonClass("petOne")}
             onClick={() => {
-              this.props.petLevelUpgrade("petOne");
+              this.props.petLevelUpgradeByUserSettings("petOne");
             }}
           >
             +
@@ -140,10 +306,12 @@ class PetsMenu extends Component {
               this.props.mainState.pets.petTwo.damagePerSecondCurrent
             )}{" "}
             (+
-            {this.renderPetDamageAfterUpgrade("petTwo")})
+            {this.calculatePetDamageAfterUpgradeSetting("petTwo")})
           </small>
           <small className="userInterface-pets-pet-price mx-auto">
-            {this.renderPetPriceParagraph("petTwo")}
+            {this.props.renderNumberWithAbbreviations(
+              this.calculatePetPriceByUpgradeSetting("petTwo")
+            )}
             <img
               draggable="false"
               alt="coin"
@@ -155,7 +323,7 @@ class PetsMenu extends Component {
             type="button"
             class={this.renderPetButtonClass("petTwo")}
             onClick={() => {
-              this.props.petLevelUpgrade("petTwo");
+              this.props.petLevelUpgradeByUserSettings("petTwo");
             }}
           >
             +
@@ -186,10 +354,12 @@ class PetsMenu extends Component {
               this.props.mainState.pets.petThree.damagePerSecondCurrent
             )}{" "}
             (+
-            {this.renderPetDamageAfterUpgrade("petThree")})
+            {this.calculatePetDamageAfterUpgradeSetting("petThree")})
           </small>
           <small className="userInterface-pets-pet-price mx-auto">
-            {this.renderPetPriceParagraph("petThree")}
+            {this.props.renderNumberWithAbbreviations(
+              this.calculatePetPriceByUpgradeSetting("petThree")
+            )}
             <img
               draggable="false"
               alt="coin"
@@ -201,7 +371,7 @@ class PetsMenu extends Component {
             type="button"
             class={this.renderPetButtonClass("petThree")}
             onClick={() => {
-              this.props.petLevelUpgrade("petThree");
+              this.props.petLevelUpgradeByUserSettings("petThree");
             }}
           >
             +
@@ -232,10 +402,12 @@ class PetsMenu extends Component {
               this.props.mainState.pets.petFour.damagePerSecondCurrent
             )}{" "}
             (+
-            {this.renderPetDamageAfterUpgrade("petFour")})
+            {this.calculatePetDamageAfterUpgradeSetting("petFour")})
           </small>
           <small className="userInterface-pets-pet-price mx-auto">
-            {this.renderPetPriceParagraph("petFour")}
+            {this.props.renderNumberWithAbbreviations(
+              this.calculatePetPriceByUpgradeSetting("petFour")
+            )}
             <img
               draggable="false"
               alt="coin"
@@ -247,7 +419,7 @@ class PetsMenu extends Component {
             type="button"
             class={this.renderPetButtonClass("petFour")}
             onClick={() => {
-              this.props.petLevelUpgrade("petFour");
+              this.props.petLevelUpgradeByUserSettings("petFour");
             }}
           >
             +
@@ -278,10 +450,12 @@ class PetsMenu extends Component {
               this.props.mainState.pets.petFive.damagePerSecondCurrent
             )}{" "}
             (+
-            {this.renderPetDamageAfterUpgrade("petFive")})
+            {this.calculatePetDamageAfterUpgradeSetting("petFive")})
           </small>
           <small className="userInterface-pets-pet-price mx-auto">
-            {this.renderPetPriceParagraph("petFive")}
+            {this.props.renderNumberWithAbbreviations(
+              this.calculatePetPriceByUpgradeSetting("petFive")
+            )}
             <img
               draggable="false"
               alt="coin"
@@ -293,7 +467,7 @@ class PetsMenu extends Component {
             type="button"
             class={this.renderPetButtonClass("petFive")}
             onClick={() => {
-              this.props.petLevelUpgrade("petFive");
+              this.props.petLevelUpgradeByUserSettings("petFive");
             }}
           >
             +

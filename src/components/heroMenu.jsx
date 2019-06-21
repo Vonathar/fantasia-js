@@ -14,28 +14,135 @@ class HeroMenu extends Component {
   // Render the button classes based on whether the user has enough money to buy the upgrade
   renderUpgradeButtonClasses = upgradeName => {
     // If the player has enough money to buy the upgrade
-    if (
+    let classes = "";
+    classes +=
       this.props.mainState.coins >=
-      this.props.mainState.heroUpgrades[upgradeName].price
-    ) {
-      return "userInterface-upgrades-upgrade-button btn btn-dark mx-auto";
-    } else {
-      // If the player does not have enough money to buy the upgrade
-      return "userInterface-upgrades-upgrade-button-disabled btn btn-dark mx-auto";
+      this.calculateUpgradePriceByUpgradeSetting(upgradeName)
+        ? "userInterface-upgrades-upgrade-button btn btn-dark mx-auto"
+        : "userInterface-upgrades-upgrade-button-disabled btn btn-dark mx-auto";
+    return classes;
+  };
+
+  // Return the damage increase that would be applied if the user were to purchase the next upgrade level
+  calculateSkillEffectAfterUpgradeSetting = upgradeName => {
+    let { level, priceMultiplier } = {
+      ...this.props.mainState.heroUpgrades[upgradeName]
+    };
+    let totalEffect = 0;
+    // X1 Upgrade
+    if (this.props.mainState.heroMenuUpgradeSettingSelected === "X1") {
+      totalEffect =
+        upgradeName === "clickDamage"
+          ? Math.round(50 * Math.pow(priceMultiplier, level))
+          : 0.3;
+      level++;
+      // X5 Upgrades
+    } else if (this.props.mainState.heroMenuUpgradeSettingSelected === "X5") {
+      for (let i = 0; i < 5; i++) {
+        totalEffect =
+          upgradeName === "clickDamage"
+            ? Math.round(50 * Math.pow(priceMultiplier, level))
+            : 0.3 * (i + 1);
+        level++;
+      }
+      // X25 Upgrades
+    } else if (this.props.mainState.heroMenuUpgradeSettingSelected === "X25") {
+      for (let i = 0; i < 25; i++) {
+        totalEffect =
+          upgradeName === "clickDamage"
+            ? Math.round(50 * Math.pow(priceMultiplier, level))
+            : 0.3 * (i + 1);
+        level++;
+      }
     }
+    return upgradeName === "clickDamage"
+      ? this.props.renderNumberWithAbbreviations(
+          Math.round(totalEffect - this.props.mainState.playerAttack)
+        )
+      : Math.round(100 * totalEffect) / 100;
   };
+
+  renderUpgradeSettingsButtonClasses = option => {
+    let classes = "btn btn-dark mx-auto ";
+    classes +=
+      this.props.mainState.heroMenuUpgradeSettingSelected === option
+        ? "petsMenu-upgradeSettings-button-selected"
+        : "petsMenu-upgradeSettings-button";
+
+    return classes;
+  };
+
   // Render the upgrade price next to the purchase button
-  renderUpgradePriceParagraph = upgradeName => {
-    return this.props.mainState.heroUpgrades[upgradeName].level === 0
-      ? this.props.mainState.heroUpgrades[upgradeName].purchasePrice
-      : this.props.mainState.heroUpgrades[upgradeName].price;
+  calculateUpgradePriceByUpgradeSetting = upgradeName => {
+    let { level, purchasePrice, price, priceMultiplier } = {
+      ...this.props.mainState.heroUpgrades[upgradeName]
+    };
+    let totalPrice = 0;
+    // X1 Upgrade
+    if (this.props.mainState.heroMenuUpgradeSettingSelected === "X1") {
+      if (level === 0) {
+        // Pet is Lv. 0
+        totalPrice += purchasePrice;
+      } else {
+        totalPrice += price;
+      }
+
+      // X5 Upgrades
+    } else if (this.props.mainState.heroMenuUpgradeSettingSelected === "X5") {
+      for (let i = 0; i < 5; i++) {
+        // Upgrade is Lv. 0
+        if (level === 0) {
+          totalPrice += purchasePrice;
+          level++;
+        } else {
+          price = Math.round(purchasePrice * Math.pow(priceMultiplier, level));
+          totalPrice += price;
+          level++;
+        }
+      }
+      // X25 Upgrades
+    } else if (this.props.mainState.heroMenuUpgradeSettingSelected === "X25") {
+      for (let i = 0; i < 25; i++) {
+        // Upgrade is Lv. 0
+        if (level === 0) {
+          totalPrice += purchasePrice;
+          level++;
+        } else {
+          price = Math.round(purchasePrice * Math.pow(priceMultiplier, level));
+          totalPrice += price;
+          level++;
+        }
+      }
+    }
+    return totalPrice;
   };
+
   render() {
     return (
       <div id="userInterface-upgrades-div">
         <p>
           <strong>Hero upgrades</strong>
         </p>
+        <div id="petsMenu-upgradeSettings-div">
+          <button
+            onClick={this.props.fetchHeroMenuUpgradeSettings}
+            className={this.renderUpgradeSettingsButtonClasses("X1")}
+          >
+            <small>X1</small>
+          </button>
+          <button
+            onClick={this.props.fetchHeroMenuUpgradeSettings}
+            className={this.renderUpgradeSettingsButtonClasses("X5")}
+          >
+            <small>X5</small>
+          </button>
+          <button
+            onClick={this.props.fetchHeroMenuUpgradeSettings}
+            className={this.renderUpgradeSettingsButtonClasses("X25")}
+          >
+            <small>X25</small>
+          </button>
+        </div>
         {/* Upgrade #1 - Click DMG */}
         <div className="userInterface-upgrades-upgrade-div">
           <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
@@ -63,16 +170,7 @@ class HeroMenu extends Component {
                 src={clickDamageImage}
               />
               {/* Show the increase the upgrade would have on the current player damage */}
-              +
-              {this.props.renderNumberWithAbbreviations(
-                Math.round(
-                  50 *
-                    Math.pow(
-                      1.045,
-                      this.props.mainState.heroUpgrades.clickDamage.level
-                    )
-                ) - this.props.mainState.playerAttackPlaceholder
-              )}
+              +{this.calculateSkillEffectAfterUpgradeSetting("clickDamage")}
             </small>
           </div>
           <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
@@ -81,7 +179,7 @@ class HeroMenu extends Component {
               className="userInterface-upgrades-upgrade-price mx-auto"
             >
               {this.props.renderNumberWithAbbreviations(
-                this.renderUpgradePriceParagraph("clickDamage")
+                this.calculateUpgradePriceByUpgradeSetting("clickDamage")
               )}
               <img
                 draggable="false"
@@ -97,7 +195,7 @@ class HeroMenu extends Component {
               type="button"
               className={this.renderUpgradeButtonClasses("clickDamage")}
               onClick={() => {
-                this.props.heroUpgradeLevelUp("clickDamage");
+                this.props.heroUpgradeLevelUpgradeByUserSettings("clickDamage");
               }}
             >
               +
@@ -131,7 +229,7 @@ class HeroMenu extends Component {
                 src={criticalChanceImage}
               />
               {/* Show the increase the upgrade would have on the current player damage */}
-              +0.3%
+              +{this.calculateSkillEffectAfterUpgradeSetting("criticalChance")}
             </small>
           </div>
           <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
@@ -140,7 +238,7 @@ class HeroMenu extends Component {
               className="userInterface-upgrades-upgrade-price mx-auto"
             >
               {this.props.renderNumberWithAbbreviations(
-                this.renderUpgradePriceParagraph("criticalChance")
+                this.calculateUpgradePriceByUpgradeSetting("criticalChance")
               )}
               <img
                 draggable="false"
@@ -155,7 +253,9 @@ class HeroMenu extends Component {
               type="button"
               className={this.renderUpgradeButtonClasses("criticalChance")}
               onClick={() => {
-                this.props.heroUpgradeLevelUp("criticalChance");
+                this.props.heroUpgradeLevelUpgradeByUserSettings(
+                  "criticalChance"
+                );
               }}
             >
               +
@@ -189,7 +289,10 @@ class HeroMenu extends Component {
                 src={criticalMultiplierImage}
               />
               {/* Show the increase the upgrade would have on the current player damage */}
-              +5%
+              +
+              {this.calculateSkillEffectAfterUpgradeSetting(
+                "criticalMultiplier"
+              )}
             </small>
           </div>
           <div className="userInterface-upgrades-upgrade-div-child mx-auto my-auto">
@@ -198,7 +301,7 @@ class HeroMenu extends Component {
               className="userInterface-upgrades-upgrade-price mx-auto"
             >
               {this.props.renderNumberWithAbbreviations(
-                this.renderUpgradePriceParagraph("criticalMultiplier")
+                this.calculateUpgradePriceByUpgradeSetting("criticalMultiplier")
               )}
               <img
                 draggable="false"
@@ -213,7 +316,9 @@ class HeroMenu extends Component {
               type="button"
               className={this.renderUpgradeButtonClasses("criticalMultiplier")}
               onClick={() => {
-                this.props.heroUpgradeLevelUp("criticalMultiplier");
+                this.props.heroUpgradeLevelUpgradeByUserSettings(
+                  "criticalMultiplier"
+                );
               }}
             >
               +
@@ -248,7 +353,10 @@ class HeroMenu extends Component {
                 src={doubleAttackImage}
               />
               {/* Show the increase the upgrade would have on the current double attack chance */}
-              +0.3%
+              +
+              {this.calculateSkillEffectAfterUpgradeSetting(
+                "doubleAttackChance"
+              )}
             </small>
           </div>
 
@@ -258,7 +366,7 @@ class HeroMenu extends Component {
               className="userInterface-upgrades-upgrade-price mx-auto"
             >
               {this.props.renderNumberWithAbbreviations(
-                this.renderUpgradePriceParagraph("doubleAttackChance")
+                this.calculateUpgradePriceByUpgradeSetting("doubleAttackChance")
               )}
               <img
                 draggable="false"
@@ -274,7 +382,9 @@ class HeroMenu extends Component {
               type="button"
               className={this.renderUpgradeButtonClasses("doubleAttackChance")}
               onClick={() => {
-                this.props.heroUpgradeLevelUp("doubleAttackChance");
+                this.props.heroUpgradeLevelUpgradeByUserSettings(
+                  "doubleAttackChance"
+                );
               }}
             >
               +

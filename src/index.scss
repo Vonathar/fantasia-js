@@ -14,6 +14,11 @@ body {
   background-size: cover;
 }
 
+#userInterface-stages-stage-checkbox {
+  width: 0.8vw;
+  height: 0.8vw;
+}
+
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
   background-color: #ffffff00;
@@ -541,6 +546,10 @@ code {
   transform: scale(1.3);
 }
 
+.damageParagraph {
+  font-family: "Righteous", cursive;
+}
+
 #userInterface-h1 {
   position: relative;
   font-family: "Great Vibes", cursive;
@@ -562,7 +571,6 @@ code {
   top: 6vh;
   margin: auto;
   width: 25vw;
-  padding: 10px;
   cursor: default;
   background-color: rgba(255, 255, 255, 0.048);
   border: 1px solid rgba(95, 95, 95, 0.486);
@@ -648,6 +656,7 @@ code {
 
 .deckMenu-row-section-progress {
   margin: 0.3vw;
+  height: 1vh;
 }
 
 .userInterface-stats-row {
@@ -681,11 +690,9 @@ code {
 
 #playerVisualDamage-div,
 #petVisualDamage-div {
-  background-color: rgba(0, 0, 0, 0.63);
+  background-color: rgba(0, 0, 0, 0.507);
   color: rgba(255, 255, 255, 0.836);
-  font-weight: bold;
-  font-size: 0.7vw;
-  border-radius: 20px;
+  border-radius: 15px;
 }
 
 #petVisualDamage-div {
@@ -745,6 +752,7 @@ code {
 .userInterface-inventory-row {
   display: flex;
   padding: 1vw;
+  height: 6vh;
 }
 
 .userInterface-stats-row-child {
@@ -773,17 +781,18 @@ code {
 }
 
 .userInterface-enemy-image-dead {
-  animation: killEnemy 0.5s;
+  animation: killEnemy 0.6s;
 }
 
 /* Enemy spins and shrinks */
 @keyframes killEnemy {
-  50% {
-    transform: scale(1.6);
+  60% {
+    transform: scale(1.4) rotate(15deg) translate(1vw, -5vw) skewX(5deg)
+      skewY(-6deg);
   }
 
   100% {
-    transform: scale(0);
+    transform: scale(0) translate(-2vw, 3vw);
   }
 }
 
@@ -961,14 +970,14 @@ code {
   height: 2vw;
   background-color: rgba(228, 228, 228, 0.568);
   color: rgb(0, 0, 0);
-  padding: 0.2vw 0.6vw 0.2vw 0.6vw;
+  padding: 0.2vw 0.6vw;
   font-size: 0.9vw;
 }
 
 .userInterface-upgrades-upgrade-button:hover,
 .userInterface-pets-pet-button:hover {
   background-color: rgba(125, 190, 106, 0.568);
-  padding: 0.2vw 0.6vw 0.2vw 0.6vw;
+  padding: 0.2vw 0.6vw;
   font-size: 0.9vw;
 }
 
@@ -1023,10 +1032,12 @@ code {
   color: black;
 }
 
-.userInterface-stages-button-selected {
-  background-color: rgba(255, 255, 255, 0.329);
-  border-radius: 5px;
+.userInterface-stages-button-selected,
+.petsMenu-upgradeSettings-button-selected {
+  background-color: rgba(180, 180, 180, 0.76);
+  border-color: rgb(255, 255, 255);
   color: black;
+  border-radius: 5px;
 }
 
 #userInterface-userSettings-menu-holder {
@@ -1126,6 +1137,11 @@ code {
   cursor: default;
 }
 
+.damage-skillEffect {
+  text-decoration: rgb(255, 72, 0) underline;
+  color: rgb(208, 137, 255);
+}
+
 .itemRarity-common {
   color: white;
 }
@@ -1166,7 +1182,7 @@ code {
   right: 2.5vw;
   margin: auto;
   width: 25vw;
-  padding: 10px;
+  padding: 1vw;
   cursor: default;
 }
 
@@ -1228,6 +1244,18 @@ code {
   color: rgb(255, 255, 255);
 }
 
+#petsMenu-upgradeSettings-div {
+  display: flex;
+  width: 12vw;
+  margin: auto;
+}
+
+.petsMenu-upgradeSettings-button {
+  padding: 0.3vh 0.6vh;
+  background-color: rgba(73, 73, 73, 0.726);
+  border: 0.1vh solid rgba(255, 255, 255, 0.616);
+}
+
 #userInterface-inventory-money {
   position: relative;
   margin: auto;
@@ -1263,4 +1291,90 @@ code {
 
 .userInterface-quests-logo {
   width: 1.5vw;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  #userInterface-player-paragraph,
+  #userInterface-enemy-paragraph {
+    font-size: 1.5em;
+  }
+  #userInterface-resources-div {
+    top: 6vh;
+    font-size: 0.5em;
+    height: 13vh;
+  }
+
+  .deckMenu-row-section {
+    width: 6vw;
+    font-size: 1.3em;
+  }
+  #playerVisualDamage-div,
+  #petVisualDamage-div {
+    font-size: 1em;
+  }
+  #userInterface-battle-div {
+    top: 50vh;
+  }
+  #userInterface-userSettings-div {
+    font-size: 0.5em;
+    top: 5vh;
+  }
+
+  .userInterface-pets-pet-button,
+  .userInterface-upgrades-upgrade-button {
+    height: 2.5vw;
+    padding: 0.2vw 0.6vw 2.4vw 0.6vw;
+    font-size: 1em;
+  }
+  #userInterface-stages-div {
+    font-size: 0.5em;
+
+    border-width: 0 1px 1px 1px;
+    border-color: rgba(95, 95, 95, 0.486);
+    border-style: solid;
+    border-radius: 25px;
+    width: 20vw;
+    padding: 0.5vw;
+    top: 30vh;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+
+  #userInterface-stages-stage-checkbox {
+    width: 1vw;
+    height: 1vw;
+  }
+
+  .userInterface-userSettings-menu-tab-button {
+    padding: 0.1vw 0.3vw 0.1vw 0.3vw;
+    font-size: 0.5em;
+    margin: 1vw;
+  }
+  #userInterface-idle-div,
+  #userInterface-debug-div,
+  #userInterface-upgrades-div,
+  #userInterface-pets-div,
+  #userInterface-stats-div,
+  #userInterface-quests-div {
+    border-radius: 0 0 25px 25px;
+    font-size: 0.5em;
+    width: 25vw;
+    padding: 0;
+  }
+  #userInterface-chatlog-div {
+    font-size: 0.5em;
+    padding: 0.5vw;
+  }
+  .inventorySlot-itemImage {
+    border: 0.1vw outset rgba(255, 227, 191, 0.418);
+    width: 2.4vw;
+  }
+
+  .inventorySlot-itemImage-equipped {
+    width: 2.4vw;
+    border: 0.1vw inset rgba(145, 255, 0, 0.945);
+  }
 }
