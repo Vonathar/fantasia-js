@@ -26,21 +26,13 @@ class PlayerVisualDamage extends Component {
       classNames += "damage-skillEffect ";
     }
     if (this.state.isDouble) {
-      classNames += "text-warning h5 ";
+      classNames += "text-warning h3 ";
     }
     if (this.state.isCritical) {
-      classNames += "text-danger h5 ";
+      classNames += "text-danger h3 ";
     }
 
     return classNames;
-  };
-
-  renderParagraphText = () => {
-    return this.state.isDouble
-      ? this.props.renderNumberWithAbbreviations(
-          Math.round(this.state.damage) / 2
-        ) + " x2!"
-      : this.props.renderNumberWithAbbreviations(Math.round(this.state.damage));
   };
 
   render() {
@@ -53,7 +45,7 @@ class PlayerVisualDamage extends Component {
         style={{ top: y, left: x }}
       >
         <span className={this.renderParagraphClasses()}>
-          {this.renderParagraphText()}
+          {this.state.damage}
         </span>
       </div>
     );

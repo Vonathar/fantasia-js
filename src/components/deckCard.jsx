@@ -1,25 +1,11 @@
 import React, { Component } from "react";
 
 class DeckCard extends Component {
-  // Card XP progress bar rendering
-  renderCardProgressExperience = cardNumber => {
-    // Obtain the card's experience in percentage
-    let cardExperiencePercentage = Math.round(
-      this.props.mainState.deck[cardNumber].experienceCurrent *
-        (100 / this.props.mainState.deck[cardNumber].experienceRequired)
-    );
-    // Set the bar's width according to the percentage of xp
-    return (
-      "progress-bar bg-success progress-bar-striped progress-bar-animated progress" +
-      cardExperiencePercentage
-    );
-  };
-
   renderCardImageClasses = cardNumber => {
     // If the card's level is 0
     return this.props.mainState.deck[cardNumber].level === 0
-      ? "deckMenu-row-image-locked"
-      : "deckMenu-row-image";
+      ? "deckMenu-row-image-locked mx-auto my-auto"
+      : "deckMenu-row-image mx-auto my-auto";
   };
 
   renderCardTooltip = cardNumber => {
@@ -100,15 +86,17 @@ class DeckCard extends Component {
   render() {
     return (
       <div className="deckMenu-row-section mx-auto">
-        <img
-          draggable="false"
-          data-toggle="tooltip"
-          title={this.renderCardTooltip(this.props.cardNumber)}
-          data-placement="top"
-          alt="deck card"
-          className={this.renderCardImageClasses(this.props.cardNumber)}
-          src={this.props.cardImage}
-        />
+        <div className="deckMenu-row-image-container">
+          <img
+            draggable="false"
+            data-toggle="tooltip"
+            title={this.renderCardTooltip(this.props.cardNumber)}
+            data-placement="top"
+            alt="deck card"
+            className={this.renderCardImageClasses(this.props.cardNumber)}
+            src={this.props.cardImage}
+          />
+        </div>
         <small className="deckMenu-row-section-paragraph">
           {this.props.mainState.deck[this.props.cardNumber].name}
         </small>
@@ -116,12 +104,15 @@ class DeckCard extends Component {
         <small className="deckMenu-row-section-paragraph">
           Lv. {this.props.mainState.deck[this.props.cardNumber].level}
         </small>
-        <div class="progress deckMenu-row-section-progress">
-          <div
-            class={this.renderCardProgressExperience(this.props.cardNumber)}
-            role="progressbar"
-          />
-        </div>
+        <progress
+          className="deckCard-progress"
+          max={
+            this.props.mainState.deck[this.props.cardNumber].experienceRequired
+          }
+          value={
+            this.props.mainState.deck[this.props.cardNumber].experienceCurrent
+          }
+        />
         <img
           src={this.props.mainState.deck[this.props.cardNumber].bonusImage}
           className="deckMenu-row-section-bonusImage"

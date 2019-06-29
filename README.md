@@ -6,42 +6,47 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-#### 2.0.1
-
-##### Gameplay
-
-- Fix a bug which caused the skill Animal Training to have the wrong multiplier
-- Fix the calculation of hero skills' potential increase
-
-##### Other
-
-- Add a '%' sign in front of upgrade's effect when expressed in percentage
-
-### 2.0.0
+### 3.0.0 - The Golden Temple Update
 
 #### Gameplay
 
-- Restyling of the damage paragraphs! They are now rendered in a different font with color coding.
-  1. **White** for normal attacks
-  2. **Red** for critical hits
-  3. **Yellow** for double hits
-  4. **Purple** with a _yellow underline_ when a skill is affecting the damage
-  5. **Orange** for pet damage
-- Added the possibility of leveling up pets and upgrades more than once with a convenient new option!
-- Pets now gain a bonus to their damage every 5 levels!
-- Pet and player attacks are now randomised differently (+/- 0-25%)
-- The stats of the first and second pet have been changed.
-- The enemy's death animation has been updated.
-- The tutorial screen has been updated.
-- Performance optimisation.
+- **Complete restyling of game graphics** - monsters, backgrounds, icons and many more!
+- **More than 70 new enemies** are waiting to be discovered in the world of Fantasia!
+- **12** entirely new, **unique pets** are ready to join the fight!
+- **24 new bosses** - fight them all to progress through the stages!
+- **5** brand **new weapons** have been added to replace the old ones - ready to be used for all-new strategies!
+- **Item rarity** now has a much greater effect on final weapon **stats**!
+- **Drops**' item rarity **chances** have been changed to reflect their stronger stats
+- Stage now changes every 10 stages instead of every 5
+- It's now easier to know the **rarity of items** without hovering on them thanks to their **coloured border**!
+- Deck cards are now easier to level up - however, they are now boss cards!
+- Significantly increase the pet damage's increase over the levels
+- The battle area has been rearranged to make more space for the enemies
+- **Performance optimisation**
+
+1. Rendering of damage paragraphs is now handled by the main state
+2. Reduce calls to _renderNumberWithAbbreviations()_ by directly storing pre-abbreviated references for usage of child components
+3. Calls to _checkIfQuestConditionsMet()_ are now scheduled automatically instead of being constantly invoked by each action
+4. Pop paragraphs from the battle log when the total number of items rendered surpasses 20
+5. Implement a check to make sure the pets' values need rerendering before calling all necessary functions
+6. Duration of visual damage rendering has been halved
+7. Drops are now automatically collected when they are more than 15 (_was 40_)
+8. Equipment parts are now also collected automatically
 
 #### Other
 
-- The auto progress stage checkbox is now responsive in size.
-- Add media queries to improve UI on mobile devices.
-- The progress bar in deck cards is now responsive in size.
-- Inventory rows now have a fixed height.
-- The colour of selected stages is now white instead of gray.
+- Debug screen now give 1b coins instead of 1m
+- Add an option in debug screen to skip the delay for enemy respawning
+- A new font is used to improve the readability of the UI
+- The battle area is now 15% bigger
+- New icons for coins and weapons
+- Progress bar for deck cards is now rendered with a standard bar instead of Bootstrap's
+- Progress bars' colors have been changed to better reflect the value they represent
+- Increase the font size of player and enemy names
+- Rewrite straightforward functions using arrow functions
+- Fix a bug which caused the skill #3 to have a much higher multiplier
+- Fix a bug which caused skills to level up improperly
+- Add recognition of hotkeys when the user has CapsLock activated
 
 ## Gameplay
 

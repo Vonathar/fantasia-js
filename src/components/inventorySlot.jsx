@@ -9,15 +9,48 @@ class InventorySlot extends Component {
     this.toggleByClick = this.toggleByClick.bind(this);
     this.state = {
       popoverOpenByHover: false,
-      popoverOpenByClick: false
+      popoverOpenByClick: false,
+      attackAbbreviated: "",
+      valueAbbreviated: ""
     };
   }
   // Render the appropriate class for items in the inventory
   renderInventoryItemClass = () => {
+    let classes = "";
     // Check whether the item is equipped or not
-    return this.props.itemObject.itemIsEquipped
-      ? "inventorySlot-itemImage-equipped scale"
-      : "inventorySlot-itemImage scale";
+    classes += this.props.itemObject.itemIsEquipped
+      ? "inventorySlot-itemImage-equipped scale "
+      : "inventorySlot-itemImage scale ";
+
+    if (this.props.itemObject.itemRarity === 0) {
+      classes += "itemSlot-common";
+    }
+    if (this.props.itemObject.itemRarity === 1) {
+      classes += "itemSlot-uncommon";
+    }
+    if (this.props.itemObject.itemRarity === 2) {
+      classes += "itemSlot-special";
+    }
+    if (this.props.itemObject.itemRarity === 3) {
+      classes += "itemSlot-rare";
+    }
+    if (this.props.itemObject.itemRarity === 4) {
+      classes += "itemSlot-legendary";
+    }
+    return classes;
+  };
+
+  storeAbbreviatedVersionForRendering = () => {
+    setTimeout(() => {
+      this.setState({
+        attackAbbreviated: this.props.renderNumberWithAbbreviations(
+          this.props.itemObject.itemStats.bonusAttack
+        ),
+        valueAbbreviated: this.props.renderNumberWithAbbreviations(
+          this.props.itemObject.itemValue
+        )
+      });
+    }, 0);
   };
 
   renderItemRarityClass = () => {
@@ -46,6 +79,7 @@ class InventorySlot extends Component {
       this.setState({
         popoverOpenByHover: !this.state.popoverOpenByHover
       });
+      this.storeAbbreviatedVersionForRendering();
     }
   }
 
@@ -54,6 +88,7 @@ class InventorySlot extends Component {
     this.setState({
       popoverOpenByClick: !this.state.popoverOpenByClick
     });
+    this.storeAbbreviatedVersionForRendering();
   }
 
   hidePopoversAfterAction = () => {
@@ -100,38 +135,23 @@ class InventorySlot extends Component {
               <p>
                 <span className="text-primary">Click DMG</span>:{" "}
                 <span className="text-danger">
-                  {this.props.renderNumberWithAbbreviations(
-                    Math.round(
-                      this.props.itemObject.itemStats.bonusAttack * 100
-                    ) / 100
-                  )}
+                  {this.state.attackAbbreviated}
                 </span>
                 <br />
                 <span className="text-primary">Double Attack Chance</span>:{" "}
                 <span className="text-danger">
-                  {this.props.renderNumberWithAbbreviations(
-                    Math.round(
-                      this.props.itemObject.itemStats.bonusDoubleAttackChance *
-                        100
-                    ) / 100
-                  )}
+                  {this.props.itemObject.itemStats.bonusDoubleAttackChance}%
                 </span>
                 <br />
                 <span className="text-primary">Critical Rate</span>:{" "}
                 <span className="text-danger">
-                  {this.props.renderNumberWithAbbreviations(
-                    Math.round(
-                      this.props.itemObject.itemStats.bonusCriticalChance * 100
-                    ) / 100
-                  )}
+                  {this.props.itemObject.itemStats.bonusCriticalChance}%
                 </span>
                 <br />
                 <br />
                 <span className="text-muted">Sell price</span>:{" "}
                 <span className="text-success">
-                  {this.props.renderNumberWithAbbreviations(
-                    Math.round(this.props.itemObject.itemValue * 100) / 100
-                  )}
+                  {this.state.valueAbbreviated}
                 </span>
               </p>
               <div id="inventorySlot-buttons">

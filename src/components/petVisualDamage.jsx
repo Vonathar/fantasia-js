@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 
 class PetVisualDamage extends Component {
   state = {
     fading: false,
-    damage: this.props.mainState.petDamageValueToBeRendered / 2
+    damage: this.props.mainState.petDamageValueToBeRendered
   };
   componentDidMount() {
     const { id, onDone, delay, duration } = this.props;
@@ -33,9 +34,7 @@ class PetVisualDamage extends Component {
         style={{ top: y, left: x }}
       >
         <span className={this.renderParagraphClasses()}>
-          {this.props.renderNumberWithAbbreviations(
-            Math.round(this.state.damage)
-          )}
+          {this.state.damage}
         </span>
       </div>
     );

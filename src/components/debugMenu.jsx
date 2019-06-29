@@ -17,7 +17,7 @@ class DebugMenu extends Component {
                 this.props.giveItemDebug("coins");
               }}
             >
-              Coins +1,000,000
+              Coins +1b
             </button>
           </small>
         </div>
@@ -57,6 +57,19 @@ class DebugMenu extends Component {
               }}
             >
               Player level +1
+            </button>
+          </small>
+        </div>
+        <div className="userInterface-debug-div">
+          <small className="userInterface-debug-category">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              onClick={() => {
+                this.props.giveItemDebug("enemySpawnNoDelay");
+              }}
+            >
+              Enemy Spawn No Delay
             </button>
           </small>
         </div>

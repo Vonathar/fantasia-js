@@ -1,33 +1,30 @@
 import React, { Component } from "react";
 import DeckCard from "./deckCard";
 /* [IMG] Enemy */
-import enemyImageOne from "../img/enemy_1.png";
-import enemyImageTwo from "../img/enemy_2.png";
-import enemyImageThree from "../img/enemy_3.png";
-import enemyImageFour from "../img/enemy_4.png";
-import enemyImageFive from "../img/enemy_5.png";
-import enemyImageSix from "../img/enemy_6.png";
-import enemyImageSeven from "../img/enemy_7.png";
-import enemyImageEight from "../img/enemy_8.png";
-import enemyImageNine from "../img/enemy_9.png";
-import enemyImageTen from "../img/enemy_10.png";
-import enemyImageEleven from "../img/enemy_11.png";
-import enemyImageTwelve from "../img/enemy_12.png";
-import enemyImageThirteen from "../img/enemy_13.png";
-import enemyImageFourteen from "../img/enemy_14.png";
-import enemyImageFifteen from "../img/enemy_15.png";
-import enemyImageSixteen from "../img/enemy_16.png";
-import enemyImageSeventeen from "../img/enemy_17.png";
-import enemyImageEighteen from "../img/enemy_18.png";
-import enemyImageNineteen from "../img/enemy_19.png";
-import enemyImageTwenty from "../img/enemy_20.png";
-import enemyImageTwentyone from "../img/enemy_21.png";
-import enemyImageTwentytwo from "../img/enemy_22.png";
-import enemyImageTwentythree from "../img/enemy_23.png";
-import enemyImageTwentyfour from "../img/enemy_24.png";
-import enemyImageTwentyfive from "../img/enemy_25.png";
-import enemyImageTwentysix from "../img/enemy_26.png";
-import enemyImageTwentyseven from "../img/enemy_27.png";
+import greenForestBossOne from "../img/stages/Green forest/greenForestBoss_1.png";
+import greenForestBossTwo from "../img/stages/Green forest/greenForestBoss_2.png";
+import greenForestBossThree from "../img/stages/Green forest/greenForestBoss_3.png";
+import darkForestBossOne from "../img/stages/Dark forest/darkForestBoss_1.png";
+import darkForestBossTwo from "../img/stages/Dark forest/darkForestBoss_2.png";
+import darkForestBossThree from "../img/stages/Dark forest/darkForestBoss_3.png";
+import magicForestBossOne from "../img/stages/Magic forest/magicForestBoss_1.png";
+import magicForestBossTwo from "../img/stages/Magic forest/magicForestBoss_2.png";
+import magicForestBossThree from "../img/stages/Magic forest/magicForestBoss_3.png";
+import cityEntranceBossOne from "../img/stages/City entrance/cityEntranceBoss_1.png";
+import cityEntranceBossTwo from "../img/stages/City entrance/cityEntranceBoss_2.png";
+import cityEntranceBossThree from "../img/stages/City entrance/cityEntranceBoss_3.png";
+import forgottenRoadBossOne from "../img/stages/Forgotten road/forgottenRoadBoss_1.png";
+import forgottenRoadBossTwo from "../img/stages/Forgotten road/forgottenRoadBoss_2.png";
+import forgottenRoadBossThree from "../img/stages/Forgotten road/forgottenRoadBoss_3.png";
+import hauntedMarketplaceBossOne from "../img/stages/Haunted marketplace/hauntedMarketplaceBoss_1.png";
+import hauntedMarketplaceBossTwo from "../img/stages/Haunted marketplace/hauntedMarketplaceBoss_2.png";
+import hauntedMarketplaceBossThree from "../img/stages/Haunted marketplace/hauntedMarketplaceBoss_3.png";
+import goldenTempleBossOne from "../img/stages/Golden temple/goldenTempleBoss_1.png";
+import goldenTempleBossTwo from "../img/stages/Golden temple/goldenTempleBoss_2.png";
+import goldenTempleBossThree from "../img/stages/Golden temple/goldenTempleBoss_3.png";
+import infernoBossOne from "../img/stages/Inferno/infernoBoss_1.png";
+import infernoBossTwo from "../img/stages/Inferno/infernoBoss_2.png";
+import infernoBossThree from "../img/stages/Inferno/infernoBoss_3.png";
 
 class DeckMenu extends Component {
   render() {
@@ -45,19 +42,19 @@ class DeckMenu extends Component {
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardOne"}
-              cardImage={enemyImageOne}
+              cardImage={greenForestBossOne}
             />
             {/* Card #2 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardTwo"}
-              cardImage={enemyImageTwo}
+              cardImage={greenForestBossTwo}
             />
             {/* Card #3 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardThree"}
-              cardImage={enemyImageThree}
+              cardImage={greenForestBossThree}
             />
           </div>
           {/* Row #2 */}
@@ -66,19 +63,19 @@ class DeckMenu extends Component {
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardFour"}
-              cardImage={enemyImageFour}
+              cardImage={darkForestBossOne}
             />
             {/* Card #2 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardFive"}
-              cardImage={enemyImageFive}
+              cardImage={darkForestBossTwo}
             />
             {/* Card #3 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardSix"}
-              cardImage={enemyImageSix}
+              cardImage={darkForestBossThree}
             />
           </div>
           {/* Row #3 */}
@@ -87,19 +84,19 @@ class DeckMenu extends Component {
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardSeven"}
-              cardImage={enemyImageSeven}
+              cardImage={magicForestBossOne}
             />
             {/* Card #2 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardEight"}
-              cardImage={enemyImageEight}
+              cardImage={magicForestBossTwo}
             />
             {/* Card #3 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardNine"}
-              cardImage={enemyImageNine}
+              cardImage={magicForestBossThree}
             />
           </div>
           {/* Row #4 */}
@@ -108,19 +105,19 @@ class DeckMenu extends Component {
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardTen"}
-              cardImage={enemyImageTen}
+              cardImage={cityEntranceBossOne}
             />
             {/* Card #2 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardEleven"}
-              cardImage={enemyImageEleven}
+              cardImage={cityEntranceBossTwo}
             />
             {/* Card #3 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardTwelve"}
-              cardImage={enemyImageTwelve}
+              cardImage={cityEntranceBossThree}
             />
           </div>
           {/* Row #5 */}
@@ -129,19 +126,19 @@ class DeckMenu extends Component {
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardThirteen"}
-              cardImage={enemyImageThirteen}
+              cardImage={forgottenRoadBossOne}
             />
             {/* Card #2 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardFourteen"}
-              cardImage={enemyImageFourteen}
+              cardImage={forgottenRoadBossTwo}
             />
             {/* Card #3 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardFifteen"}
-              cardImage={enemyImageFifteen}
+              cardImage={forgottenRoadBossThree}
             />
           </div>
           {/* Row #6 */}
@@ -150,19 +147,19 @@ class DeckMenu extends Component {
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardSixteen"}
-              cardImage={enemyImageSixteen}
+              cardImage={hauntedMarketplaceBossOne}
             />
             {/* Card #2 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardSeventeen"}
-              cardImage={enemyImageSeventeen}
+              cardImage={hauntedMarketplaceBossTwo}
             />
             {/* Card #3 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardEighteen"}
-              cardImage={enemyImageEighteen}
+              cardImage={hauntedMarketplaceBossThree}
             />
           </div>
           {/* Row #7 */}
@@ -171,19 +168,19 @@ class DeckMenu extends Component {
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardNineteen"}
-              cardImage={enemyImageNineteen}
+              cardImage={goldenTempleBossOne}
             />
             {/* Card #2 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardTwenty"}
-              cardImage={enemyImageTwenty}
+              cardImage={goldenTempleBossTwo}
             />
             {/* Card #3 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardTwentyone"}
-              cardImage={enemyImageTwentyone}
+              cardImage={goldenTempleBossThree}
             />
           </div>
           {/* Row #8 */}
@@ -192,40 +189,19 @@ class DeckMenu extends Component {
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardTwentytwo"}
-              cardImage={enemyImageTwentytwo}
+              cardImage={infernoBossOne}
             />
             {/* Card #2 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardTwentythree"}
-              cardImage={enemyImageTwentythree}
+              cardImage={infernoBossTwo}
             />
             {/* Card #3 */}
             <DeckCard
               mainState={this.props.mainState}
               cardNumber={"cardTwentyfour"}
-              cardImage={enemyImageTwentyfour}
-            />
-          </div>
-          {/* Row #9 */}
-          <div className="deckMenu-row">
-            {/* Card #1 */}
-            <DeckCard
-              mainState={this.props.mainState}
-              cardNumber={"cardTwentyfive"}
-              cardImage={enemyImageTwentyfive}
-            />
-            {/* Card #2 */}
-            <DeckCard
-              mainState={this.props.mainState}
-              cardNumber={"cardTwentysix"}
-              cardImage={enemyImageTwentysix}
-            />
-            {/* Card #3 */}
-            <DeckCard
-              mainState={this.props.mainState}
-              cardNumber={"cardTwentyseven"}
-              cardImage={enemyImageTwentyseven}
+              cardImage={infernoBossThree}
             />
           </div>
         </div>

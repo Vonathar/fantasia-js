@@ -7,46 +7,126 @@ import StagesBar from "./stagesBar";
 import BattleArea from "./battleArea";
 import SkillBar from "./skillBar";
 import TutorialScreen from "./tutorialScreen";
-/* [IMG] Boss */
-import bossImageOne from "../img/boss_1.png";
-import bossImageTwo from "../img/boss_2.png";
-import bossImageThree from "../img/boss_3.png";
-/* [IMG] Backgrounds */
-import backgroundImageOne from "../img/background_1.jpg";
-import backgroundImageTwo from "../img/background_2.jpg";
-import backgroundImageThree from "../img/background_3.jpg";
-import backgroundImageFour from "../img/background_4.jpg";
-import backgroundImageFive from "../img/background_5.jpg";
-import backgroundImageSix from "../img/background_6.jpg";
-
-/* [IMG] Enemy */
-import enemyImageOne from "../img/enemy_1.png";
-import enemyImageTwo from "../img/enemy_2.png";
-import enemyImageThree from "../img/enemy_3.png";
-import enemyImageFour from "../img/enemy_4.png";
-import enemyImageFive from "../img/enemy_5.png";
-import enemyImageSix from "../img/enemy_6.png";
-import enemyImageSeven from "../img/enemy_7.png";
-import enemyImageEight from "../img/enemy_8.png";
-import enemyImageNine from "../img/enemy_9.png";
-import enemyImageTen from "../img/enemy_10.png";
-import enemyImageEleven from "../img/enemy_11.png";
-import enemyImageTwelve from "../img/enemy_12.png";
-import enemyImageThirteen from "../img/enemy_13.png";
-import enemyImageFourteen from "../img/enemy_14.png";
-import enemyImageFifteen from "../img/enemy_15.png";
-import enemyImageSixteen from "../img/enemy_16.png";
-import enemyImageSeventeen from "../img/enemy_17.png";
-import enemyImageEighteen from "../img/enemy_18.png";
-import enemyImageNineteen from "../img/enemy_19.png";
-import enemyImageTwenty from "../img/enemy_20.png";
-import enemyImageTwentyone from "../img/enemy_21.png";
-import enemyImageTwentytwo from "../img/enemy_22.png";
-import enemyImageTwentythree from "../img/enemy_23.png";
-import enemyImageTwentyfour from "../img/enemy_24.png";
-import enemyImageTwentyfive from "../img/enemy_25.png";
-import enemyImageTwentysix from "../img/enemy_26.png";
-import enemyImageTwentyseven from "../img/enemy_27.png";
+/* Backgrounds [IMG] */
+// Green forest
+import backgroundImageOne from "../img/stages/background_1.jpg";
+// Dark forest
+import backgroundImageTwo from "../img/stages/background_2.jpg";
+// Magic forest
+import backgroundImageThree from "../img/stages/background_3.jpg";
+// Entrance to the city
+import backgroundImageFour from "../img/stages/background_4.jpg";
+// Forgotten road
+import backgroundImageFive from "../img/stages/background_5.jpg";
+// Haunted marketplace
+import backgroundImageSix from "../img/stages/background_6.jpg";
+// Inside the temple
+import backgroundImageSeven from "../img/stages/background_7.jpg";
+// Inferno
+import backgroundImageEight from "../img/stages/background_8.jpg";
+/* Enemy [IMG] */
+// Green forest
+import greenForestEnemyOne from "../img/stages/Green forest/greenForestEnemy_1.png";
+import greenForestEnemyTwo from "../img/stages/Green forest/greenForestEnemy_2.png";
+import greenForestEnemyThree from "../img/stages/Green forest/greenForestEnemy_3.png";
+import greenForestEnemyFour from "../img/stages/Green forest/greenForestEnemy_4.png";
+import greenForestEnemyFive from "../img/stages/Green forest/greenForestEnemy_5.png";
+import greenForestEnemySix from "../img/stages/Green forest/greenForestEnemy_6.png";
+import greenForestEnemySeven from "../img/stages/Green forest/greenForestEnemy_7.png";
+import greenForestBossOne from "../img/stages/Green forest/greenForestBoss_1.png";
+import greenForestBossTwo from "../img/stages/Green forest/greenForestBoss_2.png";
+import greenForestBossThree from "../img/stages/Green forest/greenForestBoss_3.png";
+// Dark forest
+import darkForestEnemyOne from "../img/stages/Dark forest/darkForestEnemy_1.png";
+import darkForestEnemyTwo from "../img/stages/Dark forest/darkForestEnemy_2.png";
+import darkForestEnemyThree from "../img/stages/Dark forest/darkForestEnemy_3.png";
+import darkForestEnemyFour from "../img/stages/Dark forest/darkForestEnemy_4.png";
+import darkForestEnemyFive from "../img/stages/Dark forest/darkForestEnemy_5.png";
+import darkForestEnemySix from "../img/stages/Dark forest/darkForestEnemy_6.png";
+import darkForestEnemySeven from "../img/stages/Dark forest/darkForestEnemy_7.png";
+import darkForestEnemyEight from "../img/stages/Dark forest/darkForestEnemy_8.png";
+import darkForestBossOne from "../img/stages/Dark forest/darkForestBoss_1.png";
+import darkForestBossTwo from "../img/stages/Dark forest/darkForestBoss_2.png";
+import darkForestBossThree from "../img/stages/Dark forest/darkForestBoss_3.png";
+// Magic forest
+import magicForestEnemyOne from "../img/stages/Magic forest/magicForestEnemy_1.png";
+import magicForestEnemyTwo from "../img/stages/Magic forest/magicForestEnemy_2.png";
+import magicForestEnemyThree from "../img/stages/Magic forest/magicForestEnemy_3.png";
+import magicForestEnemyFour from "../img/stages/Magic forest/magicForestEnemy_4.png";
+import magicForestEnemyFive from "../img/stages/Magic forest/magicForestEnemy_5.png";
+import magicForestEnemySix from "../img/stages/Magic forest/magicForestEnemy_6.png";
+import magicForestEnemySeven from "../img/stages/Magic forest/magicForestEnemy_7.png";
+import magicForestEnemyEight from "../img/stages/Magic forest/magicForestEnemy_8.png";
+import magicForestEnemyNine from "../img/stages/Magic forest/magicForestEnemy_9.png";
+import magicForestEnemyTen from "../img/stages/Magic forest/magicForestEnemy_10.png";
+import magicForestBossOne from "../img/stages/Magic forest/magicForestBoss_1.png";
+import magicForestBossTwo from "../img/stages/Magic forest/magicForestBoss_2.png";
+import magicForestBossThree from "../img/stages/Magic forest/magicForestBoss_3.png";
+// City entrance
+import cityEntranceEnemyOne from "../img/stages/City entrance/cityEntranceEnemy_1.png";
+import cityEntranceEnemyTwo from "../img/stages/City entrance/cityEntranceEnemy_2.png";
+import cityEntranceEnemyThree from "../img/stages/City entrance/cityEntranceEnemy_3.png";
+import cityEntranceEnemyFour from "../img/stages/City entrance/cityEntranceEnemy_4.png";
+import cityEntranceEnemyFive from "../img/stages/City entrance/cityEntranceEnemy_5.png";
+import cityEntranceEnemySix from "../img/stages/City entrance/cityEntranceEnemy_6.png";
+import cityEntranceEnemySeven from "../img/stages/City entrance/cityEntranceEnemy_7.png";
+import cityEntranceEnemyEight from "../img/stages/City entrance/cityEntranceEnemy_8.png";
+import cityEntranceBossOne from "../img/stages/City entrance/cityEntranceBoss_1.png";
+import cityEntranceBossTwo from "../img/stages/City entrance/cityEntranceBoss_2.png";
+import cityEntranceBossThree from "../img/stages/City entrance/cityEntranceBoss_3.png";
+// Forgotten road
+import forgottenRoadEnemyOne from "../img/stages/Forgotten road/forgottenRoadEnemy_1.png";
+import forgottenRoadEnemyTwo from "../img/stages/Forgotten road/forgottenRoadEnemy_2.png";
+import forgottenRoadEnemyThree from "../img/stages/Forgotten road/forgottenRoadEnemy_3.png";
+import forgottenRoadEnemyFour from "../img/stages/Forgotten road/forgottenRoadEnemy_4.png";
+import forgottenRoadEnemyFive from "../img/stages/Forgotten road/forgottenRoadEnemy_5.png";
+import forgottenRoadEnemySix from "../img/stages/Forgotten road/forgottenRoadEnemy_6.png";
+import forgottenRoadEnemySeven from "../img/stages/Forgotten road/forgottenRoadEnemy_7.png";
+import forgottenRoadEnemyEight from "../img/stages/Forgotten road/forgottenRoadEnemy_8.png";
+import forgottenRoadEnemyNine from "../img/stages/Forgotten road/forgottenRoadEnemy_9.png";
+import forgottenRoadEnemyTen from "../img/stages/Forgotten road/forgottenRoadEnemy_10.png";
+import forgottenRoadBossOne from "../img/stages/Forgotten road/forgottenRoadBoss_1.png";
+import forgottenRoadBossTwo from "../img/stages/Forgotten road/forgottenRoadBoss_2.png";
+import forgottenRoadBossThree from "../img/stages/Forgotten road/forgottenRoadBoss_3.png";
+// Haunted marketplace
+import hauntedMarketplaceEnemyOne from "../img/stages/Haunted marketplace/hauntedMarketplaceEnemy_1.png";
+import hauntedMarketplaceEnemyTwo from "../img/stages/Haunted marketplace/hauntedMarketplaceEnemy_2.png";
+import hauntedMarketplaceEnemyThree from "../img/stages/Haunted marketplace/hauntedMarketplaceEnemy_3.png";
+import hauntedMarketplaceEnemyFour from "../img/stages/Haunted marketplace/hauntedMarketplaceEnemy_4.png";
+import hauntedMarketplaceEnemyFive from "../img/stages/Haunted marketplace/hauntedMarketplaceEnemy_5.png";
+import hauntedMarketplaceEnemySix from "../img/stages/Haunted marketplace/hauntedMarketplaceEnemy_6.png";
+import hauntedMarketplaceEnemySeven from "../img/stages/Haunted marketplace/hauntedMarketplaceEnemy_7.png";
+import hauntedMarketplaceEnemyEight from "../img/stages/Haunted marketplace/hauntedMarketplaceEnemy_8.png";
+import hauntedMarketplaceEnemyNine from "../img/stages/Haunted marketplace/hauntedMarketplaceEnemy_9.png";
+import hauntedMarketplaceBossOne from "../img/stages/Haunted marketplace/hauntedMarketplaceBoss_1.png";
+import hauntedMarketplaceBossTwo from "../img/stages/Haunted marketplace/hauntedMarketplaceBoss_2.png";
+import hauntedMarketplaceBossThree from "../img/stages/Haunted marketplace/hauntedMarketplaceBoss_3.png";
+// Golden temple
+import goldenTempleEnemyOne from "../img/stages/Golden temple/goldenTempleEnemy_1.png";
+import goldenTempleEnemyTwo from "../img/stages/Golden temple/goldenTempleEnemy_2.png";
+import goldenTempleEnemyThree from "../img/stages/Golden temple/goldenTempleEnemy_3.png";
+import goldenTempleEnemyFour from "../img/stages/Golden temple/goldenTempleEnemy_4.png";
+import goldenTempleEnemyFive from "../img/stages/Golden temple/goldenTempleEnemy_5.png";
+import goldenTempleEnemySix from "../img/stages/Golden temple/goldenTempleEnemy_6.png";
+import goldenTempleEnemySeven from "../img/stages/Golden temple/goldenTempleEnemy_7.png";
+import goldenTempleEnemyEight from "../img/stages/Golden temple/goldenTempleEnemy_8.png";
+import goldenTempleBossOne from "../img/stages/Golden temple/goldenTempleBoss_1.png";
+import goldenTempleBossTwo from "../img/stages/Golden temple/goldenTempleBoss_2.png";
+import goldenTempleBossThree from "../img/stages/Golden temple/goldenTempleBoss_3.png";
+// Inferno
+import infernoEnemyOne from "../img/stages/Inferno/infernoEnemy_1.png";
+import infernoEnemyTwo from "../img/stages/Inferno/infernoEnemy_2.png";
+import infernoEnemyThree from "../img/stages/Inferno/infernoEnemy_3.png";
+import infernoEnemyFour from "../img/stages/Inferno/infernoEnemy_4.png";
+import infernoEnemyFive from "../img/stages/Inferno/infernoEnemy_5.png";
+import infernoEnemySix from "../img/stages/Inferno/infernoEnemy_6.png";
+import infernoEnemySeven from "../img/stages/Inferno/infernoEnemy_7.png";
+import infernoEnemyEight from "../img/stages/Inferno/infernoEnemy_8.png";
+import infernoEnemyNine from "../img/stages/Inferno/infernoEnemy_9.png";
+import infernoEnemyTen from "../img/stages/Inferno/infernoEnemy_10.png";
+import infernoBossOne from "../img/stages/Inferno/infernoBoss_1.png";
+import infernoBossTwo from "../img/stages/Inferno/infernoBoss_2.png";
+import infernoBossThree from "../img/stages/Inferno/infernoBoss_3.png";
 // Deck
 import playerExperienceImage from "../img/playerExperienceTutorial.png";
 import coinImage from "../img/coin_1.png";
@@ -58,9 +138,11 @@ import criticalChanceImage from "../img/critical_2.png";
 import clickDamageImage from "../img/cps_1.png";
 import clickPerSecondDamageImage from "../img/dps_1.png";
 // Inventory
-import swordOneImage from "../img/sword_1.png";
+import daggerOneImage from "../img/dagger_1.png";
 import maceOneImage from "../img/mace_1.png";
-import spearOneImage from "../img/spear_1.png";
+import axeOneImage from "../img/axe_1.png";
+import bowOneImage from "../img/bow_1.png";
+import swordOneImage from "../img/sword_1.png";
 class UserInterface extends Component {
   state = {
     /* Battle log UI */
@@ -94,14 +176,16 @@ class UserInterface extends Component {
     isDebugModeActive: false,
     isTutorialScreenActive: false,
     tutorialScreenSettingSelected: "Player",
-    backgroundImageCurrent: backgroundImageTwo,
+    backgroundImageCurrent: backgroundImageOne,
     backgroundImages: [
       backgroundImageOne,
       backgroundImageTwo,
       backgroundImageThree,
       backgroundImageFour,
       backgroundImageFive,
-      backgroundImageSix
+      backgroundImageSix,
+      backgroundImageSeven,
+      backgroundImageEight
     ],
     /* Stats values */
     totalPlayerAttacks: 0,
@@ -376,7 +460,7 @@ class UserInterface extends Component {
     /* Pet values */
     deck: {
       cardOne: {
-        name: "Flager",
+        name: "Rukkha",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -385,7 +469,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardTwo: {
-        name: "Vilkas",
+        name: "Daidarabotchi",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -394,7 +478,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardThree: {
-        name: "Serpe",
+        name: "Tellia",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -403,7 +487,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardFour: {
-        name: "Escarab",
+        name: "Blood Feral",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -412,7 +496,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardFive: {
-        name: "Dudu",
+        name: "Dark Queen Yoa",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -421,7 +505,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardSix: {
-        name: "Plandai",
+        name: "Knight Remment",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -431,7 +515,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardSeven: {
-        name: "Gomba",
+        name: "Queen Rafflesia",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -440,7 +524,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardEight: {
-        name: "Larme",
+        name: "Queen Yggdrasil",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -449,7 +533,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardNine: {
-        name: "Draugur",
+        name: "Gemstone Golem",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -458,7 +542,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardTen: {
-        name: "Slugus",
+        name: "Bonemask",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -467,7 +551,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardEleven: {
-        name: "Renard",
+        name: "The Fallen",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -476,7 +560,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardTwelve: {
-        name: "Lacerta",
+        name: "Ancient Automaton",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -485,7 +569,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardThirteen: {
-        name: "Rhith",
+        name: "Celestial Beatrix",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -494,7 +578,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardFourteen: {
-        name: "Okolo",
+        name: "Alfadriel",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -503,7 +587,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardFifteen: {
-        name: "Pajaro",
+        name: "Son of Valhalla",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -512,7 +596,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardSixteen: {
-        name: "Veiviser",
+        name: "Astral Lich",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -521,7 +605,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardSeventeen: {
-        name: "Arania",
+        name: "Eldritch God",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -530,7 +614,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardEighteen: {
-        name: "Stir",
+        name: "Reaper Nihilo",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -540,7 +624,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardNineteen: {
-        name: "Nube",
+        name: "Golden Huanglong",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -549,7 +633,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardTwenty: {
-        name: "Ovum",
+        name: "Golden Ladon",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -558,7 +642,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardTwentyone: {
-        name: "Skape",
+        name: "Golden Emperor",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -568,7 +652,7 @@ class UserInterface extends Component {
       },
 
       cardTwentytwo: {
-        name: "Drysor",
+        name: "Nuckelavee",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -577,7 +661,7 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardTwentythree: {
-        name: "Lapis",
+        name: "Ilnoct",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
@@ -586,40 +670,12 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       },
       cardTwentyfour: {
-        name: "Maus",
+        name: "Hellhound Garm",
         level: 0,
         experienceCurrent: 0,
         experienceRequired: 3,
         bonusType: "bonusClickDamage",
         bonusImage: clickDamageImage,
-        currentBonusMultiplier: 0
-      },
-      cardTwentyfive: {
-        name: "Frango",
-        level: 0,
-        experienceCurrent: 0,
-        experienceRequired: 3,
-        bonusType: "bonusDamagePerSecond",
-        bonusImage: clickPerSecondDamageImage,
-        currentBonusMultiplier: 0
-      },
-      cardTwentysix: {
-        name: "Helovinas",
-        level: 0,
-        experienceCurrent: 0,
-        experienceRequired: 3,
-        bonusType: "bonusCoinDrop",
-        bonusImage: coinImage,
-        currentBonusMultiplier: 0
-      },
-      cardTwentyseven: {
-        name: "Diabolus",
-        level: 0,
-        experienceCurrent: 0,
-        experienceRequired: 3,
-        bonusType: "bonusCriticalChance",
-        bonusImage: criticalChanceImage,
-        basicBonusMultiplier: 1.01,
         currentBonusMultiplier: 0
       }
     },
@@ -641,114 +697,349 @@ class UserInterface extends Component {
     },
     pets: {
       petOne: {
+        name: "Cyber Slime",
         basicPrice: 250,
         upgradePrice: 250,
         upgradeLevel: 1,
-        damagePerSecondBase: 35,
-        damagePerSecondCurrent: 35,
-        damagePerSecondPlaceholder: 35
+        damagePerSecondBase: 25,
+        damagePerSecondCurrent: 25,
+        damagePerSecondPlaceholder: 25
       },
       petTwo: {
+        name: "Cyber Hawk",
         basicPrice: 1000,
-        firstPurchasePrice: 5000,
+        firstPurchasePrice: 1000,
         upgradePrice: 1000,
         upgradeLevel: 0,
-        damagePerSecondBase: 200,
+        damagePerSecondBase: 100,
         damagePerSecondCurrent: 0,
         damagePerSecondPlaceholder: 0
       },
       petThree: {
+        name: "Cybermancer",
         basicPrice: 2500,
-        firstPurchasePrice: 12500,
+        firstPurchasePrice: 2500,
         upgradePrice: 2500,
         upgradeLevel: 0,
-        damagePerSecondBase: 500,
+        damagePerSecondBase: 250,
         damagePerSecondCurrent: 0,
         damagePerSecondPlaceholder: 0
       },
       petFour: {
-        basicPrice: 20000,
-        firstPurchasePrice: 100000,
-        upgradePrice: 20000,
+        name: "Cyber Blader",
+        basicPrice: 10000,
+        firstPurchasePrice: 10000,
+        upgradePrice: 10000,
         upgradeLevel: 0,
-        damagePerSecondBase: 4000,
+        damagePerSecondBase: 1000,
         damagePerSecondCurrent: 0,
         damagePerSecondPlaceholder: 0
       },
       petFive: {
+        name: "Cyber Ogre",
+        basicPrice: 25000,
+        firstPurchasePrice: 25000,
+        upgradePrice: 25000,
+        upgradeLevel: 0,
+        damagePerSecondBase: 2500,
+        damagePerSecondCurrent: 0,
+        damagePerSecondPlaceholder: 0
+      },
+      petSix: {
+        name: "Cyber Pegasus",
         basicPrice: 50000,
-        firstPurchasePrice: 250000,
+        firstPurchasePrice: 50000,
         upgradePrice: 50000,
         upgradeLevel: 0,
+        damagePerSecondBase: 5000,
+        damagePerSecondCurrent: 0,
+        damagePerSecondPlaceholder: 0
+      },
+      petSeven: {
+        name: "Light Slime",
+        basicPrice: 100000,
+        firstPurchasePrice: 100000,
+        upgradePrice: 100000,
+        upgradeLevel: 0,
         damagePerSecondBase: 10000,
+        damagePerSecondCurrent: 0,
+        damagePerSecondPlaceholder: 0
+      },
+      petEight: {
+        name: "Light Snake",
+        basicPrice: 200000,
+        firstPurchasePrice: 200000,
+        upgradePrice: 200000,
+        upgradeLevel: 0,
+        damagePerSecondBase: 20000,
+        damagePerSecondCurrent: 0,
+        damagePerSecondPlaceholder: 0
+      },
+      petNine: {
+        name: "Light Wisp",
+        basicPrice: 500000,
+        firstPurchasePrice: 500000,
+        upgradePrice: 500000,
+        upgradeLevel: 0,
+        damagePerSecondBase: 50000,
+        damagePerSecondCurrent: 0,
+        damagePerSecondPlaceholder: 0
+      },
+      petTen: {
+        name: "Light Scholar",
+        basicPrice: 1000000,
+        firstPurchasePrice: 1000000,
+        upgradePrice: 1000000,
+        upgradeLevel: 0,
+        damagePerSecondBase: 100000,
+        damagePerSecondCurrent: 0,
+        damagePerSecondPlaceholder: 0
+      },
+      petEleven: {
+        name: "Light Wolf",
+        basicPrice: 2500000,
+        firstPurchasePrice: 2500000,
+        upgradePrice: 2500000,
+        upgradeLevel: 0,
+        damagePerSecondBase: 250000,
+        damagePerSecondCurrent: 0,
+        damagePerSecondPlaceholder: 0
+      },
+      petTwelve: {
+        name: "Light Devourer",
+        basicPrice: 5000000,
+        firstPurchasePrice: 5000000,
+        upgradePrice: 5000000,
+        upgradeLevel: 0,
+        damagePerSecondBase: 500000,
         damagePerSecondCurrent: 0,
         damagePerSecondPlaceholder: 0
       }
     },
     petDamageValueToBeRendered: 0,
     /* Enemy values */
-    enemyImages: [
-      enemyImageOne,
-      enemyImageTwo,
-      enemyImageThree,
-      enemyImageFour,
-      enemyImageFive,
-      enemyImageSix,
-      enemyImageSeven,
-      enemyImageEight,
-      enemyImageNine,
-      enemyImageTen,
-      enemyImageEleven,
-      enemyImageTwelve,
-      enemyImageThirteen,
-      enemyImageFourteen,
-      enemyImageFifteen,
-      enemyImageSixteen,
-      enemyImageSeventeen,
-      enemyImageEighteen,
-      enemyImageNineteen,
-      enemyImageTwenty,
-      enemyImageTwentyone,
-      enemyImageTwentytwo,
-      enemyImageTwentythree,
-      enemyImageTwentyfour,
-      enemyImageTwentyfive,
-      enemyImageTwentysix,
-      enemyImageTwentyseven
-    ],
-    enemyImageCurrent: enemyImageTwentytwo,
-    enemyNames: [
-      "Flager",
-      "Vilkas",
-      "Serpe",
-      "Escarab",
-      "Dudu",
-      "Plandai",
-      "Gomba",
-      "Larme",
-      "Draugur",
-      "Slugus",
-      "Renard",
-      "Lacerta",
-      "Rhith",
-      "Okolo",
-      "Pajaro",
-      "Veiviser",
-      "Arania",
-      "Stir",
-      "Nube",
-      "Ovum",
-      "Skape",
-      "Drysor",
-      "Lapis",
-      "Maus",
-      "Frango",
-      "Helovinas",
-      "Diabolus"
-    ],
-    bossImages: [bossImageOne, bossImageTwo, bossImageThree],
-    bossNames: ["Ira", "Superbia", "Avaritia"],
-    enemyNameCurrent: "Drysor",
+    enemyImages: {
+      greenForest: [
+        greenForestEnemyOne,
+        greenForestEnemyTwo,
+        greenForestEnemyThree,
+        greenForestEnemyFour,
+        greenForestEnemyFive,
+        greenForestEnemySix,
+        greenForestEnemySeven
+      ],
+      darkForest: [
+        darkForestEnemyOne,
+        darkForestEnemyTwo,
+        darkForestEnemyThree,
+        darkForestEnemyFour,
+        darkForestEnemyFive,
+        darkForestEnemySix,
+        darkForestEnemySeven,
+        darkForestEnemyEight
+      ],
+      magicForest: [
+        magicForestEnemyOne,
+        magicForestEnemyTwo,
+        magicForestEnemyThree,
+        magicForestEnemyFour,
+        magicForestEnemyFive,
+        magicForestEnemySix,
+        magicForestEnemySeven,
+        magicForestEnemyEight,
+        magicForestEnemyNine,
+        magicForestEnemyTen
+      ],
+      cityEntrance: [
+        cityEntranceEnemyOne,
+        cityEntranceEnemyTwo,
+        cityEntranceEnemyThree,
+        cityEntranceEnemyFour,
+        cityEntranceEnemyFive,
+        cityEntranceEnemySix,
+        cityEntranceEnemySeven,
+        cityEntranceEnemyEight
+      ],
+      forgottenRoad: [
+        forgottenRoadEnemyOne,
+        forgottenRoadEnemyTwo,
+        forgottenRoadEnemyThree,
+        forgottenRoadEnemyFour,
+        forgottenRoadEnemyFive,
+        forgottenRoadEnemySix,
+        forgottenRoadEnemySeven,
+        forgottenRoadEnemyEight,
+        forgottenRoadEnemyNine,
+        forgottenRoadEnemyTen
+      ],
+      hauntedMarketplace: [
+        hauntedMarketplaceEnemyOne,
+        hauntedMarketplaceEnemyTwo,
+        hauntedMarketplaceEnemyThree,
+        hauntedMarketplaceEnemyFour,
+        hauntedMarketplaceEnemyFive,
+        hauntedMarketplaceEnemySix,
+        hauntedMarketplaceEnemySeven,
+        hauntedMarketplaceEnemyEight,
+        hauntedMarketplaceEnemyNine
+      ],
+      goldenTemple: [
+        goldenTempleEnemyOne,
+        goldenTempleEnemyTwo,
+        goldenTempleEnemyThree,
+        goldenTempleEnemyFour,
+        goldenTempleEnemyFive,
+        goldenTempleEnemySix,
+        goldenTempleEnemySeven,
+        goldenTempleEnemyEight
+      ],
+      inferno: [
+        infernoEnemyOne,
+        infernoEnemyTwo,
+        infernoEnemyThree,
+        infernoEnemyFour,
+        infernoEnemyFive,
+        infernoEnemySix,
+        infernoEnemySeven,
+        infernoEnemyEight,
+        infernoEnemyNine,
+        infernoEnemyTen
+      ]
+    },
+    enemyImageCurrent: greenForestEnemyOne,
+    enemyNames: {
+      greenForest: [
+        "Fairy Filia",
+        "Grasshopper",
+        "Green Spider",
+        "Imperial Widow",
+        "Mothy",
+        "Shroomy",
+        "Spora"
+      ],
+      darkForest: [
+        "Dark Angel",
+        "Reaper",
+        "Banshee",
+        "Imp",
+        "Ghaul",
+        "Seeker",
+        "Succubus",
+        "Ogre"
+      ],
+      magicForest: [
+        "Earth Bull",
+        "Bush Wisp",
+        "Leaf Imp",
+        "Earth Lion",
+        "Mandrake",
+        "Rock Golem",
+        "Earth Snake",
+        "Earth Spawn",
+        "Earth Turtle",
+        "Earth Wisp"
+      ],
+      cityEntrance: [
+        "Goblin Archer",
+        "Goblin Elite",
+        "Goblin Grunt",
+        "Goblin Mage",
+        "Goblin Raider",
+        "Rogue Swordman",
+        "Rogue Monk",
+        "Rogue Assassin"
+      ],
+      forgottenRoad: [
+        "Elf Archer",
+        "Elf Assassin",
+        "Crossbow Elf",
+        "Dual Sword Elf",
+        "Elf Mage",
+        "Spear Elf",
+        "Sword Elf",
+        "Nature Linker",
+        "Rogue Elf",
+        "Spellcaster"
+      ],
+      hauntedMarketplace: [
+        "Gazers Eyewing",
+        "Gazers Skull",
+        "Tenteye",
+        "Ghostus",
+        "Knight Destrand",
+        "Knight Galpha",
+        "Knight Goliath",
+        "Ghost Puppet Pailo",
+        "Ghost Revelator"
+      ],
+      goldenTemple: [
+        "Axe Knight",
+        "Golden Axe Knight",
+        "Gunner Knight  ",
+        "Golden Gunner Knight",
+        "Spear Knight",
+        "Golden Spear Knight",
+        "Sword Knight",
+        "Golden Sword Knight"
+      ],
+      inferno: [
+        "Fire Bull",
+        "Fire Dragonspawn",
+        "Fire Lion",
+        "Fire Ogre",
+        "Fire Sabretooth",
+        "Fire Salamander",
+        "Fire Turtle",
+        "Volcanic Maiden",
+        "Fire Vulture",
+        "Fire Wisp"
+      ]
+    },
+    bossImages: {
+      greenForest: [
+        greenForestBossOne,
+        greenForestBossTwo,
+        greenForestBossThree
+      ],
+      darkForest: [darkForestBossOne, darkForestBossTwo, darkForestBossThree],
+      magicForest: [
+        magicForestBossOne,
+        magicForestBossTwo,
+        magicForestBossThree
+      ],
+      cityEntrance: [
+        cityEntranceBossOne,
+        cityEntranceBossTwo,
+        cityEntranceBossThree
+      ],
+      forgottenRoad: [
+        forgottenRoadBossOne,
+        forgottenRoadBossTwo,
+        forgottenRoadBossThree
+      ],
+      hauntedMarketplace: [
+        hauntedMarketplaceBossOne,
+        hauntedMarketplaceBossTwo,
+        hauntedMarketplaceBossThree
+      ],
+      goldenTemple: [
+        goldenTempleBossOne,
+        goldenTempleBossTwo,
+        goldenTempleBossThree
+      ],
+      inferno: [infernoBossOne, infernoBossTwo, infernoBossThree]
+    },
+    bossNames: {
+      greenForest: ["Rukkha", "Daidarabotchi", "Tellia"],
+      darkForest: ["Blood Feral", "Dark Queen Yoa", "Knight Remment"],
+      magicForest: ["Queen Rafflesia", "Queen Yggdrasil", "Gemstone Golem"],
+      cityEntrance: ["Bonemask", "The Fallen", "Ancient Automaton"],
+      forgottenRoad: ["Celestial Beatrix", "Alfadriel", "Son of Valhalla"],
+      hauntedMarketplace: ["Astral Lich", "Eldritch God", "Reaper Nihilo"],
+      goldenTemple: ["Golden Huanglong", "Golden Ladon", "Golden Emperor"],
+      inferno: ["Nuckelavee", "Ilnoct", "Hellhound Garm"]
+    },
+    enemyNameCurrent: "Fairy Filia",
     enemyLevel: 1,
     enemyIsBoss: false,
     enemyHasHealth: true,
@@ -759,6 +1050,7 @@ class UserInterface extends Component {
     enemyFoodHeld: 1,
     enemyFoodValue: 1,
     enemyAttack: 50,
+    enemySpawnTime: 500,
     /* Upgrade values */
     heroUpgrades: {
       clickDamage: {
@@ -852,7 +1144,7 @@ class UserInterface extends Component {
         duration: 40000,
         isReady: true,
         isActive: false,
-        damageMultiplier: 25,
+        damageMultiplier: 1.8,
         levelToUnlock: 12,
         levelsToUpgrade: [
           32,
@@ -939,6 +1231,9 @@ class UserInterface extends Component {
     heroMenuUpgradeSettingSelected: "X1",
     isPetPriceParagraphRendered: false,
     isHeroUpgradePriceParagraphRendered: false,
+    playerDamageParagraphsToBeRendered: [],
+    petDamageParagraphsToBeRendered: [],
+    hasPlayerAttacked: false,
     /* Value placeholders 
        (used when temporarily setting a value to a different one) */
     enemyAttackPlaceholder: 50,
@@ -947,12 +1242,82 @@ class UserInterface extends Component {
     playerAttackPlaceholder: 50,
     playerAttackPerSecondPlaceholder: 50,
     /* Global game settings */
+    currentScenario: "Green Forest",
+    allScenarios: [
+      "Green Forest",
+      "Dark Forest",
+      "Magic Forest",
+      "City Entrance",
+      "Forgotten Road",
+      "Haunted Marketplace",
+      "Golden Temple",
+      "Inferno"
+    ],
+    shouldRerender: {
+      petMenuParagraphs: {
+        petOne: false,
+        petTwo: false,
+        petThree: false,
+        petFour: false,
+        petFive: false,
+        petSix: false,
+        petSeven: false,
+        petEight: false,
+        petNine: false,
+        petTen: false,
+        petEleven: false,
+        petTwelve: false
+      }
+    },
     enemyAttackInterval: setInterval(() => {
       this.enemyAttack();
     }, 1000),
     playerAttackInterval: setInterval(() => {
+      this.addPetDamageRenderingItem();
       this.playerAttackPerSecond();
-    }, 500)
+    }, 500),
+    automaticProgressSave: setInterval(() => {
+      if (this.state.playerCanAttack) {
+        setTimeout(() => {
+          this.saveProgressToLocalStorage();
+        }, 0);
+      }
+    }, 15000),
+    // Check if the quests are completed
+    checkAllQuestsProgress: setInterval(() => {
+      // Enemies killed
+      this.checkIfQuestConditionsMet(
+        "enemiesKilled",
+        this.state.totalEnemiesKilled
+      );
+      // Player attacks
+      this.checkIfQuestConditionsMet(
+        "playerAttacks",
+        this.state.totalPlayerAttacks
+      );
+      // Player damage
+      this.checkIfQuestConditionsMet(
+        "playerDamageDealt",
+        this.state.totalPlayerDamageDealt
+      );
+      // Times healed
+      this.checkIfQuestConditionsMet("skillsUsed", this.state.totalSkillsUsed);
+      this.checkIfQuestConditionsMet(
+        "timesHealed",
+        this.state.totalTimesHealed
+      );
+      // Pet damage dealt
+      this.checkIfQuestConditionsMet(
+        "petDamageDealt",
+        this.state.totalPetDamageDealt
+      );
+      // Money earned
+      this.checkIfQuestConditionsMet(
+        "moneyEarned",
+        this.state.totalMoneyEarned
+      );
+    }, 1000)
+    // Pet price / pet damage / potential pet damage / pet level
   };
 
   // Card deck UI
@@ -1073,6 +1438,10 @@ class UserInterface extends Component {
   pushNewParagraphToBattleLog = newParagraph => {
     let newParagraphList = this.state.battleLogParagraphsToBeRendered;
     newParagraphList.unshift(newParagraph);
+    // If there are more than 20 paragraphs, pop one from the stack
+    if (newParagraphList.length >= 20) {
+      newParagraphList.pop();
+    }
     this.setState({
       renderParagraphToBattleLog: newParagraphList
     });
@@ -1183,11 +1552,7 @@ class UserInterface extends Component {
       petsMenuUpgradeSettingSelected: event.target.textContent,
       isPetPriceParagraphRendered: false
     });
-    setTimeout(() => {
-      this.setState({
-        isPetPriceParagraphRendered: true
-      });
-    }, 0);
+    this.forceRerenderPetParagraphs();
   };
 
   petLevelUpgradeByUserSettings = petNumber => {
@@ -1225,6 +1590,7 @@ class UserInterface extends Component {
         }
       }
     }
+    this.forceRerenderPetParagraphs();
   };
 
   petLevelUpgrade = petNumber => {
@@ -1283,12 +1649,12 @@ class UserInterface extends Component {
         // Increase pet damage
         pets[petNumber].damagePerSecondCurrent = Math.round(
           pets[petNumber].damagePerSecondBase *
-            Math.pow(1.05, pets[petNumber].upgradeLevel)
+            Math.pow(1.08, pets[petNumber].upgradeLevel)
         );
         // Increase pet damage
         pets[petNumber].damagePerSecondPlaceholder = Math.round(
           pets[petNumber].damagePerSecondBase *
-            Math.pow(1.05, pets[petNumber].upgradeLevel)
+            Math.pow(1.08, pets[petNumber].upgradeLevel)
         );
       } else {
         return false;
@@ -1319,7 +1685,7 @@ class UserInterface extends Component {
       // Add a kill to the counter
       this.setState({ stageEnemiesKilled: this.state.stageEnemiesKilled + 1 });
       // If the next stage is going to be the last one, make it a boss stage
-      if (this.state.stageEnemiesKilled === this.state.stageEnemiesToKill - 2) {
+      if (this.state.stageEnemiesKilled === this.state.stageEnemiesToKill - 1) {
         this.setState({ enemyIsBoss: true });
       }
     }
@@ -1357,10 +1723,35 @@ class UserInterface extends Component {
         // Reset the kill counter
         stageEnemiesKilled: 0
       });
-      // If the stage is a multiple of 5
-      if (this.state.stageCurrent % 5 === 0) {
-        // Set a new background
-        this.changeToRandomBackground();
+      // If the stage is a multiple of 10
+      if (this.state.stageCurrent % 10 === 0) {
+        if (this.state.stageCurrent < 80) {
+          // Set a new background
+          this.setState({
+            currentScenario: this.state.allScenarios[
+              this.state.allScenarios.indexOf(this.state.currentScenario) + 1
+            ]
+          });
+          // If the player reached the last stage
+        } else {
+          // Calculate a random scenario index
+          let randomScenarioIndex = Math.round(
+            Math.random() * this.state.allScenarios.length
+          );
+          // If the random index is a valid number
+          randomScenarioIndex >= 0 &&
+          randomScenarioIndex < this.state.allScenarios.length &&
+          // If the random index is not the same as the current scenario index
+          this.state.allScenarios[randomScenarioIndex] !==
+            this.state.allScenarios.indexOf(this.state.currentScenario)
+            ? // Set the current scenario to the randomly generated one
+              this.setState({
+                currentScenario: this.state.allScenarios[randomScenarioIndex]
+              })
+            : // Recursively call the function
+              this.playerStageAdvance();
+        }
+        this.changeToNextBackground();
       }
     }
   };
@@ -1388,7 +1779,7 @@ class UserInterface extends Component {
   /* Since every equipment has randomly generated stats, calls to calculateNewEquipmentStatsRange
      are meant to make the randomisation of these much easier.
 
-     basicStat => The basic stat of each weapon, such as [Daggers: 50] / [Maces: 75] / [Spears: 100]
+     basicStat => The basic stat of each weapon
      itemLevel => Used to calculate the basic value of the stat (basicStat * coefficient^itemLevel)
      increaseCoefficient => The steepness of the curve; a higher coefficient will lead to much higher numbers in the long run
      maxDifferenceMargin => How much is the object allowed to stray from the original values; expressed in percentage
@@ -1408,7 +1799,7 @@ class UserInterface extends Component {
   ) => {
     let statsValue = Math.round(
       // Calculate the power of the item
-      (basicStat + (basicStat / 100) * ((itemRarity + 1) * 9)) *
+      (basicStat + (basicStat / 100) * ((itemRarity * 3 + 1) * 9)) *
         Math.pow(increaseCoefficient, itemLevel) +
         ((basicStat * Math.pow(increaseCoefficient, itemLevel)) / 100) *
           (this.calculateRandomDropChance(50)
@@ -1465,24 +1856,24 @@ class UserInterface extends Component {
   calculateNewItemRarity = () => {
     // Random number between 0 and 100
     let randomItemRarity = Math.round(Math.random() * 100);
-    // 50% chance of common
-    if (randomItemRarity <= 50) {
+    // 70% chance of common
+    if (randomItemRarity <= 70) {
       return 0;
     }
-    // 30% chance of uncommon
-    if (randomItemRarity > 50 && randomItemRarity <= 80) {
+    // 15% chance of uncommon
+    if (randomItemRarity > 70 && randomItemRarity <= 85) {
       return 1;
     }
-    // 12% chance of special
-    if (randomItemRarity > 80 && randomItemRarity <= 92) {
+    // 10% chance of special
+    if (randomItemRarity > 85 && randomItemRarity <= 95) {
       return 2;
     }
-    // 5% chance of rare
-    if (randomItemRarity > 92 && randomItemRarity <= 97) {
+    // 4% chance of rare
+    if (randomItemRarity > 95 && randomItemRarity <= 99) {
       return 3;
     }
-    // 3% chance of legendary
-    if (randomItemRarity > 97 && randomItemRarity <= 100) {
+    // 1% chance of legendary
+    if (randomItemRarity > 99 && randomItemRarity <= 100) {
       return 4;
     }
   };
@@ -1497,8 +1888,8 @@ class UserInterface extends Component {
      */
   generateNewEquipmentDropByType = type => {
     let equipmentToBeCollected = { ...this.state.equipmentToBeCollected };
-    // Generate a random number between 1 - 100
-    let randomNumber = Math.round(Math.random() * 3);
+    // Generate a random number which represents the kind of equipment found
+    let randomNumber = Math.round(Math.random() * 5);
     let randomItemRarity = this.calculateNewItemRarity();
     /* Weapon Drop */
     if (type === "weapon") {
@@ -1516,7 +1907,7 @@ class UserInterface extends Component {
         itemLevel: this.calculateNewEquipmentDropLevel(),
         itemIsEquipped: false,
         itemValue: this.calculateNewEquipmentStatsRange(
-          1000,
+          500,
           this.state.enemyLevel,
           1.05,
           5,
@@ -1526,12 +1917,12 @@ class UserInterface extends Component {
       // Weapon Type #1 - Dagger
       if (randomNumber <= 1) {
         equipmentPiece.itemName = "Training Dagger";
-        equipmentPiece.itemImage = swordOneImage;
+        equipmentPiece.itemImage = daggerOneImage;
         equipmentPiece.itemDescription =
           "A weak weapon with great attack speed";
         equipmentPiece.itemStats = {
           bonusAttack: this.calculateNewEquipmentStatsRange(
-            100,
+            25 * Math.pow(1.04, this.state.enemyLevel),
             equipmentPiece.itemLevel,
             1.05,
             3,
@@ -1561,7 +1952,7 @@ class UserInterface extends Component {
           "A sturdy weapon which balances damage and attack speed";
         equipmentPiece.itemStats = {
           bonusAttack: this.calculateNewEquipmentStatsRange(
-            150,
+            50 * Math.pow(1.04, this.state.enemyLevel),
             equipmentPiece.itemLevel,
             1.05,
             3,
@@ -1583,15 +1974,15 @@ class UserInterface extends Component {
           )
         };
       }
-      // Weapon Type #3 - Spear
+      // Weapon Type #3 - Axe
       if (randomNumber > 2 && randomNumber <= 3) {
-        equipmentPiece.itemName = "Training Spear";
-        equipmentPiece.itemImage = spearOneImage;
+        equipmentPiece.itemName = "Training Axe";
+        equipmentPiece.itemImage = axeOneImage;
         equipmentPiece.itemDescription =
-          "A long spear with great critical capabilities";
+          "A long Axe with great critical capabilities";
         equipmentPiece.itemStats = {
           bonusAttack: this.calculateNewEquipmentStatsRange(
-            200,
+            75 * Math.pow(1.04, this.state.enemyLevel),
             equipmentPiece.itemLevel,
             1.05,
             3,
@@ -1606,6 +1997,66 @@ class UserInterface extends Component {
           ),
           bonusCriticalChance: this.calculateNewEquipmentStatsRange(
             1.26,
+            equipmentPiece.itemLevel,
+            1.013,
+            3,
+            randomItemRarity
+          )
+        };
+      }
+      // Weapon Type #4 - Sword
+      if (randomNumber > 3 && randomNumber <= 4) {
+        equipmentPiece.itemName = "Training Sword";
+        equipmentPiece.itemImage = swordOneImage;
+        equipmentPiece.itemDescription =
+          "A sword which balances attack speed and damage";
+        equipmentPiece.itemStats = {
+          bonusAttack: this.calculateNewEquipmentStatsRange(
+            50 * Math.pow(1.04, this.state.enemyLevel),
+            equipmentPiece.itemLevel,
+            1.05,
+            3,
+            randomItemRarity
+          ),
+          bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
+            1.75,
+            equipmentPiece.itemLevel,
+            1.01,
+            3,
+            randomItemRarity
+          ),
+          bonusCriticalChance: this.calculateNewEquipmentStatsRange(
+            0.8,
+            equipmentPiece.itemLevel,
+            1.013,
+            3,
+            randomItemRarity
+          )
+        };
+      }
+      // Weapon Type #5 - Bow
+      if (randomNumber > 4 && randomNumber <= 5) {
+        equipmentPiece.itemName = "Training Bow";
+        equipmentPiece.itemImage = bowOneImage;
+        equipmentPiece.itemDescription =
+          "A bow with incredible damage but slow speed and critical capabilities";
+        equipmentPiece.itemStats = {
+          bonusAttack: this.calculateNewEquipmentStatsRange(
+            125 * Math.pow(1.04, this.state.enemyLevel),
+            equipmentPiece.itemLevel,
+            1.05,
+            3,
+            randomItemRarity
+          ),
+          bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
+            0.1,
+            equipmentPiece.itemLevel,
+            1.01,
+            3,
+            randomItemRarity
+          ),
+          bonusCriticalChance: this.calculateNewEquipmentStatsRange(
+            0.1,
             equipmentPiece.itemLevel,
             1.013,
             3,
@@ -1650,10 +2101,7 @@ class UserInterface extends Component {
       );
 
       // Level up attack count
-      if (
-        skills[skillNumber] === "skillOne" ||
-        skills[skillNumber] === "skillFour"
-      ) {
+      if (skillNumber === "skillOne" || skillNumber === "skillFour") {
         if (
           skills[skillNumber].numberOfAttacksLevelsToUpgrade.includes(
             this.state.playerLevel
@@ -1664,31 +2112,33 @@ class UserInterface extends Component {
       }
 
       // Skill #1
-      if (skills[skillNumber] === "skillOne") {
+      if (skillNumber === "skillOne") {
         skills[skillNumber].damageMultiplier =
           // Round to 2 decimals max (if applies)
-          Math.round(2 * Math.pow(1.2, this.state.heroSkillOneLevel) * 100) /
-          100;
+          Math.round(
+            2 * Math.pow(1.2, this.state.skills.skillOne.level) * 100
+          ) / 100;
       }
 
       // Skill #2
-      if (skills[skillNumber] === "skillTwo") {
-        skills[skillNumber].damageMultiplier =
-          Math.round(2 * Math.pow(1.1, this.state.heroSkillTwoLevel) * 100) /
-          100;
-      }
-      // Skill #3
-      if (skills[skillNumber] === "skillThree") {
+      if (skillNumber === "skillTwo") {
         skills[skillNumber].damageMultiplier =
           Math.round(
-            2.5 * Math.pow(1.1, this.state.heroSkillThreeLevel) * 100
+            2 * Math.pow(1.1, this.state.skills.skillTwo.level) * 100
           ) / 100;
       }
-      // Skill #4
-      if (skills[skillNumber] === "skillFour") {
+      // Skill #3
+      if (skillNumber === "skillThree") {
         skills[skillNumber].damageMultiplier =
-          Math.round(1.5 * Math.pow(1.2, this.state.heroSkillFourLevel) * 100) /
+          Math.round(1.8 * Math.pow(1.06, skills[skillNumber].level) * 100) /
           100;
+      }
+      // Skill #4
+      if (skillNumber === "skillFour") {
+        skills[skillNumber].damageMultiplier =
+          Math.round(
+            1.5 * Math.pow(1.2, this.state.skills.skillFour.level) * 100
+          ) / 100;
       }
     }
     this.setState({ skills });
@@ -1750,14 +2200,70 @@ class UserInterface extends Component {
     this.checkSkillForLevelUp("skillFour");
   };
 
+  // Player damage
+  addPlayerDamageRenderingItem = () => {
+    // If the enemy has health
+    if (this.state.enemyHasHealth) {
+      this.setState(state => ({
+        playerDamageParagraphsToBeRendered: [
+          ...state.playerDamageParagraphsToBeRendered,
+          { id: Date.now() }
+        ]
+      }));
+    }
+  };
+
+  removePlayerDamageRenderingItem = id => {
+    this.setState(state => ({
+      playerDamageParagraphsToBeRendered: state.playerDamageParagraphsToBeRendered.filter(
+        ({ id: itemid }) => itemid !== id
+      )
+    }));
+  };
+
+  // Pet damage
+  addPetDamageRenderingItem = () => {
+    // If the enemy has health
+    if (this.state.enemyHasHealth) {
+      this.setState(state => ({
+        petDamageParagraphsToBeRendered: [
+          ...state.petDamageParagraphsToBeRendered,
+          { id: Date.now() }
+        ]
+      }));
+    }
+  };
+  removePetDamageRenderingItem = id => {
+    this.setState(state => ({
+      petDamageParagraphsToBeRendered: state.petDamageParagraphsToBeRendered.filter(
+        ({ id: itemid }) => itemid !== id
+      )
+    }));
+  };
+
+  // Scale the image whenever the player attacks using the keyboard shortcuts
+  scaleEnemyImageOnPlayerAttack = () => {
+    this.setState({ hasPlayerAttacked: true });
+    setTimeout(() => {
+      this.setState({ hasPlayerAttacked: false });
+    }, 25);
+  };
+
   // Get the input from the keyboard, document-wide
   handleGlobalKeyboardInput = event => {
     // Use [W/E] to attack
-    if (event.key === "w" || event.key === "e") {
+    if (
+      event.key === "w" ||
+      event.key === "W" ||
+      event.key === "e" ||
+      event.key === "E"
+    ) {
+      this.addPlayerDamageRenderingItem();
       this.playerAttack();
+      this.scaleEnemyImageOnPlayerAttack();
     }
     // Use [H] to heal
-    if (event.key === "h") {
+    if (event.key === "h" || event.key === "H") {
       this.playerHeal();
     }
     // Use [1,2,3,4] to use skills
@@ -1773,7 +2279,7 @@ class UserInterface extends Component {
     if (event.key === "4") {
       this.playerUseActiveSkill("skillFour");
     }
-    if (event.key === "d") {
+    if (event.key === "d" || event.key === "D") {
       this.setState({
         isDebugModeActive: !this.state.isDebugModeActive,
         leftMenuSettingSelected: "Hero"
@@ -1840,21 +2346,20 @@ class UserInterface extends Component {
       });
     }
 
-    // If there are more than 50 uncollected drops
-    if (this.state.coinsToBeCollected + this.state.foodToBeCollected > 40) {
+    // If there are more than 15 uncollected drops
+    if (this.state.coinsToBeCollected + this.state.foodToBeCollected > 15) {
       // Collect all of them
       this.collectCoinsOnHover();
       this.collectFoodOnHover();
+      this.collectEquipmentOnHover();
     }
 
     /* SURE drops - things which are guaranteed, and WILL drop */
     // Give coins, 100% chance
     let coinsDroppedByEnemy;
     if (
-      // If the enemy is a Drysor enemy
-      this.state.enemyNameCurrent === "Drysor" ||
       // If the enemy is a boss
-      this.state.bossNames.includes(this.state.enemyNameCurrent)
+      this.state.enemyIsBoss
     ) {
       // Give 15 coins
       coinsDroppedByEnemy = 15;
@@ -1917,11 +2422,6 @@ class UserInterface extends Component {
     );
     // Update player stats
     this.setState({ totalEnemiesKilled: this.state.totalEnemiesKilled + 1 });
-    // Check if the quests are completed
-    this.checkIfQuestConditionsMet(
-      "enemiesKilled",
-      this.state.totalEnemiesKilled
-    );
 
     setTimeout(() => {
       // Generate a new enemy
@@ -1929,21 +2429,18 @@ class UserInterface extends Component {
         // Enemy level is the same as current stage /+ 1
         Math.round(this.state.stageCurrent + Math.random())
       );
-      // If the enemy was a boss, change it back to normal
-      if (this.state.enemyIsBoss) {
-        this.setState({ enemyIsBoss: false });
-      }
       // Update the player stage, if applicable
       this.playerStageProgress();
       // Set the player attack and DPS back to the origin values
       this.setState({
         playerCanAttack: true
       });
-      setTimeout(() => {
-        this.saveProgressToLocalStorage();
-      }, 0);
       // After 0.5 seconds
-    }, 500);
+    }, this.state.enemySpawnTime);
+    // If the enemy was a boss, change it back to normal
+    if (this.state.enemyIsBoss) {
+      this.setState({ enemyIsBoss: false });
+    }
   };
 
   // Calculate the final chance in % of landing a double attack
@@ -1993,12 +2490,19 @@ class UserInterface extends Component {
   calculateDamagePerSecondAllSources = () => {
     if (this.state.skills.skillTwo.isActive) {
       return (
-        (this.state.pets.petOne.damagePerSecondCurrent +
-          this.state.pets.petTwo.damagePerSecondCurrent +
-          this.state.pets.petThree.damagePerSecondCurrent +
-          this.state.pets.petFour.damagePerSecondCurrent +
-          this.state.pets.petFive.damagePerSecondCurrent) *
-        this.state.skills.skillTwo.damageMultiplier
+        this.state.pets.petOne.damagePerSecondCurrent +
+        this.state.pets.petTwo.damagePerSecondCurrent +
+        this.state.pets.petThree.damagePerSecondCurrent +
+        this.state.pets.petFour.damagePerSecondCurrent +
+        this.state.pets.petFive.damagePerSecondCurrent +
+        this.state.pets.petSix.damagePerSecondCurrent +
+        this.state.pets.petSeven.damagePerSecondCurrent +
+        this.state.pets.petEight.damagePerSecondCurrent +
+        this.state.pets.petNine.damagePerSecondCurrent +
+        this.state.pets.petTen.damagePerSecondCurrent +
+        this.state.pets.petEleven.damagePerSecondCurrent +
+        this.state.pets.petTwelve.damagePerSecondCurrent *
+          this.state.skills.skillTwo.damageMultiplier
       );
     } else
       return (
@@ -2006,7 +2510,14 @@ class UserInterface extends Component {
         this.state.pets.petTwo.damagePerSecondCurrent +
         this.state.pets.petThree.damagePerSecondCurrent +
         this.state.pets.petFour.damagePerSecondCurrent +
-        this.state.pets.petFive.damagePerSecondCurrent
+        this.state.pets.petFive.damagePerSecondCurrent +
+        this.state.pets.petSix.damagePerSecondCurrent +
+        this.state.pets.petSeven.damagePerSecondCurrent +
+        this.state.pets.petEight.damagePerSecondCurrent +
+        this.state.pets.petNine.damagePerSecondCurrent +
+        this.state.pets.petTen.damagePerSecondCurrent +
+        this.state.pets.petEleven.damagePerSecondCurrent +
+        this.state.pets.petTwelve.damagePerSecondCurrent
       );
   };
 
@@ -2020,7 +2531,7 @@ class UserInterface extends Component {
     // Randomise the damage by +/- 25%
     totalDamage +=
       (totalDamage / 100) *
-      (Math.random() * 25 * (Math.random() * 100 >= 50 ? 1 : -1));
+      (Math.random() * 25 * (Math.random() >= 0.5 ? 1 : -1));
     // If double hit
     if (this.calculateDoubleAttackChanceAllSources() >= Math.random() * 101) {
       playerLastAttack.isDouble = true;
@@ -2036,7 +2547,10 @@ class UserInterface extends Component {
     } else {
       playerLastAttack.isCritical = false;
     }
-    playerLastAttack.damage = Math.round(totalDamage);
+    // Store a reference to the last attack
+    playerLastAttack.damage = this.renderNumberWithAbbreviations(
+      Math.round(totalDamage)
+    );
     this.setState({ playerLastAttack });
     return Math.round(totalDamage);
   };
@@ -2045,26 +2559,13 @@ class UserInterface extends Component {
   playerAttack = () => {
     // If the enemy is not in the process of respawning
     if (this.state.playerCanAttack) {
+      let damageDealt = this.calculateClickDamageAfterMultipliers();
       this.setState({
         // Remove the player damage from the enemy's health
-        enemyHealthCurrent:
-          this.state.enemyHealthCurrent -
-          this.calculateClickDamageAfterMultipliers(),
-        totalPlayerAttacks: this.state.totalPlayerAttacks + 1
+        enemyHealthCurrent: this.state.enemyHealthCurrent - damageDealt,
+        totalPlayerAttacks: this.state.totalPlayerAttacks + 1,
+        totalPlayerDamageDealt: this.state.totalPlayerDamageDealt + damageDealt
       });
-      this.setState({
-        totalPlayerDamageDealt:
-          this.state.totalPlayerDamageDealt + this.state.playerLastAttack.damage
-      });
-      // After every attack, check if the quests are completed
-      this.checkIfQuestConditionsMet(
-        "playerAttacks",
-        this.state.totalPlayerAttacks
-      );
-      this.checkIfQuestConditionsMet(
-        "playerDamageDealt",
-        this.state.totalPlayerDamageDealt
-      );
       if (
         // When enemy is dead
         this.state.enemyHealthCurrent <= 0 &&
@@ -2092,7 +2593,11 @@ class UserInterface extends Component {
       if (
         this.state.hasOwnProperty(key) &&
         key !== "battleLogParagraphsToBeRendered" &&
-        key !== "enemyHasHealth"
+        key !== "enemyHasHealth" &&
+        key !== "enemyAttackInterval" &&
+        key !== "playerAttackInterval" &&
+        key !== "petDamageParagraphsToBeRendered" &&
+        key !== "playerDamageParagraphsToBeRendered"
       ) {
         // Get the key's value from localStorage
         let value = JSON.parse(localStorage.getItem(key));
@@ -2118,8 +2623,11 @@ class UserInterface extends Component {
         }
         // If the skill level is higher than Lv. 1
       } else {
-        // Initiate a new variable to store the level of the skill
         let skillLevelStorage = 0;
+        if (playerLevel > skills[skill].levelToUnlock) {
+          skillLevelStorage = 1;
+        }
+        // Initiate a new variable to store the level of the skill
         // Find the level of the skill and assign it to skillLevelStorage
         skills[skill].level = skills[skill].levelsToUpgrade.reduce(
           (total, value) => {
@@ -2172,6 +2680,25 @@ class UserInterface extends Component {
       }
     }
     this.setState({ skills });
+    // Reinitialise all renderers
+    setTimeout(() => {
+      this.forceRerenderPetParagraphs();
+    }, 0);
+  };
+
+  // Cause a forced rerendering of pets' values
+  forceRerenderPetParagraphs = () => {
+    let shouldRerender = { ...this.state.shouldRerender };
+    for (let petNumber in shouldRerender.petMenuParagraphs) {
+      shouldRerender.petMenuParagraphs[petNumber] = true;
+    }
+    this.setState({ shouldRerender });
+    setTimeout(() => {
+      for (let petNumber in shouldRerender.petMenuParagraphs) {
+        shouldRerender.petMenuParagraphs[petNumber] = false;
+        this.setState({ shouldRerender });
+      }
+    }, 100);
   };
 
   playerUseActiveSkill = skillNumber => {
@@ -2304,8 +2831,6 @@ class UserInterface extends Component {
 
     // Update the stats counter
     this.setState({ totalSkillsUsed: this.state.totalSkillsUsed + 1 });
-    // Check if the quests are completed
-    this.checkIfQuestConditionsMet("skillsUsed", this.state.totalSkillsUsed);
   };
 
   // Heal the player using food
@@ -2361,11 +2886,6 @@ class UserInterface extends Component {
       );
       // Update the stats
       this.setState({ totalTimesHealed: this.state.totalTimesHealed + 1 });
-      // Check if the quests are completed
-      this.checkIfQuestConditionsMet(
-        "timesHealed",
-        this.state.totalTimesHealed
-      );
     }
   };
 
@@ -2375,22 +2895,22 @@ class UserInterface extends Component {
     // Randomise the damage by +/- 25%
     damageDealt +=
       (damageDealt / 100) *
-      (Math.random() * 25 * (Math.random() * 100 >= 50 ? 1 : -1));
+      (Math.random() * 25 * (Math.random() * 1 >= 0.5 ? 1 : -1));
     // Store a reference in the state of the random number generate to be rendered in petVisualDamage.jsx
-    this.setState({ petDamageValueToBeRendered: damageDealt });
+    this.setState({
+      petDamageValueToBeRendered: this.renderNumberWithAbbreviations(
+        Math.round(damageDealt / 2)
+      )
+    });
+    damageDealt = Math.round(damageDealt);
     // If the enemy is not respawning
-    if (this.state.playerAttackPerSecond !== 0) {
+    if (this.state.playerCanAttack) {
       this.setState({
         // Damage the enemy by the amount of player DPS
         enemyHealthCurrent: this.state.enemyHealthCurrent - damageDealt,
         // Update player stats
         totalPetDamageDealt: this.state.totalPetDamageDealt + damageDealt
       });
-      // Check if the quests are completed
-      this.checkIfQuestConditionsMet(
-        "petDamageDealt",
-        this.state.totalPetDamageDealt
-      );
       if (
         // If enemy is dead
         this.state.enemyHealthCurrent <= 1 &&
@@ -2439,22 +2959,39 @@ class UserInterface extends Component {
 
   // Create a new random enemy type from the ones available
   generateRandomEnemyIdentity = () => {
-    // If the enemy is a normal field enemy, and not a boss
+    let currentStageIndex = this.state.allScenarios.indexOf(
+      this.state.currentScenario
+    );
+
+    // Normal enemy
     if (!this.state.enemyIsBoss) {
-      // Generate a random number between 0 and 26
-      let randomNumber = Math.round(Math.random() * 26);
+      let possibleEnemiesInStage = this.state.enemyImages[
+        Object.keys(this.state.enemyImages)[currentStageIndex]
+      ].length;
+      let randomEnemyIndex = Math.floor(Math.random() * possibleEnemiesInStage);
       this.setState({
         // And use the random number to get a new random enemy (image and name)
-        enemyImageCurrent: this.state.enemyImages[randomNumber],
-        enemyNameCurrent: this.state.enemyNames[randomNumber]
+        enemyImageCurrent: this.state.enemyImages[
+          Object.keys(this.state.enemyImages)[currentStageIndex]
+        ][randomEnemyIndex],
+        enemyNameCurrent: this.state.enemyNames[
+          Object.keys(this.state.enemyImages)[currentStageIndex]
+        ][randomEnemyIndex]
       });
+      // Boss enemy
     } else {
-      // Generate a random number between 0 and 3
-      let randomNumber = Math.round(Math.random() * 2);
+      let possibleBossesInStage = this.state.bossImages[
+        Object.keys(this.state.enemyImages)[currentStageIndex]
+      ].length;
+      let randomBossIndex = Math.floor(Math.random() * possibleBossesInStage);
       this.setState({
         // And use the random number to get a new random enemy (image and name)
-        enemyImageCurrent: this.state.bossImages[randomNumber],
-        enemyNameCurrent: this.state.bossNames[randomNumber]
+        enemyImageCurrent: this.state.bossImages[
+          Object.keys(this.state.bossImages)[currentStageIndex]
+        ][randomBossIndex],
+        enemyNameCurrent: this.state.bossNames[
+          Object.keys(this.state.bossImages)[currentStageIndex]
+        ][randomBossIndex]
       });
     }
   };
@@ -2463,45 +3000,49 @@ class UserInterface extends Component {
      The parameter 'level' is used to generate values which are balanced all-over 
   */
   generateNewEnemy = level => {
-    // Create a new identity for the next enemy
-    this.generateRandomEnemyIdentity();
-    // If the enemy is not a boss
-    if (!this.state.enemyIsBoss) {
-      this.setState({
-        // Reinitialise the values of the new enemy
-        enemyHasHealth: true,
-        enemyLevel: level,
-        enemyExperienceHeld: Math.round(25 * Math.pow(1.08, level)),
-        enemyHealthCurrent: Math.round(500 * Math.pow(1.11, level)),
-        enemyHealthMax: Math.round(500 * Math.pow(1.11, level)),
-        enemyAttack: Math.round(50 * Math.pow(1.045, level)),
-        enemyCoinsValue: Math.round(25 * Math.pow(1.05, level)),
-        // Reinitialise the values of the player
-        playerHealthCurrent: this.state.playerHealthMax
-      });
-      // If the enemy is a boss
-    } else {
-      this.setState({
-        // Reinitialise the values of the new enemy
-        enemyHasHealth: true,
-        enemyLevel: this.state.stageCurrent,
-        enemyExperienceHeld: Math.round(
-          25 * Math.pow(1.08, this.state.stageCurrent)
-        ),
-        enemyHealthCurrent: Math.round(
-          2500 * Math.pow(1.11, this.state.stageCurrent)
-        ),
-        enemyHealthMax: Math.round(
-          2500 * Math.pow(1.11, this.state.stageCurrent)
-        ),
-        enemyAttack: Math.round(50 * Math.pow(1.045, this.state.stageCurrent)),
-        enemyCoinsValue: Math.round(
-          100 * Math.pow(1.05, this.state.stageCurrent)
-        ),
-        // Reinitialise the values of the player
-        playerHealthCurrent: this.state.playerHealthMax
-      });
-    }
+    setTimeout(() => {
+      // Create a new identity for the next enemy
+      this.generateRandomEnemyIdentity();
+      // If the enemy is not a boss
+      if (!this.state.enemyIsBoss) {
+        this.setState({
+          // Reinitialise the values of the new enemy
+          enemyHasHealth: true,
+          enemyLevel: level,
+          enemyExperienceHeld: Math.round(25 * Math.pow(1.08, level)),
+          enemyHealthCurrent: Math.round(500 * Math.pow(1.11, level)),
+          enemyHealthMax: Math.round(500 * Math.pow(1.11, level)),
+          enemyAttack: Math.round(50 * Math.pow(1.045, level)),
+          enemyCoinsValue: Math.round(25 * Math.pow(1.05, level)),
+          // Reinitialise the values of the player
+          playerHealthCurrent: this.state.playerHealthMax
+        });
+        // If the enemy is a boss
+      } else {
+        this.setState({
+          // Reinitialise the values of the new enemy
+          enemyHasHealth: true,
+          enemyLevel: this.state.stageCurrent,
+          enemyExperienceHeld: Math.round(
+            25 * Math.pow(1.08, this.state.stageCurrent)
+          ),
+          enemyHealthCurrent: Math.round(
+            2500 * Math.pow(1.11, this.state.stageCurrent)
+          ),
+          enemyHealthMax: Math.round(
+            2500 * Math.pow(1.11, this.state.stageCurrent)
+          ),
+          enemyAttack: Math.round(
+            50 * Math.pow(1.045, this.state.stageCurrent)
+          ),
+          enemyCoinsValue: Math.round(
+            100 * Math.pow(1.05, this.state.stageCurrent)
+          ),
+          // Reinitialise the values of the player
+          playerHealthCurrent: this.state.playerHealthMax
+        });
+      }
+    }, 0);
   };
 
   // Equip the player with all items who's isItemEquipped boolean resolves to true
@@ -2666,12 +3207,6 @@ class UserInterface extends Component {
         // Prevent coins spawned after to also be animated
         isCoinCollected: false
       });
-
-      // Check if the quests are completed
-      this.checkIfQuestConditionsMet(
-        "moneyEarned",
-        this.state.totalMoneyEarned
-      );
     }, 500);
   };
 
@@ -2773,7 +3308,7 @@ class UserInterface extends Component {
   giveItemDebug = itemName => {
     // Increase coins
     if (itemName === "coins") {
-      this.setState({ coins: this.state.coins + 1000000 });
+      this.setState({ coins: this.state.coins + 1000000000 });
     }
     // Increase potions
     if (itemName === "potions") {
@@ -2795,6 +3330,10 @@ class UserInterface extends Component {
       localStorage.clear();
       document.location.reload(true);
     }
+    // Set enemy spawn no-delay
+    if (itemName === "enemySpawnNoDelay") {
+      this.setState({ enemySpawnTime: 0 });
+    }
   };
 
   /* Inventory UI*/
@@ -2806,22 +3345,15 @@ class UserInterface extends Component {
     this.setState({ tutorialScreenSettingSelected: event.target.textContent });
   };
 
-  changeToRandomBackground = () => {
-    let randomImageNumber = Math.round(Math.random() * 5);
-    // If the current background image is not the same as the new randomised one
-    if (
-      this.state.backgroundImageCurrent !==
-      this.state.backgroundImages[randomImageNumber]
-    ) {
-      // Update the background image
-      this.setState({
-        backgroundImageCurrent: this.state.backgroundImages[randomImageNumber]
-      });
-      // If the new random image is the same as the current one
-    } else {
-      // Recursively call the function until the picture is different
-      this.changeToRandomBackground();
-    }
+  changeToNextBackground = () => {
+    let backgroundImageIndex = this.state.allScenarios.indexOf(
+      this.state.currentScenario
+    );
+
+    // Update the background image
+    this.setState({
+      backgroundImageCurrent: this.state.backgroundImages[backgroundImageIndex]
+    });
   };
 
   renderBackgroundImage = () => {
@@ -2847,23 +3379,19 @@ class UserInterface extends Component {
   renderNumberWithAbbreviations = number => {
     // 1k - 999k
     if (number >= 1000 && number < 1000000) {
-      return Math.sign(number) * (Math.abs(number) / 1000).toFixed(1) + "k";
+      return (number / 1000).toFixed(1) + "k";
     }
     // 1m - 999m
     if (number >= 1000000 && number < 1000000000) {
-      return Math.sign(number) * (Math.abs(number) / 1000000).toFixed(1) + "m";
+      return (number / 1000000).toFixed(1) + "m";
     }
     // 1b - 999b
     if (number >= 1000000000 && number < 1000000000000) {
-      return (
-        Math.sign(number) * (Math.abs(number) / 1000000000).toFixed(1) + "b"
-      );
+      return (number / 1000000000).toFixed(1) + "b";
     }
     // 1t - 999t
     if (number >= 1000000000000 && number < 1000000000000000) {
-      return (
-        Math.sign(number) * (Math.abs(number) / 1000000000000).toFixed(1) + "t"
-      );
+      return (number / 1000000000000).toFixed(1) + "t";
     } else {
       return number;
     }
@@ -2943,6 +3471,10 @@ class UserInterface extends Component {
           collectFoodOnHover={this.collectFoodOnHover}
           collectLootBagOnHover={this.collectLootBagOnHover}
           collectEquipmentOnHover={this.collectEquipmentOnHover}
+          addPlayerDamageRenderingItem={this.addPlayerDamageRenderingItem}
+          removePlayerDamageRenderingItem={this.removePlayerDamageRenderingItem}
+          addPetDamageRenderingItem={this.addPetDamageRenderingItem}
+          removePetDamageRenderingItem={this.removePetDamageRenderingItem}
           playerAttack={this.playerAttack}
           playerHeal={this.playerHeal}
           calculateRandomDropChance={this.calculateRandomDropChance}

@@ -10,9 +10,6 @@ import doubleAttackImage from "../img/doubleAttack_1.png";
 import criticalMultiplierImage from "../img/critical_1.png";
 import criticalChanceImage from "../img/critical_2.png";
 import clickDamageImage from "../img/hero_upgrade_1.png";
-import enemyImageTwo from "../img/enemy_2.png";
-import enemyImageThree from "../img/enemy_3.png";
-import enemyImageFour from "../img/enemy_4.png";
 import hotkeysIcon from "../img/hotkeysIcon.png";
 
 class TutorialScreen extends Component {
@@ -264,9 +261,6 @@ class TutorialScreen extends Component {
         return (
           <div>
             <h5 className="tutorialScreen-h5 text-primary">Pets</h5>
-            <img src={enemyImageTwo} className="tutorialScreen-image" />
-            <img src={enemyImageThree} className="tutorialScreen-image" />
-            <img src={enemyImageFour} className="tutorialScreen-image" />
             <p className="tutorialScreen-p">
               Pets are amazing creatures which fight alongside you throughout
               your adventure!

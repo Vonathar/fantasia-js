@@ -9,57 +9,45 @@ import resourceTwoImage from "../img/resource_2.png";
 import resourceThreeImage from "../img/resource_3.png";
 
 class BattleArea extends Component {
-  state = {
-    playerDamageParagraphsToBeRendered: [],
-    petDamageParagraphsToBeRendered: []
-  };
   // Drop new coins on the floor
   renderCoinDrop = () => {
     // If the coins have not already been collected
-    if (!this.props.mainState.isCoinCollected) {
-      // Animate them so that they drop down from the enemy image
-      return "userInterface-enemy-drop-coin userInterface-enemy-drop-coin-appear";
-      // If the coins have been collected
-    } else {
-      // Animate them so that they move towards the inventory
-      return "userInterface-enemy-drop-coin userInterface-enemy-drop-coin-collect";
-    }
+    return !this.props.mainState.isCoinCollected
+      ? // Animate them so that they drop down from the enemy image
+        "userInterface-enemy-drop-coin userInterface-enemy-drop-coin-appear"
+      : // If the coins have been collected
+        // Animate them so that they move towards the inventory
+        "userInterface-enemy-drop-coin userInterface-enemy-drop-coin-collect";
   };
 
   // Drop new coins on the floor
   renderFoodDrop = () => {
     // Only when coins have not been collected
-    if (!this.props.mainState.isFoodCollected) {
-      // Animate them so that they drop down from the enemy image
-      return "userInterface-enemy-drop-food userInterface-enemy-drop-food-appear";
-    } else {
-      // Animate them so that they move towards the inventory
-      return "userInterface-enemy-drop-food userInterface-enemy-drop-food-collect";
-    }
+    return !this.props.mainState.isFoodCollected
+      ? // Animate them so that they drop down from the enemy image
+        "userInterface-enemy-drop-food userInterface-enemy-drop-food-appear"
+      : // Animate them so that they move towards the inventory
+        "userInterface-enemy-drop-food userInterface-enemy-drop-food-collect";
   };
 
   // Drop new lootbags on the floor
   renderLootBagDrop = () => {
     // Only when lootbags have not been collected
-    if (!this.props.mainState.isLootBagCollected) {
-      // Animate them so that they drop down from the enemy image
-      return "userInterface-enemy-drop-food userInterface-enemy-drop-food-appear";
-    } else {
-      // Animate them so that they move towards the inventory
-      return "userInterface-enemy-drop-food userInterface-enemy-drop-food-collect";
-    }
+    return !this.props.mainState.isLootBagCollected
+      ? // Animate them so that they drop down from the enemy image
+        "userInterface-enemy-drop-food userInterface-enemy-drop-food-appear"
+      : // Animate them so that they move towards the inventory
+        "userInterface-enemy-drop-food userInterface-enemy-drop-food-collect";
   };
 
   // Drop new equipment on the floor
   renderEquipmentDrop = () => {
     // Only when equipment has not been collected
-    if (!this.props.mainState.isEquipmentCollected) {
-      // Animate them so that they drop down from the enemy image
-      return "userInterface-enemy-drop-coin userInterface-enemy-drop-coin-appear";
-    } else {
-      // Animate them so that they move towards the inventory
-      return "userInterface-enemy-drop-coin userInterface-enemy-drop-coin-collect";
-    }
+    return !this.props.mainState.isEquipmentCollected
+      ? // Animate them so that they drop down from the enemy image
+        "userInterface-enemy-drop-coin userInterface-enemy-drop-coin-appear"
+      : // Animate them so that they move towards the inventory
+        "userInterface-enemy-drop-coin userInterface-enemy-drop-coin-collect";
   };
 
   // Create new coins dropped
@@ -148,104 +136,22 @@ class BattleArea extends Component {
 
   // Animate the enemy's image between active and dead
   renderEnemyImageClass = () => {
-    // If the enemy is alive
-    if (this.props.mainState.enemyHasHealth) {
-      // Animate it on hover and on click
-      return "userInterface-enemy-image scale scale-click";
-      // If the enemy is dead
-    } else {
-      // Animate it's death
-      return "userInterface-enemy-image userInterface-enemy-image-dead";
-    }
+    let classes = "mx-auto my-auto ";
+    classes += this.props.mainState.enemyIsBoss
+      ? "userInterface-boss-image "
+      : "userInterface-enemy-image ";
+    classes += this.props.mainState.enemyHasHealth
+      ? "scale scale-click "
+      : "userInterface-enemy-image-dead ";
+    classes += this.props.mainState.hasPlayerAttacked
+      ? "scale scale-attack"
+      : "";
+    return classes;
   };
-  // Player HP progress bar
-  renderPlayerProgressHp = () => {
-    // Obtain the player health in percentage
-    let playerHealthPercentage = Math.round(
-      this.props.mainState.playerHealthCurrent *
-        (100 / this.props.mainState.playerHealthMax)
-    );
-    // Set the bar's width according to the percentage of health remaining
-    return (
-      "progress-bar bg-danger progress-bar-striped progress-bar-animated progress" +
-      playerHealthPercentage
-    );
-  };
-
-  // Player XP progress bar
-  renderPlayerProgressXp = () => {
-    // Obtain the player experience in percentage
-    let playerExperiencePercentage = Math.round(
-      this.props.mainState.playerExperienceCurrent *
-        (100 / this.props.mainState.playerExperienceRequired)
-    );
-    // Set the bar's width according to the percentage of experience
-    return (
-      "progress-bar bg-success progress-bar-striped progress-bar-animated progress" +
-      playerExperiencePercentage
-    );
-  };
-
-  /* Visual Damage rendering */
-  // Player damage
-  addPlayerDamageRenderingItem = () => {
-    // If the enemy has health
-    if (this.props.mainState.enemyHasHealth) {
-      this.setState(state => ({
-        playerDamageParagraphsToBeRendered: [
-          ...state.playerDamageParagraphsToBeRendered,
-          { id: Date.now() }
-        ]
-      }));
-    }
-  };
-  removePlayerDamageRenderingItem = id => {
-    this.setState(state => ({
-      playerDamageParagraphsToBeRendered: state.playerDamageParagraphsToBeRendered.filter(
-        ({ id: itemid }) => itemid !== id
-      )
-    }));
-  };
-
-  // Pet damage
-  addPetDamageRenderingItem = () => {
-    // If the enemy has health
-    if (this.props.mainState.enemyHasHealth) {
-      this.setState(state => ({
-        petDamageParagraphsToBeRendered: [
-          ...state.petDamageParagraphsToBeRendered,
-          { id: Date.now() }
-        ]
-      }));
-    }
-  };
-  removePetDamageRenderingItem = id => {
-    this.setState(state => ({
-      petDamageParagraphsToBeRendered: state.petDamageParagraphsToBeRendered.filter(
-        ({ id: itemid }) => itemid !== id
-      )
-    }));
-  };
-
-  handleGlobalKeyboardInput = event => {
-    // Use [W/E] to attack
-    if (event.key === "w" || event.key === "e") {
-      if (this.props.mainState.enemyHasHealth) {
-        this.addPlayerDamageRenderingItem();
-      }
-    }
-  };
-
-  componentDidMount() {
-    document.addEventListener("keyup", this.handleGlobalKeyboardInput, false);
-    setInterval(() => {
-      this.addPetDamageRenderingItem();
-    }, 500);
-  }
 
   render() {
-    const { playerDamageParagraphsToBeRendered } = this.state;
-    const { petDamageParagraphsToBeRendered } = this.state;
+    const { playerDamageParagraphsToBeRendered } = this.props.mainState;
+    const { petDamageParagraphsToBeRendered } = this.props.mainState;
     return (
       <div id="userInterface-battle-div">
         <div id="userInterface-player-div">
@@ -278,16 +184,18 @@ class BattleArea extends Component {
           />
         </div>
         <div id="userInterface-enemy-div">
-          <img
-            alt="enemy"
-            draggable="false"
-            className={this.renderEnemyImageClass()}
-            src={this.props.mainState.enemyImageCurrent}
-            onClick={() => {
-              this.props.playerAttack();
-              this.addPlayerDamageRenderingItem();
-            }}
-          />
+          <div id="userInterface-enemy-image-container">
+            <img
+              alt="enemy"
+              draggable="false"
+              className={this.renderEnemyImageClass()}
+              src={this.props.mainState.enemyImageCurrent}
+              onClick={() => {
+                this.props.playerAttack();
+                this.props.addPlayerDamageRenderingItem();
+              }}
+            />
+          </div>
           <div id="userInterface-enemy-paragraph">
             <p>
               Lv. {this.props.mainState.enemyLevel}{" "}
@@ -301,24 +209,18 @@ class BattleArea extends Component {
             value={this.props.mainState.enemyHealthCurrent}
           />
           {/* Player visual damage */}
-          <div
-            id="playerVisualDamageContainer-div"
-            onClick={this.addPlayerDamageRenderingItem}
-          >
+          <div id="playerVisualDamageContainer-div">
             {playerDamageParagraphsToBeRendered.map(item => (
               <PlayerVisualDamage
                 mainState={this.props.mainState}
                 calculateClickDamageAllSources={
                   this.props.calculateClickDamageAllSources
                 }
-                renderNumberWithAbbreviations={
-                  this.props.renderNumberWithAbbreviations
-                }
                 key={item.id}
                 {...item}
-                onDone={this.removePlayerDamageRenderingItem}
-                delay={1000}
-                duration={1000}
+                onDone={this.props.removePlayerDamageRenderingItem}
+                delay={500}
+                duration={500}
               />
             ))}
           </div>
@@ -333,14 +235,11 @@ class BattleArea extends Component {
                 calculateDamagePerSecondAllSources={
                   this.props.calculateDamagePerSecondAllSources
                 }
-                renderNumberWithAbbreviations={
-                  this.props.renderNumberWithAbbreviations
-                }
                 key={item.id}
                 {...item}
-                onDone={this.removePlayerDamageRenderingItem}
-                delay={1000}
-                duration={1000}
+                onDone={this.props.removePetDamageRenderingItem}
+                delay={500}
+                duration={500}
               />
             ))}
           </div>

@@ -3,14 +3,87 @@ import React, { Component } from "react";
 import coinImageOne from "../img/coin_1.png";
 /* [IMG] Player */
 import clickPerSecondDamageImage from "../img/dps_1.png";
-/* [IMG] Enemy */
-import enemyImageOne from "../img/enemy_1.png";
-import enemyImageTwo from "../img/enemy_2.png";
-import enemyImageThree from "../img/enemy_3.png";
-import enemyImageFour from "../img/enemy_4.png";
-import enemyImageFive from "../img/enemy_5.png";
-
+/* [IMG] Pets */
+import petOneImage from "../img/pets/pet_1.png";
+import petTwoImage from "../img/pets/pet_2.png";
+import petThreeImage from "../img/pets/pet_3.png";
+import petFourImage from "../img/pets/pet_4.png";
+import petFiveImage from "../img/pets/pet_5.png";
+import petSixImage from "../img/pets/pet_6.png";
+import petSevenImage from "../img/pets/pet_7.png";
+import petEightImage from "../img/pets/pet_8.png";
+import petNineImage from "../img/pets/pet_9.png";
+import petTenImage from "../img/pets/pet_10.png";
+import petElevenImage from "../img/pets/pet_11.png";
+import petTwelveImage from "../img/pets/pet_12.png";
 class PetsMenu extends Component {
+  state = {
+    prices: {
+      petOne: 250,
+      petTwo: 1000,
+      petThree: 2500,
+      petFour: 10000,
+      petFive: 25000,
+      petSix: 50000,
+      petSeven: 100000,
+      petEight: 250000,
+      petNine: 500000,
+      petTen: 1000000,
+      petEleven: 2500000,
+      petTwelve: 5000000
+    },
+    pricesAbbreviated: {
+      petOne: 250,
+      petTwo: 1000,
+      petThree: 2500,
+      petFour: 10000,
+      petFive: 25000,
+      petSix: 50000,
+      petSeven: 100000,
+      petEight: 250000,
+      petNine: 500000,
+      petTen: 1000000,
+      petEleven: 2500000,
+      petTwelve: 5000000
+    },
+    damageValuesAfterUpgrade: {
+      petOne: 250,
+      petTwo: 1000,
+      petThree: 2500,
+      petFour: 10000,
+      petFive: 25000,
+      petSix: 50000,
+      petSeven: 100000,
+      petEight: 250000,
+      petNine: 500000,
+      petTen: 1000000,
+      petEleven: 2500000,
+      petTwelve: 5000000
+    },
+    damageValuesCurrent: {
+      petOne: 0,
+      petTwo: 0,
+      petThree: 0,
+      petFour: 0,
+      petFive: 0,
+      petSix: 0,
+      petSeven: 0,
+      petEight: 0,
+      petNine: 0,
+      petTen: 0,
+      petEleven: 0,
+      petTwelve: 0
+    },
+    checkForRerendering: setInterval(() => {
+      for (let petNumber in this.props.mainState.shouldRerender
+        .petMenuParagraphs) {
+        if (this.props.mainState.shouldRerender.petMenuParagraphs[petNumber]) {
+          this.checkIfParagraphsNeedRerendering();
+          break;
+        }
+      }
+    }, 50)
+  };
   calculatePetPriceByUpgradeSetting = petNumber => {
     let { upgradeLevel, firstPurchasePrice, upgradePrice, basicPrice } = {
       ...this.props.mainState.pets[petNumber]
@@ -89,7 +162,29 @@ class PetsMenu extends Component {
         }
       }
     }
-    return totalPrice;
+    let prices = { ...this.state.prices };
+    let pricesAbbreviated = { ...this.state.pricesAbbreviated };
+    prices[petNumber] = totalPrice;
+    pricesAbbreviated[petNumber] = this.props.renderNumberWithAbbreviations(
+      totalPrice
+    );
+    this.setState({ prices, pricesAbbreviated });
+  };
+
+  checkIfParagraphsNeedRerendering = () => {
+    for (let petNumber in this.state.prices) {
+      if (this.props.mainState.shouldRerender.petMenuParagraphs[petNumber]) {
+        this.calculatePetPriceByUpgradeSetting(petNumber);
+        this.calculatePetDamageAfterUpgradeSetting(petNumber);
+      }
+    }
+    let damageValuesCurrent = { ...this.state.damageValuesCurrent };
+    for (let petNumber in damageValuesCurrent) {
+      damageValuesCurrent[petNumber] = this.props.renderNumberWithAbbreviations(
+        this.props.mainState.pets[petNumber].damagePerSecondCurrent
+      );
+    }
+    this.setState({ damageValuesCurrent });
   };
 
   // Render the button classes based on whether the user has enough money to buy the upgrade
@@ -97,8 +192,7 @@ class PetsMenu extends Component {
     let classes = "";
     // Available for purchase or not
     classes +=
-      this.props.mainState.coins >=
-      this.calculatePetPriceByUpgradeSetting(petNumber)
+      this.props.mainState.coins >= this.state.prices[petNumber]
         ? "userInterface-pets-pet-button btn btn-dark mx-auto"
         : "userInterface-pets-pet-button-disabled btn btn-dark mx-auto";
     return classes;
@@ -120,7 +214,7 @@ class PetsMenu extends Component {
         if (upgradeLevel % 5 === 4) {
           damagePerSecondBase *= 1.25;
         }
-        totalDamage += damagePerSecondBase * Math.pow(1.05, upgradeLevel + 1);
+        totalDamage += damagePerSecondBase * Math.pow(1.08, upgradeLevel + 1);
       }
       upgradeLevel++;
       // X5 Upgrades
@@ -135,9 +229,9 @@ class PetsMenu extends Component {
           if (upgradeLevel % 5 === 4) {
             damagePerSecondBase *= 1.25;
           }
-          totalDamage = damagePerSecondBase * Math.pow(1.05, upgradeLevel + 1);
+          totalDamage = damagePerSecondBase * Math.pow(1.08, upgradeLevel + 1);
           damagePerSecondCurrent +=
-            damagePerSecondBase * Math.pow(1.05, upgradeLevel);
+            damagePerSecondBase * Math.pow(1.08, upgradeLevel);
           upgradeLevel++;
         }
       }
@@ -153,9 +247,9 @@ class PetsMenu extends Component {
           if (upgradeLevel % 5 === 4) {
             damagePerSecondBase *= 1.25;
           }
-          totalDamage = damagePerSecondBase * Math.pow(1.05, upgradeLevel + 1);
+          totalDamage = damagePerSecondBase * Math.pow(1.08, upgradeLevel + 1);
           damagePerSecondCurrent +=
-            damagePerSecondBase * Math.pow(1.05, upgradeLevel);
+            damagePerSecondBase * Math.pow(1.08, upgradeLevel);
           upgradeLevel++;
         }
       }
@@ -175,19 +269,24 @@ class PetsMenu extends Component {
           if (upgradeLevel % 5 === 4) {
             damagePerSecondBase *= 1.25;
           }
-          totalDamage = damagePerSecondBase * Math.pow(1.05, upgradeLevel + 1);
+          totalDamage = damagePerSecondBase * Math.pow(1.08, upgradeLevel + 1);
           damagePerSecondCurrent +=
-            damagePerSecondBase * Math.pow(1.05, upgradeLevel);
+            damagePerSecondBase * Math.pow(1.08, upgradeLevel);
           upgradeLevel++;
         }
       }
     }
-    return this.props.renderNumberWithAbbreviations(
+
+    let damageValuesAfterUpgrade = { ...this.state.damageValuesAfterUpgrade };
+    damageValuesAfterUpgrade[
+      petNumber
+    ] = this.props.renderNumberWithAbbreviations(
       Math.round(
         totalDamage -
           this.props.mainState.pets[petNumber].damagePerSecondCurrent
       )
     );
+    this.setState({ damageValuesAfterUpgrade });
   };
 
   renderUpgradeSettingsButtonClasses = option => {
@@ -235,12 +334,18 @@ class PetsMenu extends Component {
         {/* Pet 1 */}
         <div className="userInterface-pets-pet-div">
           <div className="userInterface-pets-pet-div-holder">
-            <img
-              draggable="false"
-              alt="pet"
-              src={enemyImageOne}
-              className="userInterface-pets-pet-image"
-            />
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petOneImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petOne.name}
+            </small>
+            <br />
             <small className="userInterface-pets-pet-name">
               Lv. {this.props.mainState.pets.petOne.upgradeLevel}
             </small>
@@ -253,16 +358,11 @@ class PetsMenu extends Component {
               src={clickPerSecondDamageImage}
             />
             {/* The attack which would be added to the pet after the upgrade */}
-            {this.props.renderNumberWithAbbreviations(
-              this.props.mainState.pets.petOne.damagePerSecondCurrent
-            )}{" "}
-            (+
-            {this.calculatePetDamageAfterUpgradeSetting("petOne")})
+            {this.state.damageValuesCurrent.petOne} (+
+            {this.state.damageValuesAfterUpgrade.petOne})
           </small>
           <small className="userInterface-pets-pet-price mx-auto">
-            {this.props.renderNumberWithAbbreviations(
-              this.calculatePetPriceByUpgradeSetting("petOne")
-            )}
+            {this.state.pricesAbbreviated.petOne}
             <img
               draggable="false"
               alt="coin"
@@ -284,12 +384,18 @@ class PetsMenu extends Component {
         {/* Pet 2 */}
         <div className="userInterface-pets-pet-div">
           <div className="userInterface-pets-pet-div-holder">
-            <img
-              draggable="false"
-              alt="pet"
-              src={enemyImageTwo}
-              className="userInterface-pets-pet-image"
-            />
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petTwoImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petTwo.name}
+            </small>
+            <br />
             <small className="userInterface-pets-pet-name">
               Lv. {this.props.mainState.pets.petTwo.upgradeLevel}
             </small>
@@ -302,16 +408,11 @@ class PetsMenu extends Component {
               src={clickPerSecondDamageImage}
             />
             {/* The attack which would be added to the pet after the upgrade */}
-            {this.props.renderNumberWithAbbreviations(
-              this.props.mainState.pets.petTwo.damagePerSecondCurrent
-            )}{" "}
-            (+
-            {this.calculatePetDamageAfterUpgradeSetting("petTwo")})
+            {this.state.damageValuesCurrent.petTwo} (+
+            {this.state.damageValuesAfterUpgrade.petTwo})
           </small>
           <small className="userInterface-pets-pet-price mx-auto">
-            {this.props.renderNumberWithAbbreviations(
-              this.calculatePetPriceByUpgradeSetting("petTwo")
-            )}
+            {this.state.pricesAbbreviated.petTwo}
             <img
               draggable="false"
               alt="coin"
@@ -332,12 +433,18 @@ class PetsMenu extends Component {
         {/* Pet 3 */}
         <div className="userInterface-pets-pet-div">
           <div className="userInterface-pets-pet-div-holder">
-            <img
-              draggable="false"
-              alt="pet"
-              src={enemyImageThree}
-              className="userInterface-pets-pet-image"
-            />
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petThreeImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petThree.name}
+            </small>
+            <br />
             <small className="userInterface-pets-pet-name">
               Lv. {this.props.mainState.pets.petThree.upgradeLevel}
             </small>
@@ -350,16 +457,11 @@ class PetsMenu extends Component {
               src={clickPerSecondDamageImage}
             />
             {/* The attack which would be added to the pet after the upgrade */}
-            {this.props.renderNumberWithAbbreviations(
-              this.props.mainState.pets.petThree.damagePerSecondCurrent
-            )}{" "}
-            (+
-            {this.calculatePetDamageAfterUpgradeSetting("petThree")})
+            {this.state.damageValuesCurrent.petThree} (+
+            {this.state.damageValuesAfterUpgrade.petThree})
           </small>
           <small className="userInterface-pets-pet-price mx-auto">
-            {this.props.renderNumberWithAbbreviations(
-              this.calculatePetPriceByUpgradeSetting("petThree")
-            )}
+            {this.state.pricesAbbreviated.petThree}
             <img
               draggable="false"
               alt="coin"
@@ -380,12 +482,18 @@ class PetsMenu extends Component {
         {/* Pet 4 */}
         <div className="userInterface-pets-pet-div">
           <div className="userInterface-pets-pet-div-holder">
-            <img
-              draggable="false"
-              alt="pet"
-              src={enemyImageFour}
-              className="userInterface-pets-pet-image"
-            />
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petFourImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petFour.name}
+            </small>
+            <br />
             <small className="userInterface-pets-pet-name">
               Lv. {this.props.mainState.pets.petFour.upgradeLevel}
             </small>
@@ -398,16 +506,11 @@ class PetsMenu extends Component {
               src={clickPerSecondDamageImage}
             />
             {/* The attack which would be added to the pet after the upgrade */}
-            {this.props.renderNumberWithAbbreviations(
-              this.props.mainState.pets.petFour.damagePerSecondCurrent
-            )}{" "}
-            (+
-            {this.calculatePetDamageAfterUpgradeSetting("petFour")})
+            {this.state.damageValuesCurrent.petFour} (+
+            {this.state.damageValuesAfterUpgrade.petFour})
           </small>
           <small className="userInterface-pets-pet-price mx-auto">
-            {this.props.renderNumberWithAbbreviations(
-              this.calculatePetPriceByUpgradeSetting("petFour")
-            )}
+            {this.state.pricesAbbreviated.petFour}
             <img
               draggable="false"
               alt="coin"
@@ -428,12 +531,18 @@ class PetsMenu extends Component {
         {/* Pet 5 */}
         <div className="userInterface-pets-pet-div">
           <div className="userInterface-pets-pet-div-holder">
-            <img
-              draggable="false"
-              alt="pet"
-              src={enemyImageFive}
-              className="userInterface-pets-pet-image"
-            />
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petFiveImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petFive.name}
+            </small>
+            <br />
             <small className="userInterface-pets-pet-name">
               Lv. {this.props.mainState.pets.petFive.upgradeLevel}
             </small>
@@ -446,16 +555,11 @@ class PetsMenu extends Component {
               src={clickPerSecondDamageImage}
             />
             {/* The attack which would be added to the pet after the upgrade */}
-            {this.props.renderNumberWithAbbreviations(
-              this.props.mainState.pets.petFive.damagePerSecondCurrent
-            )}{" "}
-            (+
-            {this.calculatePetDamageAfterUpgradeSetting("petFive")})
+            {this.state.damageValuesCurrent.petFive} (+
+            {this.state.damageValuesAfterUpgrade.petFive})
           </small>
           <small className="userInterface-pets-pet-price mx-auto">
-            {this.props.renderNumberWithAbbreviations(
-              this.calculatePetPriceByUpgradeSetting("petFive")
-            )}
+            {this.state.pricesAbbreviated.petFive}
             <img
               draggable="false"
               alt="coin"
@@ -468,6 +572,349 @@ class PetsMenu extends Component {
             class={this.renderPetButtonClass("petFive")}
             onClick={() => {
               this.props.petLevelUpgradeByUserSettings("petFive");
+            }}
+          >
+            +
+          </button>
+        </div>
+        {/* Pet 6 */}
+        <div className="userInterface-pets-pet-div">
+          <div className="userInterface-pets-pet-div-holder">
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petSixImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petSix.name}
+            </small>
+            <br />
+            <small className="userInterface-pets-pet-name">
+              Lv. {this.props.mainState.pets.petSix.upgradeLevel}
+            </small>
+          </div>
+          <small className="userInterface-pets-pet-dps mx-auto">
+            <img
+              className="userInterface-pets-pet-dps-child"
+              draggable="false"
+              alt="click per second"
+              src={clickPerSecondDamageImage}
+            />
+            {/* The attack which would be added to the pet after the upgrade */}
+            {this.state.damageValuesCurrent.petSix} (+
+            {this.state.damageValuesAfterUpgrade.petSix})
+          </small>
+          <small className="userInterface-pets-pet-price mx-auto">
+            {this.state.pricesAbbreviated.petSix}
+            <img
+              draggable="false"
+              alt="coin"
+              className="userInterface-pets-pet-price-image"
+              src={coinImageOne}
+            />
+          </small>
+          <button
+            type="button"
+            class={this.renderPetButtonClass("petSix")}
+            onClick={() => {
+              this.props.petLevelUpgradeByUserSettings("petSix");
+            }}
+          >
+            +
+          </button>
+        </div>
+        {/* Pet 7 */}
+        <div className="userInterface-pets-pet-div">
+          <div className="userInterface-pets-pet-div-holder">
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petSevenImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petSeven.name}
+            </small>
+            <br />
+            <small className="userInterface-pets-pet-name">
+              Lv. {this.props.mainState.pets.petSeven.upgradeLevel}
+            </small>
+          </div>
+          <small className="userInterface-pets-pet-dps mx-auto">
+            <img
+              className="userInterface-pets-pet-dps-child"
+              draggable="false"
+              alt="click per second"
+              src={clickPerSecondDamageImage}
+            />
+            {/* The attack which would be added to the pet after the upgrade */}
+            {this.state.damageValuesCurrent.petSeven} (+
+            {this.state.damageValuesAfterUpgrade.petSeven})
+          </small>
+          <small className="userInterface-pets-pet-price mx-auto">
+            {this.state.pricesAbbreviated.petSeven}
+            <img
+              draggable="false"
+              alt="coin"
+              className="userInterface-pets-pet-price-image"
+              src={coinImageOne}
+            />
+          </small>
+          <button
+            type="button"
+            class={this.renderPetButtonClass("petSeven")}
+            onClick={() => {
+              this.props.petLevelUpgradeByUserSettings("petSeven");
+            }}
+          >
+            +
+          </button>
+        </div>
+        {/* Pet 8 */}
+        <div className="userInterface-pets-pet-div">
+          <div className="userInterface-pets-pet-div-holder">
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petEightImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petEight.name}
+            </small>
+            <br />
+            <small className="userInterface-pets-pet-name">
+              Lv. {this.props.mainState.pets.petEight.upgradeLevel}
+            </small>
+          </div>
+          <small className="userInterface-pets-pet-dps mx-auto">
+            <img
+              className="userInterface-pets-pet-dps-child"
+              draggable="false"
+              alt="click per second"
+              src={clickPerSecondDamageImage}
+            />
+            {/* The attack which would be added to the pet after the upgrade */}
+            {this.state.damageValuesCurrent.petEight} (+
+            {this.state.damageValuesAfterUpgrade.petEight})
+          </small>
+          <small className="userInterface-pets-pet-price mx-auto">
+            {this.state.pricesAbbreviated.petEight}
+            <img
+              draggable="false"
+              alt="coin"
+              className="userInterface-pets-pet-price-image"
+              src={coinImageOne}
+            />
+          </small>
+          <button
+            type="button"
+            class={this.renderPetButtonClass("petEight")}
+            onClick={() => {
+              this.props.petLevelUpgradeByUserSettings("petEight");
+            }}
+          >
+            +
+          </button>
+        </div>
+        {/* Pet 9 */}
+        <div className="userInterface-pets-pet-div">
+          <div className="userInterface-pets-pet-div-holder">
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petNineImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petNine.name}
+            </small>
+            <br />
+            <small className="userInterface-pets-pet-name">
+              Lv. {this.props.mainState.pets.petNine.upgradeLevel}
+            </small>
+          </div>
+          <small className="userInterface-pets-pet-dps mx-auto">
+            <img
+              className="userInterface-pets-pet-dps-child"
+              draggable="false"
+              alt="click per second"
+              src={clickPerSecondDamageImage}
+            />
+            {/* The attack which would be added to the pet after the upgrade */}
+            {this.state.damageValuesCurrent.petNine} (+
+            {this.state.damageValuesAfterUpgrade.petNine})
+          </small>
+          <small className="userInterface-pets-pet-price mx-auto">
+            {this.state.pricesAbbreviated.petNine}
+            <img
+              draggable="false"
+              alt="coin"
+              className="userInterface-pets-pet-price-image"
+              src={coinImageOne}
+            />
+          </small>
+          <button
+            type="button"
+            class={this.renderPetButtonClass("petNine")}
+            onClick={() => {
+              this.props.petLevelUpgradeByUserSettings("petNine");
+            }}
+          >
+            +
+          </button>
+        </div>
+        {/* Pet 10 */}
+        <div className="userInterface-pets-pet-div">
+          <div className="userInterface-pets-pet-div-holder">
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petTenImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petTen.name}
+            </small>
+            <br />
+            <small className="userInterface-pets-pet-name">
+              Lv. {this.props.mainState.pets.petTen.upgradeLevel}
+            </small>
+          </div>
+          <small className="userInterface-pets-pet-dps mx-auto">
+            <img
+              className="userInterface-pets-pet-dps-child"
+              draggable="false"
+              alt="click per second"
+              src={clickPerSecondDamageImage}
+            />
+            {/* The attack which would be added to the pet after the upgrade */}
+            {this.state.damageValuesCurrent.petTen} (+
+            {this.state.damageValuesAfterUpgrade.petTen})
+          </small>
+          <small className="userInterface-pets-pet-price mx-auto">
+            {this.state.pricesAbbreviated.petTen}
+            <img
+              draggable="false"
+              alt="coin"
+              className="userInterface-pets-pet-price-image"
+              src={coinImageOne}
+            />
+          </small>
+          <button
+            type="button"
+            class={this.renderPetButtonClass("petTen")}
+            onClick={() => {
+              this.props.petLevelUpgradeByUserSettings("petTen");
+            }}
+          >
+            +
+          </button>
+        </div>
+        {/* Pet 11 */}
+        <div className="userInterface-pets-pet-div">
+          <div className="userInterface-pets-pet-div-holder">
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petElevenImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petEleven.name}
+            </small>
+            <br />
+            <small className="userInterface-pets-pet-name">
+              Lv. {this.props.mainState.pets.petEleven.upgradeLevel}
+            </small>
+          </div>
+          <small className="userInterface-pets-pet-dps mx-auto">
+            <img
+              className="userInterface-pets-pet-dps-child"
+              draggable="false"
+              alt="click per second"
+              src={clickPerSecondDamageImage}
+            />
+            {/* The attack which would be added to the pet after the upgrade */}
+            {this.state.damageValuesCurrent.petEleven} (+
+            {this.state.damageValuesAfterUpgrade.petEleven})
+          </small>
+          <small className="userInterface-pets-pet-price mx-auto">
+            {this.state.pricesAbbreviated.petEleven}
+            <img
+              draggable="false"
+              alt="coin"
+              className="userInterface-pets-pet-price-image"
+              src={coinImageOne}
+            />
+          </small>
+          <button
+            type="button"
+            class={this.renderPetButtonClass("petEleven")}
+            onClick={() => {
+              this.props.petLevelUpgradeByUserSettings("petEleven");
+            }}
+          >
+            +
+          </button>
+        </div>
+        {/* Pet 12 */}
+        <div className="userInterface-pets-pet-div">
+          <div className="userInterface-pets-pet-div-holder">
+            <div className="userInterface-pets-pet-image-container">
+              <img
+                draggable="false"
+                alt="pet"
+                src={petTwelveImage}
+                className="userInterface-pets-pet-image mx-auto my-auto"
+              />
+            </div>
+            <small className="userInterface-pets-pet-name">
+              {this.props.mainState.pets.petTwelve.name}
+            </small>
+            <br />
+            <small className="userInterface-pets-pet-name">
+              Lv. {this.props.mainState.pets.petTwelve.upgradeLevel}
+            </small>
+          </div>
+          <small className="userInterface-pets-pet-dps mx-auto">
+            <img
+              className="userInterface-pets-pet-dps-child"
+              draggable="false"
+              alt="click per second"
+              src={clickPerSecondDamageImage}
+            />
+            {/* The attack which would be added to the pet after the upgrade */}
+            {this.state.damageValuesCurrent.petTwelve} (+
+            {this.state.damageValuesAfterUpgrade.petTwelve})
+          </small>
+          <small className="userInterface-pets-pet-price mx-auto">
+            {this.state.pricesAbbreviated.petTwelve}
+            <img
+              draggable="false"
+              alt="coin"
+              className="userInterface-pets-pet-price-image"
+              src={coinImageOne}
+            />
+          </small>
+          <button
+            type="button"
+            class={this.renderPetButtonClass("petTwelve")}
+            onClick={() => {
+              this.props.petLevelUpgradeByUserSettings("petTwelve");
             }}
           >
             +
