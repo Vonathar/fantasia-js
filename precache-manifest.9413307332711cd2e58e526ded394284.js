@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "540f94ff51c593d29c210d25423548e0",
+    "revision": "6be24c02652f0a42c859faab00308ae8",
     "url": "/fantasia-js/index.html"
   },
   {
-    "revision": "c7ac451b9f626cf9edeb",
+    "revision": "c30e1224a6ea74eec3d1",
     "url": "/fantasia-js/static/css/2.a4c6d6ca.chunk.css"
   },
   {
-    "revision": "301eb537bb23a840d10b",
-    "url": "/fantasia-js/static/css/main.4b389afe.chunk.css"
+    "revision": "0dbba9b7435c4f9ce478",
+    "url": "/fantasia-js/static/css/main.9d2cbe26.chunk.css"
   },
   {
-    "revision": "c7ac451b9f626cf9edeb",
-    "url": "/fantasia-js/static/js/2.9a7c39b2.chunk.js"
+    "revision": "c30e1224a6ea74eec3d1",
+    "url": "/fantasia-js/static/js/2.881815fd.chunk.js"
   },
   {
-    "revision": "301eb537bb23a840d10b",
-    "url": "/fantasia-js/static/js/main.613667f7.chunk.js"
+    "revision": "0dbba9b7435c4f9ce478",
+    "url": "/fantasia-js/static/js/main.f453734f.chunk.js"
   },
   {
     "revision": "369c4ecfd27df2315bc5",
@@ -106,10 +106,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a3ef1ebf9a644bc56e3520ac5ecea2ad",
     "url": "/fantasia-js/static/media/cityEntranceEnemy_8.a3ef1ebf.png"
-  },
-  {
-    "revision": "f8b0ea533e6d2820e2f33eddfc3691dd",
-    "url": "/fantasia-js/static/media/clickDamageTutorial.f8b0ea53.png"
   },
   {
     "revision": "1538e0ce2f7ca2b40ebc2995ad64cf7a",
@@ -504,10 +500,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fantasia-js/static/media/playerExperienceTutorial.84386c4d.png"
   },
   {
-    "revision": "218098454bee44513908cc70c71a53a8",
-    "url": "/fantasia-js/static/media/playerHealthTutorial.21809845.png"
-  },
-  {
     "revision": "d568ef50a4c381b3dad8cabf3935a30f",
     "url": "/fantasia-js/static/media/player_1.d568ef50.png"
   },
@@ -540,11 +532,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fantasia-js/static/media/skill_4.f17f8214.png"
   },
   {
-    "revision": "4e4ad4691c791de78024c2c4d3aa9e4e",
-    "url": "/fantasia-js/static/media/skill_5.4e4ad469.png"
-  },
-  {
     "revision": "3e57a17ea316fa96c367580f2a3ef856",
     "url": "/fantasia-js/static/media/sword_1.3e57a17e.png"
+  },
+  {
+    "revision": "5688f17203377ba1821c42d58e0be140",
+    "url": "/fantasia-js/static/media/tome_1.5688f172.png"
   }
 ]);
