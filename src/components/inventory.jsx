@@ -43,6 +43,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               itemObject={this.props.mainState.inventory[0]}
               slot={0}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -57,6 +60,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={1}
               itemObject={this.props.mainState.inventory[1]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -71,6 +77,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={2}
               itemObject={this.props.mainState.inventory[2]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -85,6 +94,10 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={3}
               itemObject={this.props.mainState.inventory[3]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
+              o0
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -99,6 +112,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={4}
               itemObject={this.props.mainState.inventory[4]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -113,6 +129,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={5}
               itemObject={this.props.mainState.inventory[5]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -130,6 +149,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={6}
               itemObject={this.props.mainState.inventory[6]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -144,6 +166,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={7}
               itemObject={this.props.mainState.inventory[7]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -158,6 +183,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={8}
               itemObject={this.props.mainState.inventory[8]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -172,6 +200,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={9}
               itemObject={this.props.mainState.inventory[9]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -186,6 +217,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={10}
               itemObject={this.props.mainState.inventory[10]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -200,6 +234,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={11}
               itemObject={this.props.mainState.inventory[11]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -217,6 +254,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={12}
               itemObject={this.props.mainState.inventory[12]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -231,6 +271,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={13}
               itemObject={this.props.mainState.inventory[13]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -245,6 +288,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={14}
               itemObject={this.props.mainState.inventory[14]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -259,6 +305,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={15}
               itemObject={this.props.mainState.inventory[15]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -273,6 +322,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={16}
               itemObject={this.props.mainState.inventory[16]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={
@@ -287,6 +339,9 @@ class Inventory extends Component {
               mainState={this.props.mainState}
               slot={17}
               itemObject={this.props.mainState.inventory[17]}
+              toggleInventoryPopoversRendering={
+                this.props.toggleInventoryPopoversRendering
+              }
               toggleItemEquippedState={this.props.toggleItemEquippedState}
               playerSellItem={this.props.playerSellItem}
               playerSellAllUnequippedItems={

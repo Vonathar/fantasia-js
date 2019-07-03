@@ -34,7 +34,7 @@ class ResourcesBar extends Component {
             className="userInterface-resources-image scale"
             src={resourceTwoImage}
             data-toggle="tooltip"
-            title="Loot bags are obtained randomly by killing enemies; use them to obtain coins, upgrades and more!"
+            title="Loot bags are obtained randomly by killing enemies; use them to obtain coins and weapons!"
             data-placement="top"
           />
           <p className="userInterface-resource-div-paragraph">

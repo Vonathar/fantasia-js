@@ -75,11 +75,21 @@ class InventorySlot extends Component {
 
   // Opens the popover which immediately disappears whenever the user removes focus from the item
   toggleByHover() {
-    if (!this.state.popoverOpenByClick) {
-      this.setState({
-        popoverOpenByHover: !this.state.popoverOpenByHover
-      });
-      this.storeAbbreviatedVersionForRendering();
+    if (
+      !this.state.popoverOpenByClick &&
+      this.props.mainState.canInventoryPopoversBeRendered
+    ) {
+      setTimeout(() => {
+        this.setState({
+          popoverOpenByHover: !this.state.popoverOpenByHover
+        });
+        this.storeAbbreviatedVersionForRendering();
+      }, 200);
+      setTimeout(() => {
+        if (this.state.popoverOpenByHover) {
+          this.setState({ popoverOpenByHover: false });
+        }
+      }, 2000);
     }
   }
 
@@ -91,19 +101,13 @@ class InventorySlot extends Component {
     this.storeAbbreviatedVersionForRendering();
   }
 
-  hidePopoversAfterAction = () => {
-    if (this.props.mainState.isItemBeingSold) {
-      this.setState({ popoverOpenByClick: false, popoverOpenByHover: false });
-    }
-  };
-
   renderInventoryItem = () => {
     if (this.props.itemObject) {
       return (
         <div className="inventorySlot mx-auto">
-          {this.hidePopoversAfterAction()}
           <img
             id={"Popover" + this.props.slot}
+            alt="Inventory slot"
             src={this.props.itemObject.itemImage}
             className={this.renderInventoryItemClass()}
             data-toggle="tooltip"
@@ -175,6 +179,10 @@ class InventorySlot extends Component {
                       popoverOpenByClick: false
                     });
                     this.props.playerSellItem(this.props.itemObject);
+                    this.props.toggleInventoryPopoversRendering(false);
+                    setTimeout(() => {
+                      this.props.toggleInventoryPopoversRendering(true);
+                    }, 100);
                   }}
                 >
                   Sell
@@ -187,6 +195,10 @@ class InventorySlot extends Component {
                       popoverOpenByClick: false
                     });
                     this.props.playerSellAllUnequippedItems();
+                    this.props.toggleInventoryPopoversRendering(false);
+                    setTimeout(() => {
+                      this.props.toggleInventoryPopoversRendering(true);
+                    }, 100);
                   }}
                 >
                   Sell All Unequipped

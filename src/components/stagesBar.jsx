@@ -15,6 +15,39 @@ class StagesBar extends Component {
     return buttonClasses;
   };
 
+  renderKillsForNextStageParagraph = () => {
+    if (
+      this.props.mainState.stageEnemiesToKill -
+        this.props.mainState.stageEnemiesKilled ===
+      1
+    ) {
+      return (
+        <React.Fragment>
+          <button
+            className="btn mx-auto btn-danger stages-bossFight-button"
+            onClick={this.props.quitBossStage}
+          >
+            Quit boss fight?
+          </button>
+        </React.Fragment>
+      );
+    } else if (
+      this.props.mainState.stageEnemiesToKill -
+        this.props.mainState.stageEnemiesKilled ===
+      0
+    ) {
+      return <small className="text-success">Next stage unlocked!</small>;
+    } else {
+      return (
+        <small>
+          Kills for next stage:{" "}
+          {this.props.mainState.stageEnemiesToKill -
+            this.props.mainState.stageEnemiesKilled}
+        </small>
+      );
+    }
+  };
+
   render() {
     return (
       <div id="userInterface-stages-div">
@@ -57,11 +90,11 @@ class StagesBar extends Component {
           </button>
         </div>
         <div id="userInterface-stages-stage-pragraph">
-          <small>
-            Kills for next stage:{" "}
-            {this.props.mainState.stageEnemiesToKill -
-              this.props.mainState.stageEnemiesKilled}
+          <small className="text-primary">
+            {this.props.mainState.currentScenario}
           </small>
+          <br />
+          {this.renderKillsForNextStageParagraph()}
         </div>
         <div class="form-check" id="userInterface-stages-stage-checkbox-div">
           <input

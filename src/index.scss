@@ -14,6 +14,22 @@ body {
   background-size: cover;
 }
 
+.userInterface-div-rebirth {
+  animation: playerRebirth 5s;
+}
+
+@keyframes playerRebirth {
+  50% {
+    filter: blur(20px);
+  }
+  90% {
+    filter: blur(80px) grayscale(1);
+  }
+  100% {
+    filter: blur(0px);
+  }
+}
+
 #userInterface-stages-stage-checkbox {
   width: 0.8vw;
   height: 0.8vw;
@@ -142,7 +158,7 @@ code {
 /* Targeted */
 
 .cooldown {
-  opacity: 0.1;
+  opacity: 0.25;
   transition-duration: 0.2s;
 }
 
@@ -447,7 +463,6 @@ code {
     transform: scale(1.4) rotate(15deg) translate(1vw, -5vw) skewX(5deg)
       skewY(-6deg);
   }
-
   100% {
     transform: scale(0) translate(-2vw, 3vw);
   }
@@ -673,6 +688,12 @@ code {
   padding: 0.2vw 0.6vw 0.2vw 0.6vw;
 }
 
+.stages-bossFight-button {
+  font-size: 0.7vw;
+  margin: 0.25vw;
+  padding: 0.2vw 0.6vw 0.2vw 0.6vw;
+}
+
 .userInterface-stages-unlocked {
   background-color: rgba(201, 255, 164, 0.582);
   border-radius: 5px;
@@ -756,7 +777,8 @@ code {
 #userInterface-upgrades-div,
 #userInterface-pets-div,
 #userInterface-stats-div,
-#userInterface-quests-div {
+#userInterface-quests-div,
+#userInterface-rebirth-div {
   border-radius: 0 0 25px 25px;
   font-size: 0.9vw;
   position: relative;
@@ -770,6 +792,23 @@ code {
   border-style: solid;
   height: 35vh;
   overflow: auto;
+}
+
+.rebirth-tomesHeld-image {
+  width: 3vw;
+}
+
+.rebirth-tomesObtained-image {
+  width: 2vw;
+}
+
+.userInterface-rebirth-tomesParagrph {
+  background-color: #85858544;
+  border: 1px solid #eeeeee96;
+  width: 10vw;
+  border-radius: 40px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .userInterface-idle-category {
@@ -793,6 +832,21 @@ code {
   height: 40vh;
   padding: 10px;
   cursor: default;
+}
+
+#differentGameVersionLoad-div {
+  background-color: rgba(0, 0, 0, 0.842);
+  border: 1px solid rgba(95, 95, 95, 0.486);
+  color: white;
+  border-radius: 25px;
+  position: absolute;
+  left: 30vw;
+  width: 40vw;
+  top: 50vh;
+  height: 40vh;
+  padding: 2vw;
+  cursor: default;
+  overflow-y: auto;
 }
 
 .damage-skillEffect {
@@ -849,6 +903,10 @@ code {
   padding: 0.4vw;
 }
 
+#differentGameVersionLoad-buttons {
+  display: flex;
+}
+
 #userInterface-chatlog-div {
   background-color: rgba(0, 0, 0, 0.829);
   border-radius: 25px;
@@ -865,14 +923,14 @@ code {
 }
 
 #tutorialScreen-div {
-  background-color: rgba(0, 0, 0, 0.829);
+  background-color: rgba(0, 0, 0, 0.959);
   border: 1px solid rgba(95, 95, 95, 0.486);
 
   border-radius: 15px;
   color: white;
-  width: 40vw;
-  height: 30vh;
-  top: 28vh;
+  width: 95vw;
+  height: 86vh;
+  top: 12vh;
   position: absolute;
   left: 0;
   right: 0;
@@ -948,7 +1006,7 @@ code {
   background-color: rgba(0, 0, 0, 0.459);
   border: 1px solid rgba(95, 95, 95, 0.486);
   border-radius: 25px;
-  width: 15vw;
+  width: 12.5vw;
   padding: 0.5vw;
   margin: auto;
   left: 0;
@@ -1036,7 +1094,8 @@ code {
   #userInterface-upgrades-div,
   #userInterface-pets-div,
   #userInterface-stats-div,
-  #userInterface-quests-div {
+  #userInterface-quests-div,
+  #userInterface-rebirth-div {
     border-radius: 0 0 25px 25px;
     font-size: 0.5em;
     width: 25vw;

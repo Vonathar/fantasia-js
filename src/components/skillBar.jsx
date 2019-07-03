@@ -4,7 +4,6 @@ import skillImageOne from "../img/skill_1.png";
 import skillImageTwo from "../img/skill_2.png";
 import skillImageThree from "../img/skill_3.png";
 import skillImageFour from "../img/skill_4.png";
-import skillImageFive from "../img/skill_5.png";
 
 class SkillBar extends Component {
   renderSkillOneDescription = () => {
@@ -90,7 +89,9 @@ class SkillBar extends Component {
         " " +
         this.props.mainState.skills.skillThree.name +
         "  -  Become one with your pets, and increase your click damage by " +
-        this.props.mainState.skills.skillThree.damageMultiplier * 100 +
+        Math.round(
+          this.props.mainState.skills.skillThree.damageMultiplier * 100
+        ) +
         "% of their DPS for " +
         this.props.mainState.skills.skillThree.duration / 1000 +
         " seconds. [Cooldown: " +
@@ -203,17 +204,6 @@ class SkillBar extends Component {
             }}
             data-toggle="tooltip"
             title={this.renderSkillFourDescription()}
-            data-placement="top"
-          />
-        </div>
-        <div className="userInterface-skills-skill-div mx-auto">
-          <img
-            draggable="false"
-            alt="skill 5"
-            className="userInterface-skills-skill-img scale"
-            src={skillImageFive}
-            data-toggle="tooltip"
-            title="Rebirth is coming soon!"
             data-placement="top"
           />
         </div>

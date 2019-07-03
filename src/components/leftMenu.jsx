@@ -5,6 +5,7 @@ import QuestMenu from "./questMenu";
 import DebugMenu from "./debugMenu";
 import PetsMenu from "./petsMenu";
 import DeckMenu from "./deckMenu";
+import RebirthMenu from "./rebirthMenu";
 
 class LeftMenu extends Component {
   renderDebugMenu = () => {
@@ -93,6 +94,18 @@ class LeftMenu extends Component {
         />
       );
     }
+    // Rebirth tab selected
+    if (this.props.mainState.leftMenuSettingSelected === "Rebirth") {
+      return (
+        <RebirthMenu
+          mainState={this.props.mainState}
+          renderNumberWithAbbreviations={
+            this.props.renderNumberWithAbbreviations
+          }
+          playerRebirth={this.props.playerRebirth}
+        />
+      );
+    }
     // Debug tab selected
     if (this.props.mainState.leftMenuSettingSelected === "Debug") {
       return <DebugMenu giveItemDebug={this.props.giveItemDebug} />;
@@ -161,6 +174,15 @@ class LeftMenu extends Component {
               onClick={this.props.fetchLeftMenuSettingSelection}
             >
               <small>Deck</small>
+            </button>
+          </div>
+          <div className="mx-auto" id="userInterface-userSettings-menu-tab">
+            <button
+              type="button"
+              class="userInterface-userSettings-menu-tab-button btn btn-dark mx-auto"
+              onClick={this.props.fetchLeftMenuSettingSelection}
+            >
+              <small>Rebirth</small>
             </button>
           </div>
           {this.renderDebugMenu()}

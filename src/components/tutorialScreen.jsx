@@ -3,9 +3,6 @@ import skillImageOne from "../img/skill_1.png";
 import skillImageTwo from "../img/skill_2.png";
 import skillImageThree from "../img/skill_3.png";
 import skillImageFour from "../img/skill_4.png";
-import clickDamageTutorialImage from "../img/clickDamageTutorial.png";
-import playerHealthImage from "../img/playerHealthTutorial.png";
-import playerExperienceImage from "../img/playerExperienceTutorial.png";
 import doubleAttackImage from "../img/doubleAttack_1.png";
 import criticalMultiplierImage from "../img/critical_1.png";
 import criticalChanceImage from "../img/critical_2.png";
@@ -75,11 +72,7 @@ class TutorialScreen extends Component {
       if (this.props.mainState.tutorialScreenSettingSelected === "Player") {
         return (
           <div>
-            <h5 className="tutorialScreen-h5 text-primary">Attack</h5>
-            <img
-              src={clickDamageTutorialImage}
-              className="tutorialScreen-image"
-            />
+            <h5 className="tutorialScreen-h5 text-info">Attack</h5>
             <p className="tutorialScreen-p">
               Attacking is the main way to deal damage to the enemy. To attack,
               you can either click the enemy icon, or press the keys
@@ -97,8 +90,7 @@ class TutorialScreen extends Component {
               (DPS) and upgrading your hero (CD), but don't forget about other
               upgrades such as Critical Chance, Critical Damage and Double
               Attack!
-              <h5 className="tutorialScreen-h5 text-primary">Heal</h5>
-              <img src={playerHealthImage} className="tutorialScreen-image" />
+              <h5 className="tutorialScreen-h5 text-info">Heal</h5>
               <p />
               Healing is how you recover your character's HP (health points). To
               heal, you can either click the player icon, or press the
@@ -108,11 +100,7 @@ class TutorialScreen extends Component {
               Remember: <strong> potions</strong> are required for you to heal!
               they can be found by killing enemies, or by opening loot bags.
               <br />
-              <h5 className="tutorialScreen-h5 text-primary">Level</h5>
-              <img
-                src={playerExperienceImage}
-                className="tutorialScreen-image"
-              />
+              <h5 className="tutorialScreen-h5 text-info">Level</h5>
               <p />
               Your level dictates how many HP you have, as well as how strong
               your skills are.
@@ -130,10 +118,14 @@ class TutorialScreen extends Component {
         return (
           <div>
             {/* Skill #1 */}
-            <h5 className="tutorialScreen-h5 text-primary">
+            <h5 className="tutorialScreen-h5 text-info">
               {this.props.mainState.skills.skillOne.name}
             </h5>
-            <img src={skillImageOne} className="tutorialScreen-image" />
+            <img
+              src={skillImageOne}
+              className="tutorialScreen-image"
+              alt="Skill one"
+            />
             <p className="tutorialScreen-p">
               Quickly attack the enemy multiple times, dealing damage based on
               the player level; level up the player to raise the skill level.
@@ -161,10 +153,14 @@ class TutorialScreen extends Component {
               </strong>
             </p>
             {/* Skill #2 */}
-            <h5 className="tutorialScreen-h5 text-primary">
+            <h5 className="tutorialScreen-h5 text-info">
               {this.props.mainState.skills.skillTwo.name}
             </h5>
-            <img src={skillImageTwo} className="tutorialScreen-image" />
+            <img
+              src={skillImageTwo}
+              className="tutorialScreen-image"
+              alt="Skill two"
+            />
             <p className="tutorialScreen-p">
               Increases your total DPS by a fixed percentage; the skill can be
               unlocked at level 5, and can be improved by raising the level of
@@ -192,10 +188,14 @@ class TutorialScreen extends Component {
               </strong>
             </p>
             {/* Skill #3 */}
-            <h5 className="tutorialScreen-h5 text-primary">
+            <h5 className="tutorialScreen-h5 text-info">
               {this.props.mainState.skills.skillThree.name}
             </h5>
-            <img src={skillImageThree} className="tutorialScreen-image" />
+            <img
+              src={skillImageThree}
+              className="tutorialScreen-image"
+              alt="Skill three"
+            />
             <p className="tutorialScreen-p">
               Become one with your animals, increasing your Click Damage by a %
               of your total DPS from pets; duration and percentage of damage
@@ -223,10 +223,14 @@ class TutorialScreen extends Component {
               </strong>
             </p>
             {/* Skill #4 */}
-            <h5 className="tutorialScreen-h5 text-primary">
+            <h5 className="tutorialScreen-h5 text-info">
               {this.props.mainState.skills.skillFour.name}
             </h5>
-            <img src={skillImageFour} className="tutorialScreen-image" />
+            <img
+              src={skillImageFour}
+              className="tutorialScreen-image"
+              alt="Skill four"
+            />
             <p className="tutorialScreen-p">
               All your pets get together to attack the enemy, dealing damage 3
               times based on a % of your total DPS; the amount of attacks, as
@@ -260,7 +264,7 @@ class TutorialScreen extends Component {
       if (this.props.mainState.tutorialScreenSettingSelected === "Pets") {
         return (
           <div>
-            <h5 className="tutorialScreen-h5 text-primary">Pets</h5>
+            <h5 className="tutorialScreen-h5 text-info">Pets</h5>
             <p className="tutorialScreen-p">
               Pets are amazing creatures which fight alongside you throughout
               your adventure!
@@ -281,13 +285,17 @@ class TutorialScreen extends Component {
       if (this.props.mainState.tutorialScreenSettingSelected === "Hotkeys") {
         return (
           <div>
-            <h5 className="tutorialScreen-h5 text-primary">Hotkeys</h5>
-            <img src={hotkeysIcon} className="tutorialScreen-image" />
+            <h5 className="tutorialScreen-h5 text-info">Hotkeys</h5>
+            <img
+              src={hotkeysIcon}
+              className="tutorialScreen-image"
+              alt="Hotkey"
+            />
             <p className="tutorialScreen-p">
               The following are the currently registered hotkeys in Fantasia:
               <br />
               <br />
-              {/* Hotkey #1 */}
+              {/* Hotkey [W/E] */}
               <p>
                 [
                 <span className="text-warning">
@@ -299,7 +307,7 @@ class TutorialScreen extends Component {
                 </span>
                 ] - Attack
               </p>
-              {/* Hotkey #2 */}
+              {/* Hotkey [H] */}
               <p>
                 [
                 <span className="text-warning">
@@ -307,7 +315,15 @@ class TutorialScreen extends Component {
                 </span>
                 ] - Heal
               </p>
-              {/* Hotkey #3 */}
+              {/* Hotkey [P] */}
+              <p>
+                [
+                <span className="text-warning">
+                  <strong>P</strong>
+                </span>
+                ] - Pause / Unpause
+              </p>
+              {/* Hotkey [1] */}
               <p>
                 [
                 <span className="text-warning">
@@ -315,7 +331,7 @@ class TutorialScreen extends Component {
                 </span>
                 ] - Quick Stab
               </p>
-              {/* Hotkey #4 */}
+              {/* Hotkey [2] */}
               <p>
                 [
                 <span className="text-warning">
@@ -323,7 +339,7 @@ class TutorialScreen extends Component {
                 </span>
                 ] - Mark of the Beast
               </p>
-              {/* Hotkey #5 */}
+              {/* Hotkey [3] */}
               <p>
                 [
                 <span className="text-warning">
@@ -331,7 +347,7 @@ class TutorialScreen extends Component {
                 </span>
                 ] - Animal Training
               </p>
-              {/* Hotkey #6 */}
+              {/* Hotkey [4] */}
               <p>
                 [
                 <span className="text-warning">
@@ -339,7 +355,7 @@ class TutorialScreen extends Component {
                 </span>
                 ] - Fruit of Madness
               </p>
-              {/* Hotkey #7 */}
+              {/* Hotkey [T] */}
               <p>
                 [
                 <span className="text-warning">
@@ -356,8 +372,12 @@ class TutorialScreen extends Component {
         return (
           <div>
             {/* Upgrade #1 */}
-            <h5 className="tutorialScreen-h5 text-primary">Click Damage</h5>
-            <img src={clickDamageImage} className="tutorialScreen-image" />
+            <h5 className="tutorialScreen-h5 text-info">Click Damage</h5>
+            <img
+              src={clickDamageImage}
+              className="tutorialScreen-image"
+              alt="Sword"
+            />
             <p className="tutorialScreen-p">
               Increase the damage dealt with every player attack.
               <br />
@@ -371,8 +391,12 @@ class TutorialScreen extends Component {
               </strong>
             </p>
             {/* Upgrade #2 */}
-            <h5 className="tutorialScreen-h5 text-primary">Critical Chance</h5>
-            <img src={criticalChanceImage} className="tutorialScreen-image" />
+            <h5 className="tutorialScreen-h5 text-info">Critical Chance</h5>
+            <img
+              src={criticalChanceImage}
+              className="tutorialScreen-image"
+              alt="Critical hit"
+            />
             <p className="tutorialScreen-p">
               Increase the chances of landing a critical hit.
               <br />
@@ -384,10 +408,11 @@ class TutorialScreen extends Component {
               </strong>
             </p>
             {/* Upgrade #3 */}
-            <h5 className="tutorialScreen-h5 text-primary">Critical Damage</h5>
+            <h5 className="tutorialScreen-h5 text-info">Critical Damage</h5>
             <img
               src={criticalMultiplierImage}
               className="tutorialScreen-image"
+              alt="Critical multiplier"
             />
             <p className="tutorialScreen-p">
               Increase the damage dealt by critical hits.
@@ -403,8 +428,12 @@ class TutorialScreen extends Component {
               </strong>
             </p>
             {/* Upgrade #3 */}
-            <h5 className="tutorialScreen-h5 text-primary">Double attack</h5>
-            <img src={doubleAttackImage} className="tutorialScreen-image" />
+            <h5 className="tutorialScreen-h5 text-info">Double attack</h5>
+            <img
+              src={doubleAttackImage}
+              className="tutorialScreen-image"
+              alt="Double attack chance"
+            />
             <p className="tutorialScreen-p">
               Increase the chance of attacking twice with a single click.
               <br />

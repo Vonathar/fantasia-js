@@ -152,6 +152,9 @@ class UserInterface extends Component {
         <small>Welcome to Fantasia!</small>
       </p>,
       <p>
+        <small className="text-primary">Version: 3.1.0</small>
+      </p>,
+      <p>
         <small>
           To <span className="text-danger">attack</span>, click on the enemy
           icon or press the keys W / E on your keyboard. You can also get help
@@ -173,9 +176,14 @@ class UserInterface extends Component {
       </p>
     ],
     /* Global settings */
+    gameVersion: "3.1.0",
+    gameVersionAllowedByUser: "",
+    isGamePaused: false,
+    isFirstGameSession: false,
     isDebugModeActive: false,
     isTutorialScreenActive: false,
     tutorialScreenSettingSelected: "Player",
+    canInventoryPopoversBeRendered: true,
     backgroundImageCurrent: backgroundImageOne,
     backgroundImages: [
       backgroundImageOne,
@@ -187,6 +195,11 @@ class UserInterface extends Component {
       backgroundImageSeven,
       backgroundImageEight
     ],
+    /* Rebirth values */
+    rebirthTomesHeld: 0,
+    tomesObtainableFromRebirth: 0,
+    totalPlayerRebirths: 0,
+    isPlayerRebirting: false,
     /* Stats values */
     totalPlayerAttacks: 0,
     totalSkillsUsed: 0,
@@ -277,7 +290,11 @@ class UserInterface extends Component {
           10000000000000,
           25000000000000,
           50000000000000,
-          100000000000000
+          100000000000000,
+          1000000000000000,
+          2500000000000000,
+          5000000000000000,
+          10000000000000000
         ]
       },
       petDamageDealt: {
@@ -314,7 +331,11 @@ class UserInterface extends Component {
           10000000000000,
           25000000000000,
           50000000000000,
-          100000000000000
+          100000000000000,
+          1000000000000000,
+          2500000000000000,
+          5000000000000000,
+          10000000000000000
         ]
       },
       enemiesKilled: {
@@ -455,7 +476,7 @@ class UserInterface extends Component {
     playerDoubleAttackChance: 0,
     playerCriticalChance: 0.1,
     playerCriticalMultiplier: 1.2,
-    playerAttackMultiplier: 1,
+    damageMultiplierFromTomes: 0,
     playerAttackPerSecond: 50,
     /* Pet values */
     deck: {
@@ -1049,7 +1070,7 @@ class UserInterface extends Component {
     enemyCoinsValue: 25,
     enemyFoodHeld: 1,
     enemyFoodValue: 1,
-    enemyAttack: 50,
+    enemyAttack: 3,
     enemySpawnTime: 500,
     /* Upgrade values */
     heroUpgrades: {
@@ -1068,14 +1089,14 @@ class UserInterface extends Component {
       criticalChance: {
         level: 0,
         priceMultiplier: 1.5,
-        price: 750,
-        purchasePrice: 500
+        price: 1500,
+        purchasePrice: 1000
       },
       criticalMultiplier: {
         level: 0,
         priceMultiplier: 1.5,
-        price: 750,
-        purchasePrice: 500
+        price: 1500,
+        purchasePrice: 1000
       }
     },
     /* Skill values */
@@ -1089,7 +1110,7 @@ class UserInterface extends Component {
         isReady: true,
         numberOfAttacks: 3,
         numberOfAttacksLevelsToUpgrade: [10, 50, 100, 200, 350, 500],
-        damageMultiplier: 2,
+        damageMultiplier: 1.8,
         levelToUnlock: 3,
         levelsToUpgrade: [
           5,
@@ -1117,7 +1138,7 @@ class UserInterface extends Component {
         duration: 10000,
         isReady: true,
         isActive: false,
-        damageMultiplier: 1.8,
+        damageMultiplier: 1.1,
         levelToUnlock: 5,
         levelsToUpgrade: [
           15,
@@ -1140,11 +1161,11 @@ class UserInterface extends Component {
         name: "Animal training",
         level: 0,
         cooldown: 120000,
-        cooldownReductionByLevelUp: 4000,
-        duration: 40000,
+        cooldownReductionByLevelUp: 1000,
+        duration: 20000,
         isReady: true,
         isActive: false,
-        damageMultiplier: 1.8,
+        damageMultiplier: 1.1,
         levelToUnlock: 12,
         levelsToUpgrade: [
           32,
@@ -1216,7 +1237,6 @@ class UserInterface extends Component {
     foodToBeCollected: 0,
     lootBagsToBeCollected: 0,
     // Chance in percentage
-    equipmentDropChance: 3,
     lootBagsDropChance: 0.2,
     foodDropChance: 25,
     isFoodCollected: false,
@@ -1270,19 +1290,21 @@ class UserInterface extends Component {
       }
     },
     enemyAttackInterval: setInterval(() => {
-      this.enemyAttack();
+      if (!this.state.isGamePaused) {
+        this.enemyAttack();
+      }
     }, 1000),
     playerAttackInterval: setInterval(() => {
-      this.addPetDamageRenderingItem();
-      this.playerAttackPerSecond();
+      if (!this.state.isGamePaused) {
+        this.addPetDamageRenderingItem();
+        this.playerAttackPerSecond();
+      }
     }, 500),
     automaticProgressSave: setInterval(() => {
-      if (this.state.playerCanAttack) {
-        setTimeout(() => {
-          this.saveProgressToLocalStorage();
-        }, 0);
-      }
-    }, 15000),
+      setTimeout(() => {
+        this.saveProgressToLocalStorage();
+      }, 0);
+    }, 10000),
     // Check if the quests are completed
     checkAllQuestsProgress: setInterval(() => {
       // Enemies killed
@@ -1649,12 +1671,12 @@ class UserInterface extends Component {
         // Increase pet damage
         pets[petNumber].damagePerSecondCurrent = Math.round(
           pets[petNumber].damagePerSecondBase *
-            Math.pow(1.08, pets[petNumber].upgradeLevel)
+            Math.pow(1.1, pets[petNumber].upgradeLevel)
         );
         // Increase pet damage
         pets[petNumber].damagePerSecondPlaceholder = Math.round(
           pets[petNumber].damagePerSecondBase *
-            Math.pow(1.08, pets[petNumber].upgradeLevel)
+            Math.pow(1.1, pets[petNumber].upgradeLevel)
         );
       } else {
         return false;
@@ -1710,7 +1732,55 @@ class UserInterface extends Component {
         // Go to the next stage
         this.playerStageAdvance();
       }
+      if (this.state.stageCurrent <= 70 && this.state.stageCurrent % 5 === 0) {
+        this.setState({
+          tomesObtainableFromRebirth: this.state.tomesObtainableFromRebirth + 1
+        });
+      }
+      if (
+        this.state.stageCurrent > 70 &&
+        this.state.stageCurrent <= 100 &&
+        this.state.stageCurrent % 3 === 0
+      ) {
+        this.setState({
+          tomesObtainableFromRebirth: this.state.tomesObtainableFromRebirth + 1
+        });
+      }
+      if (
+        this.state.stageCurrent > 100 &&
+        this.state.stageCurrent <= 120 &&
+        this.state.stageCurrent % 2 === 0
+      ) {
+        this.setState({
+          tomesObtainableFromRebirth: this.state.tomesObtainableFromRebirth + 1
+        });
+      }
+      if (
+        this.state.stageCurrent > 120 &&
+        this.state.stageCurrent <= 150 &&
+        this.state.stageCurrent % 1 === 0
+      ) {
+        this.setState({
+          tomesObtainableFromRebirth: this.state.tomesObtainableFromRebirth + 1
+        });
+      }
+      if (this.state.stageCurrent > 150 && this.state.stageCurrent % 1 === 0) {
+        this.setState({
+          tomesObtainableFromRebirth: Math.round(
+            this.state.tomesObtainableFromRebirth +
+              1 * Math.pow(1.0055, this.state.stageMaxUnlocked)
+          )
+        });
+      }
     }
+  };
+
+  quitBossStage = () => {
+    this.setState({
+      enemyIsBoss: false,
+      stageEnemiesKilled: 0
+    });
+    this.generateNewEnemy(this.state.stageCurrent);
   };
 
   // Player stage select
@@ -1761,6 +1831,223 @@ class UserInterface extends Component {
     this.setState({
       isStageProgressAuto: event.target.checked
     });
+  };
+
+  playerRebirth = () => {
+    // If the player reached at least stage 70
+    if (this.state.stageMaxUnlocked >= 70) {
+      // Toggle the rebirthing animation
+      setTimeout(() => {
+        this.setState({ isPlayerRebirting: true });
+        setTimeout(() => {
+          this.setState({ isPlayerRebirting: false });
+        }, 5000);
+      }, 0);
+      // And reset all game values
+      setTimeout(() => {
+        // Reset global values
+        this.setState({
+          currentScenario: "Green Forest",
+          backgroundImageCurrent: this.state.backgroundImages[0],
+          stageCurrent: 1,
+          stageEnemiesKilled: 0,
+          stageEnemiesToKill: 5,
+          stageMaxUnlocked: 1,
+          isStageProgressAuto: true,
+          playerLevel: 1,
+          playerRankCurrent: "Rogue",
+          playerHealthCurrent: 500,
+          playerHealthMax: 500,
+          playerExperienceCurrent: 0,
+          playerExperienceRequired: 250,
+          playerAttack: 50,
+          playerCanAttack: true,
+          playerDoubleAttackChance: 0,
+          playerCriticalChance: 0.1,
+          playerCriticalMultiplier: 1.2,
+          playerAttackMultiplier: 1,
+          playerAttackPerSecond: 50,
+          rebirthTomesHeld:
+            this.state.rebirthTomesHeld + this.state.tomesObtainableFromRebirth,
+          tomesObtainableFromRebirth: 0,
+          inventory: [],
+          coinsToBeCollected: 0,
+          coinsToBeCollectedValue: 0,
+          foodToBeCollected: 0,
+          coins: 0,
+          totalPlayerRebirths: this.state.totalPlayerRebirths + 1,
+          battleLogParagraphsToBeRendered: [],
+          enemyNameCurrent: "Fairy Filia",
+          enemyImageCurrent: this.state.enemyImages.greenForest[0],
+          enemyLevel: 1,
+          enemyIsBoss: false,
+          enemyHasHealth: true,
+          enemyHealthCurrent: 500,
+          enemyHealthMax: 500,
+          enemyExperienceHeld: 27,
+          enemyCoinsValue: 25,
+          enemyFoodHeld: 1,
+          enemyFoodValue: 1,
+          enemyAttack: 3,
+          enemySpawnTime: 500
+        });
+        // Reset inventory
+        let equipmentToBeCollected = { ...this.state.equipmentToBeCollected };
+        equipmentToBeCollected.weapon = [];
+        // Reset pets
+        let pets = { ...this.state.pets };
+        for (let pet in pets) {
+          if (pets[pet] !== this.state.pets.petOne) {
+            pets[pet].upgradeLevel = 0;
+            pets[pet].damagePerSecondCurrent = 0;
+            pets[pet].damagePerSecondPlaceholder = 0;
+          } else {
+            pets[pet].upgradeLevel = 1;
+            pets[pet].damagePerSecondCurrent = 25;
+            pets[pet].damagePerSecondPlaceholder = 25;
+          }
+          if (pet === this.state.pets.petOne) {
+            pets[pet].upgradePrice = 250;
+            pets[pet].basicPrice = 250;
+            pets[pet].damagePerSecondBase = 25;
+          }
+          if (pet === this.state.pets.petTwo) {
+            pets[pet].basicPrice = 1000;
+            pets[pet].firstPurchasePrice = 1000;
+            pets[pet].upgradePrice = 1000;
+            pets[pet].damagePerSecondBase = 100;
+          }
+          if (pet === this.state.pets.petThree) {
+            pets[pet].basicPrice = 2500;
+            pets[pet].firstPurchasePrice = 2500;
+            pets[pet].upgradePrice = 2500;
+            pets[pet].damagePerSecondBase = 250;
+          }
+          if (pet === this.state.pets.petFour) {
+            pets[pet].basicPrice = 10000;
+            pets[pet].firstPurchasePrice = 10000;
+            pets[pet].upgradePrice = 10000;
+            pets[pet].damagePerSecondBase = 1000;
+          }
+          if (pet === this.state.pets.petFive) {
+            pets[pet].basicPrice = 25000;
+            pets[pet].firstPurchasePrice = 25000;
+            pets[pet].upgradePrice = 25000;
+            pets[pet].damagePerSecondBase = 2500;
+          }
+          if (pet === this.state.pets.petSix) {
+            pets[pet].basicPrice = 50000;
+            pets[pet].firstPurchasePrice = 50000;
+            pets[pet].upgradePrice = 50000;
+            pets[pet].damagePerSecondBase = 5000;
+          }
+          if (pet === this.state.pets.petSeven) {
+            pets[pet].basicPrice = 100000;
+            pets[pet].firstPurchasePrice = 100000;
+            pets[pet].upgradePrice = 100000;
+            pets[pet].damagePerSecondBase = 10000;
+          }
+          if (pet === this.state.pets.petEight) {
+            pets[pet].basicPrice = 200000;
+            pets[pet].firstPurchasePrice = 200000;
+            pets[pet].upgradePrice = 200000;
+            pets[pet].damagePerSecondBase = 20000;
+          }
+          if (pet === this.state.pets.petNine) {
+            pets[pet].basicPrice = 500000;
+            pets[pet].firstPurchasePrice = 500000;
+            pets[pet].upgradePrice = 500000;
+            pets[pet].damagePerSecondBase = 50000;
+          }
+          if (pet === this.state.pets.petTen) {
+            pets[pet].basicPrice = 1000000;
+            pets[pet].firstPurchasePrice = 1000000;
+            pets[pet].upgradePrice = 1000000;
+            pets[pet].damagePerSecondBase = 100000;
+          }
+          if (pet === this.state.pets.petEleven) {
+            pets[pet].basicPrice = 2500000;
+            pets[pet].firstPurchasePrice = 2500000;
+            pets[pet].upgradePrice = 2500000;
+            pets[pet].damagePerSecondBase = 250000;
+          }
+          if (pet === this.state.pets.petTwelve) {
+            pets[pet].basicPrice = 5000000;
+            pets[pet].firstPurchasePrice = 5000000;
+            pets[pet].upgradePrice = 5000000;
+            pets[pet].damagePerSecondBase = 500000;
+          }
+        }
+        // Reset skills
+        let skills = { ...this.state.skills };
+        skills.skillTwo.isActive = false;
+        skills.skillThree.isActive = false;
+        for (let skill in skills) {
+          skills[skill].level = 0;
+          skills[skill].isReady = true;
+          if (skills[skill] === "skillOne") {
+            skills[skills].cooldown = 30000;
+            skills[skills].cooldownReductionByLevelUp = 1000;
+            skills[skills].numberOfAttacks = 3;
+            skills[skills].damageMultiplier = 1.8;
+          }
+          if (skills[skill] === "skillTwo") {
+            skills[skills].cooldown = 60000;
+            skills[skills].cooldownReductionByLevelUp = 2000;
+            skills[skills].duration = 10000;
+            skills[skills].damageMultiplier = 1.1;
+          }
+          if (skills[skill] === "skillThree") {
+            skills[skills].cooldown = 120000;
+            skills[skills].cooldownReductionByLevelUp = 1000;
+            skills[skills].duration = 20000;
+            skills[skills].damageMultiplier = 1.1;
+          }
+          if (skills[skill] === "skillFour") {
+            skills[skills].cooldown = 30000;
+            skills[skills].cooldownReductionByLevelUp = 1000;
+            skills[skills].numberOfAttacks = 3;
+            skills[skills].damageMultiplier = 1.8;
+          }
+        }
+        // Reset hero upgrades
+        let heroUpgrades = { ...this.state.heroUpgrades };
+        for (let upgrade in heroUpgrades) {
+          if (upgrade !== "clickDamage") {
+            heroUpgrades[upgrade].level = 0;
+            heroUpgrades[upgrade].priceMultiplier = 1.5;
+            heroUpgrades[upgrade].price = 1500;
+            heroUpgrades[upgrade].purchasePrice = 1000;
+          } else {
+            heroUpgrades[upgrade].level = 1;
+            heroUpgrades[upgrade].priceMultiplier = 1.045;
+            heroUpgrades[upgrade].price = 100;
+            heroUpgrades[upgrade].purchasePrice = 100;
+          }
+        }
+        // Reset equipment bonuses
+        let equipmentBonuses = { ...this.state.equipmentBonuses };
+        for (let bonus in equipmentBonuses) {
+          equipmentBonuses[bonus] = 0;
+        }
+        this.setState({
+          heroUpgrades,
+          pets,
+          skills,
+          equipmentBonuses,
+          equipmentToBeCollected,
+          damageMultiplierFromTomes: this.state.rebirthTomesHeld / 100
+        });
+      }, 4000);
+    } else {
+      this.pushNewParagraphToBattleLog(
+        <p>
+          <small>Reach </small>
+          <small className="text-warning">stage 70</small>{" "}
+          <small>to unlock rebirth! </small>
+        </p>
+      );
+    }
   };
 
   // Calculate a random level to be given to the equipment which this function is called on
@@ -1922,24 +2209,24 @@ class UserInterface extends Component {
           "A weak weapon with great attack speed";
         equipmentPiece.itemStats = {
           bonusAttack: this.calculateNewEquipmentStatsRange(
-            25 * Math.pow(1.04, this.state.enemyLevel),
+            10 * Math.pow(1.04, this.state.enemyLevel),
             equipmentPiece.itemLevel,
-            1.05,
+            1.07,
             3,
             randomItemRarity
           ),
           bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
-            3,
+            5,
             equipmentPiece.itemLevel,
-            1.01,
-            3,
+            1.005,
+            10,
             randomItemRarity
           ),
           bonusCriticalChance: this.calculateNewEquipmentStatsRange(
             1,
             equipmentPiece.itemLevel,
-            1.013,
-            3,
+            1.005,
+            10,
             randomItemRarity
           )
         };
@@ -1948,28 +2235,27 @@ class UserInterface extends Component {
       if (randomNumber > 1 && randomNumber <= 2) {
         equipmentPiece.itemName = "Training Mace";
         equipmentPiece.itemImage = maceOneImage;
-        equipmentPiece.itemDescription =
-          "A sturdy weapon which balances damage and attack speed";
+        equipmentPiece.itemDescription = "A sturdy weapon with balanced stats";
         equipmentPiece.itemStats = {
           bonusAttack: this.calculateNewEquipmentStatsRange(
-            50 * Math.pow(1.04, this.state.enemyLevel),
+            15 * Math.pow(1.04, this.state.enemyLevel),
             equipmentPiece.itemLevel,
-            1.05,
+            1.07,
             3,
             randomItemRarity
           ),
           bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
-            1,
+            2,
             equipmentPiece.itemLevel,
-            1.01,
-            3,
+            1.005,
+            10,
             randomItemRarity
           ),
           bonusCriticalChance: this.calculateNewEquipmentStatsRange(
-            0.8,
+            2,
             equipmentPiece.itemLevel,
-            1.013,
-            3,
+            1.005,
+            10,
             randomItemRarity
           )
         };
@@ -1982,24 +2268,24 @@ class UserInterface extends Component {
           "A long Axe with great critical capabilities";
         equipmentPiece.itemStats = {
           bonusAttack: this.calculateNewEquipmentStatsRange(
-            75 * Math.pow(1.04, this.state.enemyLevel),
+            10 * Math.pow(1.04, this.state.enemyLevel),
             equipmentPiece.itemLevel,
-            1.05,
+            1.07,
             3,
             randomItemRarity
           ),
           bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
-            0.2,
+            1,
             equipmentPiece.itemLevel,
-            1.01,
-            3,
+            1.005,
+            10,
             randomItemRarity
           ),
           bonusCriticalChance: this.calculateNewEquipmentStatsRange(
-            1.26,
+            5,
             equipmentPiece.itemLevel,
-            1.013,
-            3,
+            1.005,
+            10,
             randomItemRarity
           )
         };
@@ -2009,27 +2295,27 @@ class UserInterface extends Component {
         equipmentPiece.itemName = "Training Sword";
         equipmentPiece.itemImage = swordOneImage;
         equipmentPiece.itemDescription =
-          "A sword which balances attack speed and damage";
+          "A sword which balances damage and attack speed";
         equipmentPiece.itemStats = {
           bonusAttack: this.calculateNewEquipmentStatsRange(
-            50 * Math.pow(1.04, this.state.enemyLevel),
+            15 * Math.pow(1.04, this.state.enemyLevel),
             equipmentPiece.itemLevel,
-            1.05,
+            1.07,
             3,
             randomItemRarity
           ),
           bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
-            1.75,
-            equipmentPiece.itemLevel,
-            1.01,
             3,
+            equipmentPiece.itemLevel,
+            1.005,
+            10,
             randomItemRarity
           ),
           bonusCriticalChance: this.calculateNewEquipmentStatsRange(
-            0.8,
+            1,
             equipmentPiece.itemLevel,
-            1.013,
-            3,
+            1.005,
+            10,
             randomItemRarity
           )
         };
@@ -2042,23 +2328,23 @@ class UserInterface extends Component {
           "A bow with incredible damage but slow speed and critical capabilities";
         equipmentPiece.itemStats = {
           bonusAttack: this.calculateNewEquipmentStatsRange(
-            125 * Math.pow(1.04, this.state.enemyLevel),
+            20 * Math.pow(1.04, this.state.enemyLevel),
             equipmentPiece.itemLevel,
-            1.05,
+            1.07,
             3,
             randomItemRarity
           ),
           bonusDoubleAttackChance: this.calculateNewEquipmentStatsRange(
-            0.1,
+            1,
             equipmentPiece.itemLevel,
-            1.01,
+            1.005,
             3,
             randomItemRarity
           ),
           bonusCriticalChance: this.calculateNewEquipmentStatsRange(
-            0.1,
+            1,
             equipmentPiece.itemLevel,
-            1.013,
+            1.005,
             3,
             randomItemRarity
           )
@@ -2116,7 +2402,7 @@ class UserInterface extends Component {
         skills[skillNumber].damageMultiplier =
           // Round to 2 decimals max (if applies)
           Math.round(
-            2 * Math.pow(1.2, this.state.skills.skillOne.level) * 100
+            1.8 * Math.pow(1.1, this.state.skills.skillOne.level) * 100
           ) / 100;
       }
 
@@ -2124,20 +2410,20 @@ class UserInterface extends Component {
       if (skillNumber === "skillTwo") {
         skills[skillNumber].damageMultiplier =
           Math.round(
-            2 * Math.pow(1.1, this.state.skills.skillTwo.level) * 100
+            1.2 * Math.pow(1.1, this.state.skills.skillTwo.level) * 100
           ) / 100;
       }
       // Skill #3
       if (skillNumber === "skillThree") {
         skills[skillNumber].damageMultiplier =
-          Math.round(1.8 * Math.pow(1.06, skills[skillNumber].level) * 100) /
+          Math.round(1.2 * Math.pow(1.1, skills[skillNumber].level) * 100) /
           100;
       }
       // Skill #4
       if (skillNumber === "skillFour") {
         skills[skillNumber].damageMultiplier =
           Math.round(
-            1.5 * Math.pow(1.2, this.state.skills.skillFour.level) * 100
+            1.8 * Math.pow(1.1, this.state.skills.skillFour.level) * 100
           ) / 100;
       }
     }
@@ -2171,7 +2457,9 @@ class UserInterface extends Component {
           this.calculateExperienceMultiplierAllSources()
       ),
       playerHealthCurrent: Math.round(
-        500 * Math.pow(1.05, this.state.playerLevel)
+        500 *
+          Math.pow(1.05, this.state.playerLevel) *
+          this.state.deckBonuses.bonusHealth
       )
     });
 
@@ -2203,7 +2491,7 @@ class UserInterface extends Component {
   // Player damage
   addPlayerDamageRenderingItem = () => {
     // If the enemy has health
-    if (this.state.enemyHasHealth) {
+    if (this.state.enemyHasHealth && !this.state.isGamePaused) {
       this.setState(state => ({
         playerDamageParagraphsToBeRendered: [
           ...state.playerDamageParagraphsToBeRendered,
@@ -2285,11 +2573,32 @@ class UserInterface extends Component {
         leftMenuSettingSelected: "Hero"
       });
     }
-    if (event.key === "t") {
+    if (event.key === "t" || event.key === "T") {
       this.setState({
         isTutorialScreenActive: !this.state.isTutorialScreenActive,
         leftMenuSettingSelected: "Hero"
       });
+      this.togglePause();
+    }
+    if (event.key === "p" || event.key === "P") {
+      this.togglePause();
+    }
+  };
+
+  togglePause = () => {
+    this.setState({ isGamePaused: !this.state.isGamePaused });
+    if (this.state.isGamePaused) {
+      this.pushNewParagraphToBattleLog(
+        <p>
+          <small className="text-warning">Game paused.</small>
+        </p>
+      );
+    } else {
+      this.pushNewParagraphToBattleLog(
+        <p>
+          <small className="text-warning">Game unpaused.</small>
+        </p>
+      );
     }
   };
 
@@ -2346,8 +2655,13 @@ class UserInterface extends Component {
       });
     }
 
-    // If there are more than 15 uncollected drops
-    if (this.state.coinsToBeCollected + this.state.foodToBeCollected > 15) {
+    // If there are more than 10 uncollected drops
+    if (
+      this.state.coinsToBeCollected +
+        this.state.foodToBeCollected +
+        this.state.equipmentToBeCollected.weapon.length >
+      10
+    ) {
       // Collect all of them
       this.collectCoinsOnHover();
       this.collectFoodOnHover();
@@ -2422,24 +2736,37 @@ class UserInterface extends Component {
     );
     // Update player stats
     this.setState({ totalEnemiesKilled: this.state.totalEnemiesKilled + 1 });
-
-    setTimeout(() => {
-      // Generate a new enemy
-      this.generateNewEnemy(
-        // Enemy level is the same as current stage /+ 1
-        Math.round(this.state.stageCurrent + Math.random())
-      );
-      // Update the player stage, if applicable
-      this.playerStageProgress();
-      // Set the player attack and DPS back to the origin values
-      this.setState({
-        playerCanAttack: true
-      });
-      // After 0.5 seconds
-    }, this.state.enemySpawnTime);
-    // If the enemy was a boss, change it back to normal
-    if (this.state.enemyIsBoss) {
-      this.setState({ enemyIsBoss: false });
+    try {
+      setTimeout(() => {
+        // Generate a new enemy
+        this.generateNewEnemy(
+          // Enemy level is the same as current stage /+ 1
+          Math.round(this.state.stageCurrent + Math.random())
+        );
+        // Update the player stage, if applicable
+        this.playerStageProgress();
+        // Set the player attack and DPS back to the origin values
+        this.setState({
+          playerCanAttack: true
+        });
+        // After 0.5 seconds
+      }, this.state.enemySpawnTime);
+      // If the enemy was a boss, change it back to normal
+      if (this.state.enemyIsBoss) {
+        this.setState({ enemyIsBoss: false });
+      }
+      setTimeout(() => {
+        if (this.state.enemyHasHealth && this.state.enemyHealthCurrent <= 0) {
+          throw new Error(
+            "The new enemy failed to generate. Attempting new generation."
+          );
+        }
+      }, 100);
+    } catch (error) {
+      setTimeout(() => {
+        console.log(error);
+        this.generateNewEnemy();
+      }, 0);
     }
   };
 
@@ -2471,54 +2798,43 @@ class UserInterface extends Component {
     // Basic damage
     let damage =
       this.state.playerAttack + this.state.equipmentBonuses.bonusAttack;
-    // If the skill #3 is active
     if (this.state.skills.skillThree.isActive) {
       // Add to the basic the skill's extra damage
       damage +=
         (this.calculateDamagePerSecondAllSources() / 100) *
         this.state.skills.skillThree.damageMultiplier;
     }
+
     // Basic multiplier
     let damageMultiplier = 1;
-    // Add deck bonus click damage
     damageMultiplier += this.state.deckBonuses.bonusClickDamage;
+    damageMultiplier += this.state.damageMultiplierFromTomes;
 
     return damage * damageMultiplier;
   };
 
   // Sum of all the DPS sources
   calculateDamagePerSecondAllSources = () => {
+    let damage =
+      this.state.pets.petOne.damagePerSecondCurrent +
+      this.state.pets.petTwo.damagePerSecondCurrent +
+      this.state.pets.petThree.damagePerSecondCurrent +
+      this.state.pets.petFour.damagePerSecondCurrent +
+      this.state.pets.petFive.damagePerSecondCurrent +
+      this.state.pets.petSix.damagePerSecondCurrent +
+      this.state.pets.petSeven.damagePerSecondCurrent +
+      this.state.pets.petEight.damagePerSecondCurrent +
+      this.state.pets.petNine.damagePerSecondCurrent +
+      this.state.pets.petTen.damagePerSecondCurrent +
+      this.state.pets.petEleven.damagePerSecondCurrent +
+      this.state.pets.petTwelve.damagePerSecondCurrent;
+    let multiplier = 1;
+    multiplier += this.state.deckBonuses.bonusDamagePerSecond;
+    multiplier += this.state.damageMultiplierFromTomes;
     if (this.state.skills.skillTwo.isActive) {
-      return (
-        this.state.pets.petOne.damagePerSecondCurrent +
-        this.state.pets.petTwo.damagePerSecondCurrent +
-        this.state.pets.petThree.damagePerSecondCurrent +
-        this.state.pets.petFour.damagePerSecondCurrent +
-        this.state.pets.petFive.damagePerSecondCurrent +
-        this.state.pets.petSix.damagePerSecondCurrent +
-        this.state.pets.petSeven.damagePerSecondCurrent +
-        this.state.pets.petEight.damagePerSecondCurrent +
-        this.state.pets.petNine.damagePerSecondCurrent +
-        this.state.pets.petTen.damagePerSecondCurrent +
-        this.state.pets.petEleven.damagePerSecondCurrent +
-        this.state.pets.petTwelve.damagePerSecondCurrent *
-          this.state.skills.skillTwo.damageMultiplier
-      );
-    } else
-      return (
-        this.state.pets.petOne.damagePerSecondCurrent +
-        this.state.pets.petTwo.damagePerSecondCurrent +
-        this.state.pets.petThree.damagePerSecondCurrent +
-        this.state.pets.petFour.damagePerSecondCurrent +
-        this.state.pets.petFive.damagePerSecondCurrent +
-        this.state.pets.petSix.damagePerSecondCurrent +
-        this.state.pets.petSeven.damagePerSecondCurrent +
-        this.state.pets.petEight.damagePerSecondCurrent +
-        this.state.pets.petNine.damagePerSecondCurrent +
-        this.state.pets.petTen.damagePerSecondCurrent +
-        this.state.pets.petEleven.damagePerSecondCurrent +
-        this.state.pets.petTwelve.damagePerSecondCurrent
-      );
+      multiplier += this.state.skills.skillTwo.damageMultiplier;
+    }
+    return damage * multiplier;
   };
 
   // Calculate the final click damage after adding up all sources
@@ -2558,21 +2874,24 @@ class UserInterface extends Component {
   // Attack the enemy
   playerAttack = () => {
     // If the enemy is not in the process of respawning
-    if (this.state.playerCanAttack) {
+    if (this.state.playerCanAttack && !this.state.isGamePaused) {
       let damageDealt = this.calculateClickDamageAfterMultipliers();
-      this.setState({
-        // Remove the player damage from the enemy's health
-        enemyHealthCurrent: this.state.enemyHealthCurrent - damageDealt,
-        totalPlayerAttacks: this.state.totalPlayerAttacks + 1,
-        totalPlayerDamageDealt: this.state.totalPlayerDamageDealt + damageDealt
-      });
-      if (
-        // When enemy is dead
-        this.state.enemyHealthCurrent <= 0 &&
-        // When XP has not already been given
-        this.state.enemyHasHealth !== false
-      ) {
-        this.enemyDie();
+      if (damageDealt !== null) {
+        this.setState({
+          // Remove the player damage from the enemy's health
+          enemyHealthCurrent: this.state.enemyHealthCurrent - damageDealt,
+          totalPlayerAttacks: this.state.totalPlayerAttacks + 1,
+          totalPlayerDamageDealt:
+            this.state.totalPlayerDamageDealt + damageDealt
+        });
+        if (
+          // When enemy is dead
+          this.state.enemyHealthCurrent <= 0 &&
+          // When XP has not already been given
+          this.state.enemyHasHealth !== false
+        ) {
+          this.enemyDie();
+        }
       }
     }
   };
@@ -2593,15 +2912,16 @@ class UserInterface extends Component {
       if (
         this.state.hasOwnProperty(key) &&
         key !== "battleLogParagraphsToBeRendered" &&
-        key !== "enemyHasHealth" &&
         key !== "enemyAttackInterval" &&
         key !== "playerAttackInterval" &&
         key !== "petDamageParagraphsToBeRendered" &&
-        key !== "playerDamageParagraphsToBeRendered"
+        key !== "playerDamageParagraphsToBeRendered" &&
+        key !== "enemyHealthCurrent" &&
+        key !== "enemyHasHealth" &&
+        key !== "playerCanAttack"
       ) {
         // Get the key's value from localStorage
         let value = JSON.parse(localStorage.getItem(key));
-
         // Set the state with it
         this.setState({ [key]: value });
       }
@@ -2666,7 +2986,7 @@ class UserInterface extends Component {
         ) {
           skills[skill].damageMultiplier =
             // Round to 2 decimals max (if applies)
-            Math.round(2 * Math.pow(1.07, skills[skill].level) * 100) / 100;
+            Math.round(1.8 * Math.pow(1.1, skills[skill].level) * 100) / 100;
         }
 
         // Skill #2 & Skill #3
@@ -2675,14 +2995,15 @@ class UserInterface extends Component {
           skills[skill].name === "Animal training"
         ) {
           skills[skill].damageMultiplier =
-            Math.round(1.8 * Math.pow(1.06, skills[skill].level) * 100) / 100;
+            Math.round(1.2 * Math.pow(1.1, skills[skill].level) * 100) / 100;
         }
       }
     }
     this.setState({ skills });
-    // Reinitialise all renderers
+    // Reinitialise all values
     setTimeout(() => {
       this.forceRerenderPetParagraphs();
+      this.enemyAttack();
     }, 0);
   };
 
@@ -2702,135 +3023,146 @@ class UserInterface extends Component {
   };
 
   playerUseActiveSkill = skillNumber => {
-    // Create a copy of the object
-    let skills = { ...this.state.skills };
-    // Skill is [Ready/Unlocked] and enemy is alive
-    if (
-      skills[skillNumber].isReady &&
-      skills[skillNumber].level !== 0 &&
-      this.state.enemyHasHealth
-    ) {
-      // Set the skill on cooldown
-      skills[skillNumber].isReady = false;
-      setTimeout(() => {
-        skills[skillNumber].isReady = true;
-        this.setState({ skills });
-      }, skills[skillNumber].cooldown);
-      // Skills #1 and #4
-      if (skillNumber === "skillOne" || skillNumber === "skillFour") {
-        let numberOfAttacks = skills[skillNumber].numberOfAttacks;
-        let skillActivate = () => {
-          if (numberOfAttacks !== 0) {
-            numberOfAttacks--;
-            setTimeout(() => {
-              this.setState({
-                enemyHealthCurrent:
-                  this.state.enemyHealthCurrent -
-                  this.calculateClickDamageAllSources() *
-                    skills[skillNumber].damageMultiplier
-              });
-              skillActivate();
-            }, 250);
-          }
-        };
-        skillActivate();
-        this.setState({ skills });
-      }
-      // Skills #2 and #3
-      if (skillNumber === "skillTwo" || skillNumber === "skillThree") {
-        skills[skillNumber].isActive = true;
-        this.setState({ skills });
-        // Set the skill back to inactive
+    if (!this.state.isGamePaused) {
+      // Create a copy of the object
+      let skills = { ...this.state.skills };
+      // Skill is [Ready/Unlocked] and enemy is alive
+      if (
+        skills[skillNumber].isReady &&
+        skills[skillNumber].level !== 0 &&
+        this.state.enemyHasHealth
+      ) {
+        // Set the skill on cooldown
+        skills[skillNumber].isReady = false;
         setTimeout(() => {
-          skills[skillNumber].isActive = false;
+          skills[skillNumber].isReady = true;
           this.setState({ skills });
-          // Add a 'Skill finished' paragraph to the Battle Log
+        }, skills[skillNumber].cooldown);
+        // Skills #1 and #4
+        if (skillNumber === "skillOne" || skillNumber === "skillFour") {
+          let numberOfAttacks = skills[skillNumber].numberOfAttacks;
+          let skillActivate = () => {
+            if (numberOfAttacks !== 0) {
+              let damage =
+                this.calculateClickDamageAllSources() *
+                skills[skillNumber].damageMultiplier;
+              if (damage !== null) {
+                numberOfAttacks--;
+                setTimeout(() => {
+                  this.setState({
+                    enemyHealthCurrent:
+                      this.state.enemyHealthCurrent -
+                      this.calculateClickDamageAllSources() *
+                        skills[skillNumber].damageMultiplier
+                  });
+                  skillActivate();
+                }, 250);
+              }
+            }
+          };
+          skillActivate();
+          this.setState({ skills });
+        }
+        // Skills #2 and #3
+        if (skillNumber === "skillTwo" || skillNumber === "skillThree") {
+          skills[skillNumber].isActive = true;
+          this.setState({ skills });
+          // Set the skill back to inactive
+          setTimeout(() => {
+            skills[skillNumber].isActive = false;
+            this.setState({ skills });
+            // Add a 'Skill finished' paragraph to the Battle Log
+            this.pushNewParagraphToBattleLog(
+              <p>
+                <small className="text-warning">
+                  {skills[skillNumber].name}
+                </small>
+                <small> expired.</small>
+              </p>
+            );
+          }, this.state.skills[skillNumber].duration);
+        }
+
+        if (skillNumber === "skillOne") {
+          // Add a 'Skill used' paragraph to the Battle Log
           this.pushNewParagraphToBattleLog(
             <p>
-              <small className="text-warning">{skills[skillNumber].name}</small>
-              <small> expired.</small>
+              <small>
+                {skills[skillNumber].name} deals{" "}
+                <span className="text-warning">
+                  {this.renderNumberWithAbbreviations(
+                    Math.round(
+                      this.calculateClickDamageAllSources() *
+                        skills[skillNumber].damageMultiplier *
+                        skills[skillNumber].numberOfAttacks
+                    )
+                  )}{" "}
+                  DMG
+                </span>
+                !
+              </small>
             </p>
           );
-        }, this.state.skills[skillNumber].duration);
+        }
+
+        if (skillNumber === "skillTwo") {
+          // Add a 'Skill used' paragraph to the Battle Log
+          this.pushNewParagraphToBattleLog(
+            <p>
+              <small>
+                <span className="text-warning">
+                  {skills[skillNumber].name}{" "}
+                </span>
+                makes your pets{" "}
+                <span className="text-warning">
+                  {Math.round(skills[skillNumber].damageMultiplier * 100)}%
+                </span>{" "}
+                stronger!
+              </small>
+            </p>
+          );
+        }
+
+        if (skillNumber === "skillThree") {
+          // Add a 'Skill used' paragraph to the Battle Log
+          this.pushNewParagraphToBattleLog(
+            <p>
+              <small>
+                <span className="text-warning">
+                  {this.state.skills[skillNumber].name}{" "}
+                </span>
+                makes your click damage stronger!
+              </small>
+            </p>
+          );
+        }
+
+        if (skillNumber === "skillFour") {
+          // Add a 'Skill used' paragraph to the Battle Log
+          this.pushNewParagraphToBattleLog(
+            <p>
+              <small>
+                {this.state.skills[skillNumber].name} deals{" "}
+                <span className="text-warning">
+                  {this.renderNumberWithAbbreviations(
+                    Math.round(
+                      this.calculateDamagePerSecondAllSources() *
+                        this.state.skills[skillNumber].damageMultiplier *
+                        this.state.skills[skillNumber].numberOfAttacks
+                    )
+                  )}{" "}
+                  DMG
+                </span>
+                !
+              </small>
+            </p>
+          );
+        }
       }
 
-      if (skillNumber === "skillOne") {
-        // Add a 'Skill used' paragraph to the Battle Log
-        this.pushNewParagraphToBattleLog(
-          <p>
-            <small>
-              {skills[skillNumber].name} deals{" "}
-              <span className="text-warning">
-                {this.renderNumberWithAbbreviations(
-                  Math.round(
-                    this.calculateClickDamageAllSources() *
-                      skills[skillNumber].damageMultiplier *
-                      skills[skillNumber].numberOfAttacks
-                  )
-                )}{" "}
-                DMG
-              </span>
-              !
-            </small>
-          </p>
-        );
-      }
-
-      if (skillNumber === "skillTwo") {
-        // Add a 'Skill used' paragraph to the Battle Log
-        this.pushNewParagraphToBattleLog(
-          <p>
-            <small>
-              <span className="text-warning">{skills[skillNumber].name} </span>
-              makes your pets{" "}
-              <span className="text-warning">
-                {Math.round(skills[skillNumber].damageMultiplier * 100)}%
-              </span>{" "}
-              stronger!
-            </small>
-          </p>
-        );
-      }
-
-      if (skillNumber === "skillThree") {
-        // Add a 'Skill used' paragraph to the Battle Log
-        this.pushNewParagraphToBattleLog(
-          <p>
-            <small>
-              <span className="text-warning">
-                {this.state.skills[skillNumber].name}{" "}
-              </span>
-              makes your click damage stronger!
-            </small>
-          </p>
-        );
-      }
-
-      if (skillNumber === "skillFour") {
-        // Add a 'Skill used' paragraph to the Battle Log
-        this.pushNewParagraphToBattleLog(
-          <p>
-            <small>
-              {this.state.skills[skillNumber].name} deals{" "}
-              <span className="text-warning">
-                {this.renderNumberWithAbbreviations(
-                  Math.round(
-                    this.calculateDamagePerSecondAllSources() *
-                      this.state.skills[skillNumber].damageMultiplier *
-                      this.state.skills[skillNumber].numberOfAttacks
-                  )
-                )}{" "}
-                DMG
-              </span>
-              !
-            </small>
-          </p>
-        );
-      }
+      // Update the stats counter
+      this.setState({ totalSkillsUsed: this.state.totalSkillsUsed + 1 });
     }
-
-    // Update the stats counter
-    this.setState({ totalSkillsUsed: this.state.totalSkillsUsed + 1 });
   };
 
   // Heal the player using food
@@ -2897,27 +3229,29 @@ class UserInterface extends Component {
       (damageDealt / 100) *
       (Math.random() * 25 * (Math.random() * 1 >= 0.5 ? 1 : -1));
     // Store a reference in the state of the random number generate to be rendered in petVisualDamage.jsx
+    damageDealt = Math.round(damageDealt);
     this.setState({
       petDamageValueToBeRendered: this.renderNumberWithAbbreviations(
-        Math.round(damageDealt / 2)
+        damageDealt
       )
     });
-    damageDealt = Math.round(damageDealt);
     // If the enemy is not respawning
-    if (this.state.playerCanAttack) {
-      this.setState({
-        // Damage the enemy by the amount of player DPS
-        enemyHealthCurrent: this.state.enemyHealthCurrent - damageDealt,
-        // Update player stats
-        totalPetDamageDealt: this.state.totalPetDamageDealt + damageDealt
-      });
-      if (
-        // If enemy is dead
-        this.state.enemyHealthCurrent <= 1 &&
-        // If XP has not already been given
-        this.state.enemyHasHealth !== false
-      ) {
-        this.enemyDie();
+    if (this.state.playerCanAttack && !this.state.isGamePaused) {
+      if (damageDealt !== null) {
+        this.setState({
+          // Damage the enemy by the amount of player DPS
+          enemyHealthCurrent: this.state.enemyHealthCurrent - damageDealt,
+          // Update player stats
+          totalPetDamageDealt: this.state.totalPetDamageDealt + damageDealt
+        });
+        if (
+          // If enemy is dead
+          this.state.enemyHealthCurrent <= 1 &&
+          // If XP has not already been given
+          this.state.enemyHasHealth !== false
+        ) {
+          this.enemyDie();
+        }
       }
     }
   };
@@ -2937,8 +3271,7 @@ class UserInterface extends Component {
         if (this.state.enemyIsBoss) {
           this.setState({
             stageEnemiesKilled: 0,
-            enemyIsBoss: false,
-            activateAutoStageAdvance: false
+            enemyIsBoss: false
           });
         }
         // Render a paragraph to the Battle Log saying that the player is dead
@@ -3010,9 +3343,9 @@ class UserInterface extends Component {
           enemyHasHealth: true,
           enemyLevel: level,
           enemyExperienceHeld: Math.round(25 * Math.pow(1.08, level)),
-          enemyHealthCurrent: Math.round(500 * Math.pow(1.11, level)),
-          enemyHealthMax: Math.round(500 * Math.pow(1.11, level)),
-          enemyAttack: Math.round(50 * Math.pow(1.045, level)),
+          enemyHealthCurrent: Math.round(500 * Math.pow(1.12, level)),
+          enemyHealthMax: Math.round(500 * Math.pow(1.12, level)),
+          enemyAttack: Math.round(3 * Math.pow(1.045, level)),
           enemyCoinsValue: Math.round(25 * Math.pow(1.05, level)),
           // Reinitialise the values of the player
           playerHealthCurrent: this.state.playerHealthMax
@@ -3024,13 +3357,13 @@ class UserInterface extends Component {
           enemyHasHealth: true,
           enemyLevel: this.state.stageCurrent,
           enemyExperienceHeld: Math.round(
-            25 * Math.pow(1.08, this.state.stageCurrent)
+            75 * Math.pow(1.08, this.state.stageCurrent)
           ),
           enemyHealthCurrent: Math.round(
-            2500 * Math.pow(1.11, this.state.stageCurrent)
+            2500 * Math.pow(1.12, this.state.stageCurrent)
           ),
           enemyHealthMax: Math.round(
-            2500 * Math.pow(1.11, this.state.stageCurrent)
+            2500 * Math.pow(1.12, this.state.stageCurrent)
           ),
           enemyAttack: Math.round(
             50 * Math.pow(1.045, this.state.stageCurrent)
@@ -3043,6 +3376,10 @@ class UserInterface extends Component {
         });
       }
     }, 0);
+  };
+
+  toggleInventoryPopoversRendering = boolean => {
+    this.setState({ canInventoryPopoversBeRendered: boolean });
   };
 
   // Equip the player with all items who's isItemEquipped boolean resolves to true
@@ -3265,7 +3602,7 @@ class UserInterface extends Component {
       }
       // Set the state with the modified array
       this.setState({ inventory, equipmentToBeCollected });
-    }, 500);
+    }, 0);
   };
 
   // Add food to the inventory
@@ -3398,20 +3735,100 @@ class UserInterface extends Component {
   };
 
   renderStageBar = () => {
-    if (!this.state.isTutorialScreenActive) {
+    return (
+      <StagesBar
+        mainState={this.state}
+        activateAutoStageAdvance={this.activateAutoStageAdvance}
+        playerStageAdvance={this.playerStageAdvance}
+        quitBossStage={this.quitBossStage}
+      />
+    );
+  };
+
+  renderBattleArea = () => {
+    if (
+      this.state.gameVersion === "3.1.0" ||
+      this.state.gameVersionAllowedByUser === this.state.gameVersion
+    ) {
       return (
-        <StagesBar
+        <BattleArea
           mainState={this.state}
-          activateAutoStageAdvance={this.activateAutoStageAdvance}
-          playerStageAdvance={this.playerStageAdvance}
+          collectCoinsOnHover={this.collectCoinsOnHover}
+          collectFoodOnHover={this.collectFoodOnHover}
+          collectLootBagOnHover={this.collectLootBagOnHover}
+          collectEquipmentOnHover={this.collectEquipmentOnHover}
+          addPlayerDamageRenderingItem={this.addPlayerDamageRenderingItem}
+          removePlayerDamageRenderingItem={this.removePlayerDamageRenderingItem}
+          addPetDamageRenderingItem={this.addPetDamageRenderingItem}
+          removePetDamageRenderingItem={this.removePetDamageRenderingItem}
+          playerAttack={this.playerAttack}
+          playerHeal={this.playerHeal}
+          calculateRandomDropChance={this.calculateRandomDropChance}
+          calculateClickDamageAllSources={this.calculateClickDamageAllSources}
+          calculateDamagePerSecondAllSources={
+            this.calculateDamagePerSecondAllSources
+          }
+          renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
         />
+      );
+    } else {
+      return (
+        <div id="differentGameVersionLoad-div">
+          <h4 className="text-primary">Welcome back!</h4>
+          <br />
+          <p>
+            The current version of the game is{" "}
+            <span className="text-warning">3.1.0</span>, but we detected a game
+            save from an older version which might not be compatible with the
+            current one. Would you like delete your progress and start over, or
+            continue your game?
+          </p>
+
+          <br />
+          <div id="differentGameVersionLoad-buttons">
+            <button
+              className="btn btn-dark mx-auto text-warning"
+              onClick={() => {
+                localStorage.clear();
+                document.location.reload(true);
+              }}
+            >
+              Delete my saved data
+            </button>
+            <button
+              className="btn btn-dark mx-auto text-primary"
+              onClick={() => {
+                this.setState({
+                  gameVersionAllowedByUser: this.state.gameVersion
+                });
+              }}
+            >
+              Keep playing
+            </button>
+          </div>
+          <br />
+          <br />
+
+          <small className="text-danger">
+            Please remember that using your saved game on the newer version{" "}
+            <em>might</em> cause parts of the game to behave unexpectedly.
+          </small>
+        </div>
       );
     }
   };
 
+  renderUserInterfaceClasses = () => {
+    return this.state.isPlayerRebirting ? "userInterface-div-rebirth" : "";
+  };
+
   render() {
     return (
-      <div style={this.renderBackgroundImage()} id="userInterface-div">
+      <div
+        style={this.renderBackgroundImage()}
+        id="userInterface-div"
+        className={this.renderUserInterfaceClasses()}
+      >
         <h1 id="userInterface-h1">Fantasia</h1>
         {/* Resources bar [ TOP ] */}
         <ResourcesBar mainState={this.state} />
@@ -3451,40 +3868,24 @@ class UserInterface extends Component {
             this.calculateCoinDropMultiplierAllSources
           }
           giveItemDebug={this.giveItemDebug}
+          playerRebirth={this.playerRebirth}
           petLevelUpgrade={this.petLevelUpgrade}
           fetchLeftMenuSettingSelection={this.fetchLeftMenuSettingSelection}
         />
         <Inventory
           mainState={this.state}
           renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
+          toggleInventoryPopoversRendering={
+            this.toggleInventoryPopoversRendering
+          }
           toggleItemEquippedState={this.toggleItemEquippedState}
           playerSellItem={this.playerSellItem}
           playerSellAllUnequippedItems={this.playerSellAllUnequippedItems}
         />
         {/* Stages [ TOP ] */}
         {this.renderStageBar()}
-
         {/* Battle [ MIDDLE ] */}
-        <BattleArea
-          mainState={this.state}
-          collectCoinsOnHover={this.collectCoinsOnHover}
-          collectFoodOnHover={this.collectFoodOnHover}
-          collectLootBagOnHover={this.collectLootBagOnHover}
-          collectEquipmentOnHover={this.collectEquipmentOnHover}
-          addPlayerDamageRenderingItem={this.addPlayerDamageRenderingItem}
-          removePlayerDamageRenderingItem={this.removePlayerDamageRenderingItem}
-          addPetDamageRenderingItem={this.addPetDamageRenderingItem}
-          removePetDamageRenderingItem={this.removePetDamageRenderingItem}
-          playerAttack={this.playerAttack}
-          playerHeal={this.playerHeal}
-          calculateRandomDropChance={this.calculateRandomDropChance}
-          calculateClickDamageAllSources={this.calculateClickDamageAllSources}
-          calculateDamagePerSecondAllSources={
-            this.calculateDamagePerSecondAllSources
-          }
-          renderNumberWithAbbreviations={this.renderNumberWithAbbreviations}
-        />
-
+        {this.renderBattleArea()}
         {/* Skills [ BOTTOM ] */}
         <SkillBar
           mainState={this.state}

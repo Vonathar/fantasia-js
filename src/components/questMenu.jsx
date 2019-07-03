@@ -15,6 +15,7 @@ class QuestMenu extends Component {
           <img
             className="userInterface-quests-logo"
             src={achievementPointImage}
+            alt="Quest chest"
           />
         </p>
         {/* Quest #1  -  Player attacks */}
@@ -32,6 +33,7 @@ class QuestMenu extends Component {
           <img
             className="userInterface-quests-logo"
             src={achievementPointImage}
+            alt="Quest chest"
           />
           {this.props.mainState.quests.playerAttacks.adventurePointsHeld} AP
         </small>
@@ -60,6 +62,7 @@ class QuestMenu extends Component {
           <img
             className="userInterface-quests-logo"
             src={achievementPointImage}
+            alt="Quest chest"
           />
           {this.props.mainState.quests.petDamageDealt.adventurePointsHeld} AP
         </small>
@@ -88,6 +91,7 @@ class QuestMenu extends Component {
           <img
             className="userInterface-quests-logo"
             src={achievementPointImage}
+            alt="Quest chest"
           />
           {this.props.mainState.quests.playerDamageDealt.adventurePointsHeld} AP
         </small>
@@ -116,6 +120,7 @@ class QuestMenu extends Component {
           <img
             className="userInterface-quests-logo"
             src={achievementPointImage}
+            alt="Quest chest"
           />
           {this.props.mainState.quests.moneyEarned.adventurePointsHeld} AP
         </small>
@@ -142,6 +147,7 @@ class QuestMenu extends Component {
           <img
             className="userInterface-quests-logo"
             src={achievementPointImage}
+            alt="Quest chest"
           />
           {this.props.mainState.quests.skillsUsed.adventurePointsHeld} AP
         </small>
@@ -163,6 +169,7 @@ class QuestMenu extends Component {
           <img
             className="userInterface-quests-logo"
             src={achievementPointImage}
+            alt="Quest chest"
           />
           {this.props.mainState.quests.timesHealed.adventurePointsHeld} AP
         </small>
@@ -184,6 +191,7 @@ class QuestMenu extends Component {
           <img
             className="userInterface-quests-logo"
             src={achievementPointImage}
+            alt="Quest chest"
           />
           {this.props.mainState.quests.enemiesKilled.adventurePointsHeld} AP
         </small>

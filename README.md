@@ -6,6 +6,43 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
+#### 3.1.0
+
+##### Gameplay
+
+- **Rebirth mode** is now live! Restart the game from the beginning, but receive **tomes** as a reward!
+- Introduce a **game version check** at the start of the game to warn the player if their saved data might have a conflict with the new update
+- Game can now be **paused** pressing the [P] key!
+- It is now possible to **quit a boss stage** whenever the player wishes to do so
+- The name of the current scenario is now displayed in the stage bar
+- The tutorial screen is now much bigger for easier reading
+- The auto game save interval has been increased
+- Drops on the ground are now automatically collected when they are more than 10
+
+##### Game rebalancing
+
+- Non-boss enemies' damage has been drastically reduced to facilitate idle stage progression
+- All enemies and bosses now have a steeper increment in health over the levels
+- Bosses now reward three times the basic experience points
+- Damage of all pets has been increased
+- All weapons' damage has been lowered in earlier stages, but increased in later stages
+- Skills #1, #2 and #3 now have a lower damage multiplier
+- The duration of skill #3 has been halved
+- Price of _critical chance_ and _critical damage_ upgrades has been increased
+
+##### Other
+
+- Fix a bug which caused the health deck card bonus not to be added to the player's health
+- Fix a bug which caused items' popovers to remain open after the usered unhovered their icons
+- Introduce error handlers to fix enemies spawning with a negative value of health when there is latency
+- Fix a bug which caused the 'sell all' button in the inventory to sometimes crash the page
+- Added alternative text for images in the tutorial, quest and inventory tab
+- The icon of the 'rebirth' skill has been removed as its predicted functionalies are handled inside of the rebirth window
+- The stats' name in the summary tab are now highlighted in blue
+- Prevent the player damage to be null during respawning when the 'noDelay' option from the debug screen is active
+- Fix a bug which only showed half of the pet damage in the rendered bubble
+- Performance optimisation
+
 ### 3.0.0 - The Golden Temple Update
 
 #### Gameplay

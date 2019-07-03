@@ -214,13 +214,13 @@ class SummaryMenu extends Component {
         </div>
         <div className="userInterface-stats-row">
           <div className="userInterface-stats-row-child mx-auto">
-            <small className="userInterface-stats-category">
+            <small className="userInterface-stats-category text-primary">
               Total player attacks
             </small>
             <p>{this.props.mainState.totalPlayerAttacks.toLocaleString()}</p>
           </div>
           <div className="userInterface-stats-row-child mx-auto">
-            <small className="userInterface-stats-category">
+            <small className="userInterface-stats-category text-primary">
               Total player damage
             </small>
             <p>
@@ -233,7 +233,7 @@ class SummaryMenu extends Component {
 
         <div className="userInterface-stats-row">
           <div className="userInterface-stats-row-child mx-auto">
-            <small className="userInterface-stats-category">
+            <small className="userInterface-stats-category text-primary">
               Total pet damage
             </small>
             <p>
@@ -243,14 +243,16 @@ class SummaryMenu extends Component {
             </p>
           </div>
           <div className="userInterface-stats-row-child mx-auto">
-            <small className="userInterface-stats-category">Total kills</small>
+            <small className="userInterface-stats-category text-primary">
+              Total kills
+            </small>
             <p>{this.props.mainState.totalEnemiesKilled.toLocaleString()}</p>
           </div>
         </div>
 
         <div className="userInterface-stats-row">
           <div className="userInterface-stats-row-child mx-auto">
-            <small className="userInterface-stats-category">
+            <small className="userInterface-stats-category text-primary">
               Total money earned
             </small>
             <p>
@@ -260,7 +262,7 @@ class SummaryMenu extends Component {
             </p>
           </div>
           <div className="userInterface-stats-row-child mx-auto">
-            <small className="userInterface-stats-category">
+            <small className="userInterface-stats-category text-primary">
               Total money spent
             </small>
             <p>
@@ -273,13 +275,13 @@ class SummaryMenu extends Component {
 
         <div className="userInterface-stats-row">
           <div className="userInterface-stats-row-child mx-auto">
-            <small className="userInterface-stats-category">
+            <small className="userInterface-stats-category text-primary">
               Total skills used
             </small>
             <p>{this.props.mainState.totalSkillsUsed.toLocaleString()}</p>
           </div>
           <div className="userInterface-stats-row-child mx-auto">
-            <small className="userInterface-stats-category">
+            <small className="userInterface-stats-category text-primary">
               Total player deaths
             </small>
             <p>{this.props.mainState.totalPlayerDeaths.toLocaleString()}</p>
@@ -287,12 +289,19 @@ class SummaryMenu extends Component {
         </div>
         <div className="userInterface-stats-row">
           <div className="userInterface-stats-row-child mx-auto">
-            <small className="userInterface-stats-category">
+            <small className="userInterface-stats-category text-primary">
               Total potions used
             </small>
             <p>{this.props.mainState.totalTimesHealed.toLocaleString()}</p>
           </div>
+          <div className="userInterface-stats-row-child mx-auto">
+            <small className="userInterface-stats-category text-primary">
+              Total rebirths
+            </small>
+            <p>{this.props.mainState.totalPlayerRebirths.toLocaleString()}</p>
+          </div>
         </div>
+
         <small>Check out your stats to know more about your adventure!</small>
       </div>
     );

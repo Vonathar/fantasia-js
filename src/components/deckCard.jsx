@@ -116,6 +116,7 @@ class DeckCard extends Component {
         <img
           src={this.props.mainState.deck[this.props.cardNumber].bonusImage}
           className="deckMenu-row-section-bonusImage"
+          alt="Deck bonus"
         />
         <small>
           {"+" +

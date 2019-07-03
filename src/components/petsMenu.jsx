@@ -214,7 +214,7 @@ class PetsMenu extends Component {
         if (upgradeLevel % 5 === 4) {
           damagePerSecondBase *= 1.25;
         }
-        totalDamage += damagePerSecondBase * Math.pow(1.08, upgradeLevel + 1);
+        totalDamage += damagePerSecondBase * Math.pow(1.1, upgradeLevel + 1);
       }
       upgradeLevel++;
       // X5 Upgrades
@@ -229,9 +229,9 @@ class PetsMenu extends Component {
           if (upgradeLevel % 5 === 4) {
             damagePerSecondBase *= 1.25;
           }
-          totalDamage = damagePerSecondBase * Math.pow(1.08, upgradeLevel + 1);
+          totalDamage = damagePerSecondBase * Math.pow(1.1, upgradeLevel + 1);
           damagePerSecondCurrent +=
-            damagePerSecondBase * Math.pow(1.08, upgradeLevel);
+            damagePerSecondBase * Math.pow(1.1, upgradeLevel);
           upgradeLevel++;
         }
       }
@@ -247,9 +247,9 @@ class PetsMenu extends Component {
           if (upgradeLevel % 5 === 4) {
             damagePerSecondBase *= 1.25;
           }
-          totalDamage = damagePerSecondBase * Math.pow(1.08, upgradeLevel + 1);
+          totalDamage = damagePerSecondBase * Math.pow(1.1, upgradeLevel + 1);
           damagePerSecondCurrent +=
-            damagePerSecondBase * Math.pow(1.08, upgradeLevel);
+            damagePerSecondBase * Math.pow(1.1, upgradeLevel);
           upgradeLevel++;
         }
       }
@@ -269,9 +269,9 @@ class PetsMenu extends Component {
           if (upgradeLevel % 5 === 4) {
             damagePerSecondBase *= 1.25;
           }
-          totalDamage = damagePerSecondBase * Math.pow(1.08, upgradeLevel + 1);
+          totalDamage = damagePerSecondBase * Math.pow(1.1, upgradeLevel + 1);
           damagePerSecondCurrent +=
-            damagePerSecondBase * Math.pow(1.08, upgradeLevel);
+            damagePerSecondBase * Math.pow(1.1, upgradeLevel);
           upgradeLevel++;
         }
       }
