@@ -6,12 +6,11 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ## Change log
 
-#### 3.2.0
+#### 3.2.1
 
 ##### Gameplay
 
-- Introduce the **fever bar** - attack the enemy continously to deal more damage! (Up to +20%)
-- Add a small text next to progress bars to explain what they represent
+- Using skills now also adds to the fever bar
 
 ##### Game rebalancing
 
@@ -19,8 +18,7 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ##### Other
 
-- Potions are now reset upon rebirth
-- The battle area is now bigger
+- The fever bar's value goes down more smoothly
 
 ### 3.0.0 - The Golden Temple Update
 

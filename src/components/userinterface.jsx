@@ -1310,7 +1310,7 @@ class UserInterface extends Component {
           playerFeverValueCurrent: this.state.playerFeverValueCurrent - 1
         });
       }
-    }, 100),
+    }, 50),
     automaticProgressSave: setInterval(() => {
       setTimeout(() => {
         this.saveProgressToLocalStorage();
@@ -3079,6 +3079,7 @@ class UserInterface extends Component {
                         skills[skillNumber].damageMultiplier
                   });
                   skillActivate();
+                  this.playerGainFever();
                 }, 250);
               }
             }
