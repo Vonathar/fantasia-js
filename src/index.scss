@@ -84,8 +84,26 @@ body {
   border-radius: 20px;
 }
 
-#battleArea-progress-playerExperience {
+#battleArea-progress-playerExperience,
+#battleArea-progress-playerFever {
   width: 39vw;
+}
+
+#battleArea-progress-playerHealth-div,
+#battleArea-progress-playerFever-div,
+#battleArea-progress-playerExperience-div,
+#battleArea-progress-enemyHealth-div {
+  display: flex;
+  color: white;
+}
+
+#battleArea-progress-playerExperience-div,
+#battleArea-progress-playerFever-div {
+  width: 39vw;
+}
+
+.battleArea-progress-name {
+  padding: 0.2vw;
 }
 
 #battleArea-progress-enemyHealth {
@@ -138,6 +156,20 @@ body {
     ),
     -webkit-linear-gradient(top, rgba(255, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
     -webkit-linear-gradient(left, rgb(0, 255, 55), #9dff00);
+  background-size: 35px 20px, 100% 100%, 100% 100%;
+  border-radius: 20px;
+}
+
+#battleArea-progress-playerFever::-webkit-progress-value {
+  background-image: -webkit-linear-gradient(
+      -45deg,
+      transparent 33%,
+      rgba(0, 0, 0, 0.1) 33%,
+      rgba(0, 0, 0, 0.1) 66%,
+      transparent 66%
+    ),
+    -webkit-linear-gradient(top, rgba(255, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+    -webkit-linear-gradient(left, rgb(162, 0, 255), #ff006a);
   background-size: 35px 20px, 100% 100%, 100% 100%;
   border-radius: 20px;
 }
@@ -416,7 +448,7 @@ code {
   position: relative;
   width: 10vw;
   height: 30vh;
-  top: 7.5vh;
+  top: 10vh;
 }
 
 .userInterface-enemy-image {
@@ -450,7 +482,7 @@ code {
   left: 4vw;
   height: 20vh;
   width: 25vw;
-  top: 7.5vh;
+  top: 10vh;
 }
 
 .userInterface-enemy-image-dead {
@@ -572,11 +604,11 @@ code {
   position: fixed;
   font-size: 0.9vw;
 
-  top: 50vh;
+  top: 45vh;
   display: flex;
   margin: auto;
   width: 40vw;
-  height: 40vh;
+  height: 45vh;
   padding: 10px;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -668,7 +700,7 @@ code {
   left: 0;
   right: 0;
   position: fixed;
-  top: 30vh;
+  top: 27.5vh;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;

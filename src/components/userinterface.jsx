@@ -152,7 +152,7 @@ class UserInterface extends Component {
         <small>Welcome to Fantasia!</small>
       </p>,
       <p>
-        <small className="text-primary">Version: 3.1.0</small>
+        <small className="text-primary">Version: 3.2.0</small>
       </p>,
       <p>
         <small>
@@ -176,7 +176,7 @@ class UserInterface extends Component {
       </p>
     ],
     /* Global settings */
-    gameVersion: "3.1.0",
+    gameVersion: "3.2.0",
     gameVersionAllowedByUser: "",
     isGamePaused: false,
     isFirstGameSession: false,
@@ -466,6 +466,8 @@ class UserInterface extends Component {
     playerHealthMax: 500,
     playerExperienceCurrent: 0,
     playerExperienceRequired: 250,
+    playerFeverValueCurrent: 0,
+    playerFeverValueMax: 100,
     playerAttack: 50,
     playerLastAttack: {
       damage: 50,
@@ -1289,6 +1291,7 @@ class UserInterface extends Component {
         petTwelve: false
       }
     },
+    /* Game loops */
     enemyAttackInterval: setInterval(() => {
       if (!this.state.isGamePaused) {
         this.enemyAttack();
@@ -1300,6 +1303,14 @@ class UserInterface extends Component {
         this.playerAttackPerSecond();
       }
     }, 500),
+    // Periodically reduce the value of the fever bar
+    playerFeverGoDown: setInterval(() => {
+      if (this.state.playerFeverValueCurrent > 0) {
+        this.setState({
+          playerFeverValueCurrent: this.state.playerFeverValueCurrent - 1
+        });
+      }
+    }, 100),
     automaticProgressSave: setInterval(() => {
       setTimeout(() => {
         this.saveProgressToLocalStorage();
@@ -1871,6 +1882,7 @@ class UserInterface extends Component {
             this.state.rebirthTomesHeld + this.state.tomesObtainableFromRebirth,
           tomesObtainableFromRebirth: 0,
           inventory: [],
+          food: 0,
           coinsToBeCollected: 0,
           coinsToBeCollectedValue: 0,
           foodToBeCollected: 0,
@@ -2864,11 +2876,21 @@ class UserInterface extends Component {
       playerLastAttack.isCritical = false;
     }
     // Store a reference to the last attack
+    totalDamage *=
+      Math.round(this.state.playerFeverValueCurrent * 100) / 50000 + 1;
     playerLastAttack.damage = this.renderNumberWithAbbreviations(
       Math.round(totalDamage)
     );
     this.setState({ playerLastAttack });
     return Math.round(totalDamage);
+  };
+
+  // Add points to the fever bar
+  playerGainFever = () => {
+    if (this.state.playerFeverValueCurrent <= this.state.playerFeverValueMax)
+      this.setState({
+        playerFeverValueCurrent: this.state.playerFeverValueCurrent + 3
+      });
   };
 
   // Attack the enemy
@@ -2884,6 +2906,7 @@ class UserInterface extends Component {
           totalPlayerDamageDealt:
             this.state.totalPlayerDamageDealt + damageDealt
         });
+        this.playerGainFever();
         if (
           // When enemy is dead
           this.state.enemyHealthCurrent <= 0 &&
@@ -3747,7 +3770,7 @@ class UserInterface extends Component {
 
   renderBattleArea = () => {
     if (
-      this.state.gameVersion === "3.1.0" ||
+      this.state.gameVersion === "3.2.0" ||
       this.state.gameVersionAllowedByUser === this.state.gameVersion
     ) {
       return (
@@ -3778,7 +3801,7 @@ class UserInterface extends Component {
           <br />
           <p>
             The current version of the game is{" "}
-            <span className="text-warning">3.1.0</span>, but we detected a game
+            <span className="text-warning">3.2.0</span>, but we detected a game
             save from an older version which might not be compatible with the
             current one. Would you like delete your progress and start over, or
             continue your game?

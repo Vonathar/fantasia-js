@@ -170,18 +170,43 @@ class BattleArea extends Component {
               {this.props.mainState.playerRankCurrent}
             </p>
           </div>
-          <progress
-            className="battleArea-progress"
-            id="battleArea-progress-playerHealth"
-            max={this.props.mainState.playerHealthMax}
-            value={this.props.mainState.playerHealthCurrent}
-          />
-          <progress
-            className="battleArea-progress"
-            id="battleArea-progress-playerExperience"
-            max={this.props.mainState.playerExperienceRequired}
-            value={this.props.mainState.playerExperienceCurrent}
-          />
+          <div id="battleArea-progress-playerHealth-div">
+            <small className="mx-auto my-auto battleArea-progress-name">
+              HP
+            </small>
+            <progress
+              className="battleArea-progress mx-auto my-auto"
+              id="battleArea-progress-playerHealth"
+              max={this.props.mainState.playerHealthMax}
+              value={this.props.mainState.playerHealthCurrent}
+            />
+          </div>
+          <div
+            id="battleArea-progress-playerFever-div"
+            data-toggle="tooltip"
+            title="Attack the enemy continously to increase your fever! When at max, you deal up to 20% extra damage."
+          >
+            <small className="mx-auto my-auto battleArea-progress-name">
+              FV
+            </small>
+            <progress
+              className="battleArea-progress mx-auto my-auto"
+              id="battleArea-progress-playerFever"
+              max={this.props.mainState.playerFeverValueMax}
+              value={this.props.mainState.playerFeverValueCurrent}
+            />
+          </div>
+          <div id="battleArea-progress-playerExperience-div">
+            <small className="mx-auto my-auto battleArea-progress-name">
+              XP
+            </small>
+            <progress
+              className="battleArea-progress mx-auto my-auto"
+              id="battleArea-progress-playerExperience"
+              max={this.props.mainState.playerExperienceRequired}
+              value={this.props.mainState.playerExperienceCurrent}
+            />
+          </div>
         </div>
         <div id="userInterface-enemy-div">
           <div id="userInterface-enemy-image-container">
@@ -202,12 +227,17 @@ class BattleArea extends Component {
               {this.props.mainState.enemyNameCurrent}
             </p>
           </div>
-          <progress
-            className="battleArea-progress"
-            id="battleArea-progress-enemyHealth"
-            max={this.props.mainState.enemyHealthMax}
-            value={this.props.mainState.enemyHealthCurrent}
-          />
+          <div id="battleArea-progress-enemyHealth-div">
+            <small className="mx-auto my-auto battleArea-progress-name">
+              HP
+            </small>
+            <progress
+              className="battleArea-progress mx-auto my-auto"
+              id="battleArea-progress-enemyHealth"
+              max={this.props.mainState.enemyHealthMax}
+              value={this.props.mainState.enemyHealthCurrent}
+            />
+          </div>
           {/* Player visual damage */}
           <div id="playerVisualDamageContainer-div">
             {playerDamageParagraphsToBeRendered.map(item => (
