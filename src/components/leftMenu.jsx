@@ -6,6 +6,7 @@ import DebugMenu from "./debugMenu";
 import PetsMenu from "./petsMenu";
 import DeckMenu from "./deckMenu";
 import RebirthMenu from "./rebirthMenu";
+import ViresMenu from "./viresMenu";
 
 class LeftMenu extends Component {
   renderDebugMenu = () => {
@@ -106,6 +107,15 @@ class LeftMenu extends Component {
         />
       );
     }
+    // Vires tab selected
+    if (this.props.mainState.leftMenuSettingSelected === "Vires") {
+      return (
+        <ViresMenu
+          mainState={this.props.mainState}
+          viresUpgradeLevelUp={this.props.viresUpgradeLevelUp}
+        />
+      );
+    }
     // Debug tab selected
     if (this.props.mainState.leftMenuSettingSelected === "Debug") {
       return <DebugMenu giveItemDebug={this.props.giveItemDebug} />;
@@ -183,6 +193,15 @@ class LeftMenu extends Component {
               onClick={this.props.fetchLeftMenuSettingSelection}
             >
               <small>Rebirth</small>
+            </button>
+          </div>
+          <div className="mx-auto" id="userInterface-userSettings-menu-tab">
+            <button
+              type="button"
+              class="userInterface-userSettings-menu-tab-button btn btn-dark mx-auto"
+              onClick={this.props.fetchLeftMenuSettingSelection}
+            >
+              <small>Vires</small>
             </button>
           </div>
           {this.renderDebugMenu()}

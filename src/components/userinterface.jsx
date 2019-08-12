@@ -702,6 +702,12 @@ class UserInterface extends Component {
         currentBonusMultiplier: 0
       }
     },
+    viresUpgradesBonuses: {
+      bonusDoubleAttackChance: 0,
+      bonusFeverPoints: 0,
+      bonusPetAttackSpeed: 0,
+      bonusPetDamageMultiplierFromClickDamage: 0
+    },
     deckBonuses: {
       bonusExperience: 0,
       bonusHealth: 0,
@@ -1101,6 +1107,45 @@ class UserInterface extends Component {
         purchasePrice: 1000
       }
     },
+    viresUpgrades: {
+      player: {
+        upgradeOne: {
+          name: "Swift hands",
+          level: 0,
+          priceMultiplier: 1.2,
+          purchasePrice: 10,
+          price: 10
+        },
+        upgradeTwo: {
+          name: "Sharpness",
+          level: 0,
+          priceMultiplier: 1.2,
+          purchasePrice: 10,
+          price: 10
+        }
+      },
+      idle: {
+        upgradeOne: {
+          name: "Magic leaves",
+          level: 0,
+          priceMultiplier: 1.3,
+          purchasePrice: 5,
+          price: 5
+        },
+        upgradeTwo: {
+          name: "Allegiance",
+          level: 0,
+          priceMultiplier: 1.2,
+          purchasePrice: 10,
+          price: 10
+        }
+      },
+      others: {
+        upgradeOne: {
+          level: 0
+        }
+      }
+    },
     /* Skill values */
 
     skills: {
@@ -1297,12 +1342,6 @@ class UserInterface extends Component {
         this.enemyAttack();
       }
     }, 1000),
-    playerAttackInterval: setInterval(() => {
-      if (!this.state.isGamePaused) {
-        this.addPetDamageRenderingItem();
-        this.playerAttackPerSecond();
-      }
-    }, 500),
     // Periodically reduce the value of the fever bar
     playerFeverGoDown: setInterval(() => {
       if (this.state.playerFeverValueCurrent > 0) {
@@ -1352,6 +1391,12 @@ class UserInterface extends Component {
     }, 1000)
     // Pet price / pet damage / potential pet damage / pet level
   };
+
+  playerAttackInterval = setInterval(() => {
+    if (!this.state.isGamePaused) {
+      this.playerAttackPerSecond();
+    }
+  }, 500 - this.state.viresUpgradesBonuses.bonusPetAttackSpeed);
 
   // Card deck UI
 
@@ -2060,6 +2105,80 @@ class UserInterface extends Component {
         </p>
       );
     }
+  };
+
+  viresIncreaseEffect = (type, upgradeNumber) => {
+    let viresUpgradesBonuses = { ...this.state.viresUpgradesBonuses };
+    if (type === "player") {
+      if (upgradeNumber === "upgradeOne") {
+        viresUpgradesBonuses.bonusDoubleAttackChance += 0.05;
+      }
+      if (upgradeNumber === "upgradeTwo") {
+        viresUpgradesBonuses.bonusFeverPoints += 0.2;
+      }
+    }
+    if (type === "idle") {
+      if (upgradeNumber === "upgradeOne") {
+        viresUpgradesBonuses.bonusPetAttackSpeed += 5;
+      }
+      if (upgradeNumber === "upgradeTwo") {
+        viresUpgradesBonuses.bonusPetDamageMultiplierFromClickDamage += 0.005;
+      }
+    }
+    this.setState({ viresUpgradesBonuses });
+  };
+
+  viresUpgradeLevelUp = (type, upgradeNumber) => {
+    // Create a copy of the upgrade objects
+    let viresUpgrades = { ...this.state.viresUpgrades };
+    // If the upgrade has never been bought before
+    if (viresUpgrades[type][upgradeNumber].level === 0) {
+      // If the player holds enough tomes
+      if (
+        this.state.rebirthTomesHeld >=
+        viresUpgrades[type][upgradeNumber].purchasePrice
+      ) {
+        // Level up the skill
+        viresUpgrades[type][upgradeNumber].level = 1;
+        // Remove the spent tomes from the player
+        this.setState({
+          rebirthTomesHeld:
+            this.state.rebirthTomesHeld -
+            viresUpgrades[type][upgradeNumber].purchasePrice
+        });
+        // Increase the upgrade effect
+        this.viresIncreaseEffect(type, upgradeNumber);
+      }
+      // If the upgrade level is 1 or more
+    } else {
+      // If the player holds enough tomes
+      if (
+        this.state.rebirthTomesHeld >= viresUpgrades[type][upgradeNumber].price
+      ) {
+        // Level up the skill
+        viresUpgrades[type][upgradeNumber].level++;
+        // Remove the spent tomes from the player
+        this.setState({
+          rebirthTomesHeld:
+            this.state.rebirthTomesHeld -
+            viresUpgrades[type][upgradeNumber].price
+        });
+        // Increase the upgrade effect
+        this.viresIncreaseEffect(type, upgradeNumber);
+        // Increase the price for the next upgrade
+        viresUpgrades[type][upgradeNumber].price = Math.round(
+          viresUpgrades[type][upgradeNumber].purchasePrice *
+            Math.pow(
+              viresUpgrades[type][upgradeNumber].priceMultiplier,
+              viresUpgrades[type][upgradeNumber].level
+            )
+        );
+      }
+    }
+    this.setState({
+      viresUpgrades,
+      damageMultiplierFromTomes: this.state.rebirthTomesHeld / 100
+    });
   };
 
   // Calculate a random level to be given to the equipment which this function is called on
@@ -2786,7 +2905,11 @@ class UserInterface extends Component {
   calculateDoubleAttackChanceAllSources = () => {
     let doubleAttackChance = this.state.playerDoubleAttackChance;
     doubleAttackChance += this.state.deckBonuses.bonusDoubleAttackChance;
+    doubleAttackChance += this.state.viresUpgradesBonuses
+      .bonusDoubleAttackChance;
     doubleAttackChance += this.state.equipmentBonuses.bonusDoubleAttackChance;
+    doubleAttackChance += this.state.viresUpgradesBonuses
+      .bonusDoubleAttackChance;
     return doubleAttackChance;
   };
 
@@ -2840,9 +2963,14 @@ class UserInterface extends Component {
       this.state.pets.petTen.damagePerSecondCurrent +
       this.state.pets.petEleven.damagePerSecondCurrent +
       this.state.pets.petTwelve.damagePerSecondCurrent;
+    damage +=
+      this.calculateClickDamageAllSources() *
+      this.state.viresUpgradesBonuses.bonusPetDamageMultiplierFromClickDamage;
     let multiplier = 1;
     multiplier += this.state.deckBonuses.bonusDamagePerSecond;
     multiplier += this.state.damageMultiplierFromTomes;
+    multiplier += this.state.viresUpgradesBonuses
+      .bonusPetDamageMultiplierFromClickDamage;
     if (this.state.skills.skillTwo.isActive) {
       multiplier += this.state.skills.skillTwo.damageMultiplier;
     }
@@ -2889,7 +3017,10 @@ class UserInterface extends Component {
   playerGainFever = () => {
     if (this.state.playerFeverValueCurrent <= this.state.playerFeverValueMax)
       this.setState({
-        playerFeverValueCurrent: this.state.playerFeverValueCurrent + 3
+        playerFeverValueCurrent:
+          this.state.playerFeverValueCurrent +
+          this.state.viresUpgradesBonuses.bonusFeverPoints +
+          3
       });
   };
 
@@ -3200,10 +3331,10 @@ class UserInterface extends Component {
       // The enemy is not in the process of respawning
       this.state.enemyHasHealth
     ) {
-      // If healing the player by 25% would make the current HP be more than the max HP
+      // If healing the player by 5% would make the current HP be more than the max HP
       if (
         this.state.playerHealthCurrent +
-          (this.state.playerHealthMax / 100) * 25 >
+          (this.state.playerHealthMax / 100) * 5 >
         this.state.playerHealthMax
       ) {
         amountHealed =
@@ -3216,16 +3347,16 @@ class UserInterface extends Component {
           playerHealthCurrent: this.state.playerHealthMax
         });
 
-        // If the player is missing more than 25% of the health
+        // If the player is missing more than 5% of the health
       } else {
-        amountHealed = (this.state.playerHealthMax / 100) * 25;
+        amountHealed = (this.state.playerHealthMax / 100) * 5;
         this.setState({
           // Remove 1 food from the player
           food: this.state.food - 1,
           // Increase the health by 25% of the max
           playerHealthCurrent:
             this.state.playerHealthCurrent +
-            (this.state.playerHealthMax / 100) * 25
+            (this.state.playerHealthMax / 100) * 5
         });
       }
       // Add a 'HP increased' paragraph to the Battle Log
@@ -3259,6 +3390,8 @@ class UserInterface extends Component {
         damageDealt
       )
     });
+    this.addPetDamageRenderingItem();
+
     // If the enemy is not respawning
     if (this.state.playerCanAttack && !this.state.isGamePaused) {
       if (damageDealt !== null) {
@@ -3753,6 +3886,36 @@ class UserInterface extends Component {
     // 1t - 999t
     if (number >= 1000000000000 && number < 1000000000000000) {
       return (number / 1000000000000).toFixed(1) + "t";
+    } // 1Qa - 999Qa
+    if (number >= 1000000000000000 && number < 1000000000000000000) {
+      return (number / 1000000000000000).toFixed(1) + "Qa";
+    } // 1Qi - 999Qi
+    if (number >= 1000000000000000000 && number < 1000000000000000000000) {
+      return (number / 1000000000000000000).toFixed(1) + "Qi";
+    } // 1Sx - 999Sx
+    if (
+      number >= 1000000000000000000000 &&
+      number < 1000000000000000000000000
+    ) {
+      return (number / 1000000000000000000000).toFixed(1) + "Sx";
+    } // 1Sp - 999Sp
+    if (
+      number >= 1000000000000000000000000 &&
+      number < 1000000000000000000000000000
+    ) {
+      return (number / 1000000000000000000000000).toFixed(1) + "Sp";
+    } // 1Oc - 999Oc
+    if (
+      number >= 1000000000000000000000000000 &&
+      number < 1000000000000000000000000000000
+    ) {
+      return (number / 1000000000000000000000000000).toFixed(1) + "Oc";
+    } // 1No - 999No
+    if (
+      number >= 1000000000000000000000000000000 &&
+      number < 1000000000000000000000000000000000
+    ) {
+      return (number / 1000000000000000000000000000000).toFixed(1) + "No";
     } else {
       return number;
     }
@@ -3872,6 +4035,7 @@ class UserInterface extends Component {
           }
           petLevelUpgrade={this.petLevelUpgrade}
           petLevelUpgradeByUserSettings={this.petLevelUpgradeByUserSettings}
+          viresUpgradeLevelUp={this.viresUpgradeLevelUp}
           calculateClickDamageAllSources={this.calculateClickDamageAllSources}
           calculateDamagePerSecondAllSources={
             this.calculateDamagePerSecondAllSources

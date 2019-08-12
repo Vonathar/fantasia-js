@@ -10,15 +10,16 @@ Fantasia is a work in progress, so many more features are currently on the way!
 
 ##### Gameplay
 
-- Using skills now also adds to the fever bar
+- **Vires upgrades** are now live! Spend your tomes to purchase powerful upgrades.
 
 ##### Game rebalancing
 
-- N/a
+- _Potions_ now heal the player of 5% of total HP.
 
 ##### Other
 
-- The fever bar's value goes down more smoothly
+- Fix a bug which caused the pet damage not to display when the enemy died in 1 hit.
+- Improve the number abbreviating function to accommodate for larger numbers.
 
 ### 3.0.0 - The Golden Temple Update
 

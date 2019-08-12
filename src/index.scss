@@ -276,7 +276,8 @@ code {
 }
 
 .userInterface-stats-summary-row,
-.deckMenu-row {
+.deckMenu-row,
+.userInterface-vires-row {
   display: flex;
   margin-bottom: 1vw;
   overflow-x: hidden;
@@ -287,9 +288,10 @@ code {
 }
 
 .userInterface-stats-summary-section,
-.deckMenu-row-section {
+.deckMenu-row-section,
+.userInterface-vires-section {
   display: block;
-  width: 4vw;
+  width: 5vw;
   padding: 0.2vw;
   border-radius: 15px;
 }
@@ -300,6 +302,22 @@ code {
 
 .userInterface-stats-summary-section-image {
   height: 2vh;
+}
+
+.userInterface-vires-image {
+  width: 3vw;
+}
+
+.userInterface-vires-purchaseButton {
+  padding: 0.3vh 0.6vh;
+  background-color: rgba(73, 73, 73, 0.726);
+  border: 0.1vh solid rgba(255, 255, 255, 0.616);
+  border-radius: 10px;
+  display: flex;
+}
+
+.vires-purchaseButton-image {
+  width: 1.5vw;
 }
 
 .deckMenu-row-image {
@@ -810,7 +828,8 @@ code {
 #userInterface-pets-div,
 #userInterface-stats-div,
 #userInterface-quests-div,
-#userInterface-rebirth-div {
+#userInterface-rebirth-div,
+#userInterface-vires-div {
   border-radius: 0 0 25px 25px;
   font-size: 0.9vw;
   position: relative;
