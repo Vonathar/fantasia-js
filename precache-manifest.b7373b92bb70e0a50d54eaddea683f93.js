@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "00f4ce857e1646189d0756d19baf9e9f",
+    "revision": "0c8584405ee04694751509dc92dd72f0",
     "url": "/fantasia-js/index.html"
   },
   {
-    "revision": "c30e1224a6ea74eec3d1",
+    "revision": "15fb96162193984f3063",
     "url": "/fantasia-js/static/css/2.a4c6d6ca.chunk.css"
   },
   {
-    "revision": "fa6f3b852a85bc8776d4",
-    "url": "/fantasia-js/static/css/main.52ce2805.chunk.css"
+    "revision": "d10f0bc5b3269d47c9dc",
+    "url": "/fantasia-js/static/css/main.5d269320.chunk.css"
   },
   {
-    "revision": "c30e1224a6ea74eec3d1",
-    "url": "/fantasia-js/static/js/2.881815fd.chunk.js"
+    "revision": "15fb96162193984f3063",
+    "url": "/fantasia-js/static/js/2.ae99daaf.chunk.js"
   },
   {
-    "revision": "fa6f3b852a85bc8776d4",
-    "url": "/fantasia-js/static/js/main.f7d4d335.chunk.js"
+    "revision": "d10f0bc5b3269d47c9dc",
+    "url": "/fantasia-js/static/js/main.04cd22db.chunk.js"
   },
   {
     "revision": "369c4ecfd27df2315bc5",
@@ -340,6 +340,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fantasia-js/static/media/hotkeysIcon.cdee3569.png"
   },
   {
+    "revision": "4812b2b64af58a4255e206d3dbbc7e77",
+    "url": "/fantasia-js/static/media/idleVires_1.4812b2b6.png"
+  },
+  {
+    "revision": "4e4ad4691c791de78024c2c4d3aa9e4e",
+    "url": "/fantasia-js/static/media/idleVires_2.4e4ad469.png"
+  },
+  {
     "revision": "b62d4853ff5883680eda148d4b0b045e",
     "url": "/fantasia-js/static/media/infernoBoss_1.b62d4853.png"
   },
@@ -448,6 +456,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fantasia-js/static/media/magicForestEnemy_9.4dbc272b.png"
   },
   {
+    "revision": "15344cb672057bd4096210d55efbf6eb",
+    "url": "/fantasia-js/static/media/otherVires_1.15344cb6.png"
+  },
+  {
+    "revision": "c32ea5deec9d5c54b3682b3fbd04ae39",
+    "url": "/fantasia-js/static/media/otherVires_2.c32ea5de.png"
+  },
+  {
     "revision": "e565c1bb78f2bfb965e38b0a61694127",
     "url": "/fantasia-js/static/media/pet_1.e565c1bb.png"
   },
@@ -498,6 +514,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "84386c4d42db4a6d7ad7bad277289caa",
     "url": "/fantasia-js/static/media/playerExperienceTutorial.84386c4d.png"
+  },
+  {
+    "revision": "b9b6b9120db874f301b604520ce6e52d",
+    "url": "/fantasia-js/static/media/playerVires_1.b9b6b912.png"
+  },
+  {
+    "revision": "baa0f23262aa5d5bbd3ca924e55fa9e5",
+    "url": "/fantasia-js/static/media/playerVires_2.baa0f232.png"
   },
   {
     "revision": "d568ef50a4c381b3dad8cabf3935a30f",
